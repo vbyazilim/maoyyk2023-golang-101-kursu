@@ -9,21 +9,20 @@ Golang programlama dili kursu.
 
 ---
 
-## Bölüm 1: Golang Hakkında Genel Bilgiler
+## Bölüm 01: Golang Hakkında Genel Bilgiler
 
-1. Tanıtım
-1. Öne Çıkan Kısımları
+1. Tanıtım, Öne Çıkan Kısımları
 1. Go Proverbs
 1. Kurulum
 
-## Bölüm 2: Golang Uygulamasına Genel Bakış
+## Bölüm 02: Golang Uygulamasına Genel Bakış
 
 1. Paket Kavramı
 1. `main` Paketi
 1. Executable (çalıştırılabilir uygulama) ve Library (yardımcı kütüphane)
 1. Golang Uygulamasını Çalıştırmak
 
-## Bölüm 3: Dil Kuralları
+## Bölüm 03: Dil Kuralları
 
 1. Unicode Kavramı
 1. Anahtar Kelimeler
@@ -33,7 +32,7 @@ Golang programlama dili kursu.
 1. Sabitler
 1. Değişkenler
 
-## Bölüm 4: Veri Tipleri
+## Bölüm 04: Veri Tipleri
 
 1. String (metinseller)
 1. Boolean (mantıksallar)
@@ -46,7 +45,7 @@ Golang programlama dili kursu.
 1. Maps
 1. Tip Dönüştürmek
 
-## Bölüm 5: Fonksiyonlar
+## Bölüm 05: Fonksiyonlar
 
 1. Function Signature (fonksiyon imzası)
 1. Argüman / Parametre
@@ -55,14 +54,14 @@ Golang programlama dili kursu.
 1. Closure / Anonim Fonksiyonlar ve Function Scope (kapsama alanı)
 1. Deferring (erteleme)
 
-## Bölüm 6: Durum Kontrolleri
+## Bölüm 06: Durum Kontrolleri
 
 1. `if`, `else`, `else if`
 1. Short `if` declaration (kısa if tanımı)
 1. `switch` ve `case` İfadeleri
 1. Label, `break` ve `goto` İşlemleri
 
-## Bölüm 7: Döngüler
+## Bölüm 07: Döngüler
 
 1. `C` stili döngü
 1. `range`
@@ -70,14 +69,14 @@ Golang programlama dili kursu.
 1. `for` Kullanımı
 1. Label Kullanımı
 
-## Bölüm 8: Interface
+## Bölüm 08: Interface
 
 1. Tanımı
 1. Tip Olarak **empty interface** ya da `any`
 1. Tip Kontrol Meknizması
 1. Davranış Olarak `interface`
 
-## Bölüm 9: Error
+## Bölüm 09: Error
 
 1. `error` Nedir?
 1. Custom Error Types (özelleştirilmiş error tipi oluşturmak)
