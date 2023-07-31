@@ -150,6 +150,7 @@ Golang programlama dili kursu.
 
 ### Bölüm 17: Golang Paketi Geliştirmek
 
+1. `golangci-linter` Kurulumu ve Konfigürasyonu
 1. Paketi Dağıtmak / Paylaşmak
 1. Go Modülü Anatomisi
 
@@ -157,7 +158,9 @@ Golang programlama dili kursu.
 
 1. `http` Paketini Kullanarak Rest-API Tasarlamak
 1. Domain Driven Design prensibini Kullanmak
-1. http server’ın unit testleri
+1. http server’ın Unit Testleri
+1. Uygulamanın Docker Container’ından Çalıştırılması
+1. GitHub Actions ile Linter/Checker Kullanımı
 
 ---
 
