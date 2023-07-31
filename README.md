@@ -1,29 +1,29 @@
 ![Version](https://img.shields.io/badge/version-0.0.0-orange.svg?style=for-the-badge)
 
-# Mustafa Akgül Özgür Yazılım Yaz Kampı 2023 - Golang 101 Kursu
+# Mustafa Akgül Özgür Yazılım Yaz Kampı 2023
+
+## Golang 101 Kursu
 
 [Uğur Özyılmazel](@vigo) ve [Erhan Akpınar](@erhanakp) tarafından Ağustos 2023 tarihinde verilen
 Golang programlama dili kursu.
 
 ---
 
-## Bölümler
-
-### Bölüm 1: Golang Hakkında Genel Bilgiler
+## Bölüm 1: Golang Hakkında Genel Bilgiler
 
 1. Tanıtım
 1. Öne Çıkan Kısımları
 1. Go Proverbs
 1. Kurulum
 
-### Bölüm 2: Golang Uygulamasına Genel Bakış
+## Bölüm 2: Golang Uygulamasına Genel Bakış
 
 1. Paket Kavramı
 1. `main` Paketi
 1. Executable (çalıştırılabilir uygulama) ve Library (yardımcı kütüphane)
 1. Golang Uygulamasını Çalıştırmak
 
-### Bölüm 3: Dil Kuralları
+## Bölüm 3: Dil Kuralları
 
 1. Unicode Kavramı
 1. Anahtar Kelimeler
@@ -33,7 +33,7 @@ Golang programlama dili kursu.
 1. Sabitler
 1. Değişkenler
 
-### Bölüm 4: Veri Tipleri
+## Bölüm 4: Veri Tipleri
 
 1. String (metinseller)
 1. Boolean (mantıksallar)
@@ -46,7 +46,7 @@ Golang programlama dili kursu.
 1. Maps
 1. Tip Dönüştürmek
 
-### Bölüm 5: Fonksiyonlar
+## Bölüm 5: Fonksiyonlar
 
 1. Function Signature (fonksiyon imzası)
 1. Argüman / Parametre
@@ -55,14 +55,14 @@ Golang programlama dili kursu.
 1. Closure / Anonim Fonksiyonlar ve Function Scope (kapsama alanı)
 1. Deferring (erteleme)
 
-### Bölüm 6: Durum Kontrolleri
+## Bölüm 6: Durum Kontrolleri
 
 1. `if`, `else`, `else if`
 1. Short `if` declaration (kısa if tanımı)
 1. `switch` ve `case` İfadeleri
 1. Label, `break` ve `goto` İşlemleri
 
-### Bölüm 7: Döngüler
+## Bölüm 7: Döngüler
 
 1. `C` stili döngü
 1. `range`
@@ -70,14 +70,14 @@ Golang programlama dili kursu.
 1. `for` Kullanımı
 1. Label Kullanımı
 
-### Bölüm 8: Interface
+## Bölüm 8: Interface
 
 1. Tanımı
 1. Tip Olarak **empty interface** ya da `any`
 1. Tip Kontrol Meknizması
 1. Davranış Olarak `interface`
 
-### Bölüm 9: Error
+## Bölüm 9: Error
 
 1. `error` Nedir?
 1. Custom Error Types (özelleştirilmiş error tipi oluşturmak)
@@ -87,25 +87,25 @@ Golang programlama dili kursu.
 1. Yaygın Pratikler
 1. `panic` ve `recover`
 
-### Bölüm 10: `nil`
+## Bölüm 10: `nil`
 
 1. `nil` Nedir?
 1. Nerelerde ve Ne İçin Kullanınır?
 
-### Bölüm 11: Generics
+## Bölüm 11: Generics
 
 1. Nedir? Ne Amaçla Kullanılır
 1. Generic Types
 1. Generic Functions
 1. Generic Interfaces
 
-### Bölüm 12: Reflection
+## Bölüm 12: Reflection
 
 1. Ne İşe Yarar? Faydaları ve Zararları
 1. Tip Kontrolleri
 1. @wip
 
-### Bölüm 12: JSON İle Çalışmak
+## Bölüm 12: JSON İle Çalışmak
 
 1. `json:"TAG"`
 1. Encoding (Marshal)
@@ -114,7 +114,7 @@ Golang programlama dili kursu.
 1. Reference Types
 1. Streaming Encoders ve Decoders
 
-### Bölüm 13: Test
+## Bölüm 13: Test
 
 1. Test Nedir? Neden Yazılır?
 1. Test Nasıl Çalıştırılır
@@ -128,7 +128,7 @@ Golang programlama dili kursu.
 1. Escape Analysis
 1. Memory ve CPU Profiling Temelleri
 
-### Bölüm 14: Concurrency
+## Bölüm 14: Concurrency
 
 1. Nedir? Golang’in Concurrency Stratejisi Nedir?
 1. Goroutine Nedir?
@@ -139,7 +139,7 @@ Golang programlama dili kursu.
 1. Context
 1. Concurrency Pratikleri (yaygın kullanılan desenler)
 
-### Bölüm 16: İsimlendirme Kuralları
+## Bölüm 16: İsimlendirme Kuralları
 
 1. Naming Conventions
 1. Değişken İsimlendirmesi
@@ -148,13 +148,13 @@ Golang programlama dili kursu.
 1. Interface’lerin İsimlendirmesi
 1. Paketlerin İsimlendirmesi
 
-### Bölüm 17: Golang Paketi Geliştirmek
+## Bölüm 17: Golang Paketi Geliştirmek
 
 1. `golangci-linter` Kurulumu ve Konfigürasyonu
 1. Paketi Dağıtmak / Paylaşmak
 1. Go Modülü Anatomisi
 
-### Bölüm 18: In-Memory Key-Value Store
+## Bölüm 18: In-Memory Key-Value Store
 
 1. `http` Paketini Kullanarak Rest-API Tasarlamak
 1. Domain Driven Design prensibini Kullanmak
