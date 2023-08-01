@@ -1,4 +1,5 @@
 ![Version](https://img.shields.io/badge/version-0.0.0-orange.svg?style=for-the-badge)
+![Go Version](https://img.shields.io/badge/go-1.20.6-orange.svg?style=for-the-badge)
 
 # Mustafa Akgül Özgür Yazılım Yaz Kampı 2023
 
@@ -11,9 +12,9 @@ Golang programlama dili kursu.
 
 ## Bölüm 01: Golang Hakkında Genel Bilgiler
 
-1. Tanıtım, Öne Çıkan Kısımları
-1. Go Proverbs
-1. Kurulum
+1. [Tanıtım, Öne Çıkan Kısımları](docs/01/01-tanitim.md)
+1. [Go Proverbs](docs/01/02-proverbs.md)
+1. [Kurulum](docs/01/03-kurulum.md)
 
 ## Bölüm 02: Golang Uygulamasına Genel Bakış
 

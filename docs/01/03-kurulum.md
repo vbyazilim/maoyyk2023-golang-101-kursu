@@ -16,4 +16,15 @@ $ go env
 $ cd "$(go env GOROOT)/src"    # source code
 ```
 
+Linux için;
+
+```bash
+$ rm -rf /usr/local/go && tar -C /usr/local -xzf go1.20.6.linux-amd64.tar.gz
+
+# $HOME/.profile
+$ export PATH=$PATH:/usr/local/go/bin
+$ go version
+$ go env
+```
+
 [01]: https://go.dev/dl/
