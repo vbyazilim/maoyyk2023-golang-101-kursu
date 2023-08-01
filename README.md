@@ -18,20 +18,18 @@ Golang programlama dili kursu.
 
 ## Bölüm 02: Golang Uygulamasına Genel Bakış
 
-1. Paket Kavramı
-1. `main` Paketi
-1. Executable (çalıştırılabilir uygulama) ve Library (yardımcı kütüphane)
-1. Golang Uygulamasını Çalıştırmak
+1. [Paket Kavramı ve `main` Paketi](docs/02/01-paket-kavrami.md)
+1. [Executable, Library ve Golang Uygulamasını Çalıştırmak](docs/02/02-executable-lib-run.md)
 
 ## Bölüm 03: Dil Kuralları
 
-1. Unicode Kavramı
-1. Anahtar Kelimeler
-1. Operatörler ve İşaretçiler
-1. Built-in (gömülü gelen) Veri Tipleri
-1. Kod Stili
-1. Sabitler
-1. Değişkenler
+1. [Unicode Kavramı](docs/03/01-dil-kurallari.md#unicode)
+1. [Anahtar Kelimeler](docs/03/01-dil-kurallari.md#)
+1. [Operatörler ve İşaretçiler](docs/03/01-dil-kurallari.md#)
+1. [Built-in (gömülü gelen) Veri Tipleri](docs/03/01-dil-kurallari.md#)
+1. [Kod Stili](docs/03/01-dil-kurallari.md#)
+1. [Sabitler](docs/03/02-sabitler.md)
+1. [Değişkenler](docs/03/03-degiskenler.md)
 
 ## Bölüm 04: Veri Tipleri
 
