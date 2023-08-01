@@ -4,7 +4,7 @@
 
 ## Golang 101 Kursu
 
-[Uğur Özyılmazel](@vigo) ve [Erhan Akpınar](@erhanakp) tarafından Ağustos 2023 tarihinde verilen
+[Uğur Özyılmazel][vigo] ve [Erhan Akpınar][erhan] tarafından Ağustos 2023 tarihinde verilen
 Golang programlama dili kursu.
 
 ---
@@ -187,4 +187,6 @@ beklenir.
 
 ---
 
-[COC]: https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/blob/main/CODE_OF_CONDUCT.md
+[COC]:   https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/blob/main/CODE_OF_CONDUCT.md
+[vigo]:  https://github.com/vigo
+[erhan]: https://github.com/erhanakp
