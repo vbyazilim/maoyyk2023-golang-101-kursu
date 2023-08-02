@@ -24,34 +24,34 @@ Golang programlama dili kursu.
 ## Bölüm 03: Dil Kuralları
 
 1. [Unicode Kavramı](docs/03/01-dil-kurallari.md#unicode)
-1. [Anahtar Kelimeler](docs/03/01-dil-kurallari.md#)
-1. [Operatörler ve İşaretçiler](docs/03/01-dil-kurallari.md#)
-1. [Built-in (gömülü gelen) Veri Tipleri](docs/03/01-dil-kurallari.md#)
-1. [Kod Stili](docs/03/01-dil-kurallari.md#)
+1. [Anahtar Kelimeler](docs/03/01-dil-kurallari.md#anahtar-kelimeler)
+1. [Operatörler ve İşaretçiler](docs/03/01-dil-kurallari.md#operat%C3%B6rler-ve-i%CC%87%C5%9Faret%C3%A7iler)
+1. [Built-in (gömülü gelen) Veri Tipleri](docs/03/01-dil-kurallari.md#built-in-veri-tipleri)
+1. [Kod Stili](docs/03/01-dil-kurallari.md#kod-stili)
 1. [Sabitler](docs/03/02-sabitler.md)
 1. [Değişkenler](docs/03/03-degiskenler.md)
 
 ## Bölüm 04: Veri Tipleri
 
-1. String (metinseller)
-1. Boolean (mantıksallar)
-1. Numerics (sayısallar)
-1. Arrays (diziler)
-1. Slices (dizi kesitleri)
-1. Structs (yapılar)
-1. Pointer (işaretçi) Kavramı
-1. Struct Methods ve Receivers
-1. Maps
-1. Tip Dönüştürmek
+1. [Strings (metinseller)](docs/04/01-string.md)
+1. [Booleans (mantıksallar)](docs/04/02-bool.md)
+1. [Numerics (sayısallar)](docs/04/03-numerics.md)
+1. [Arrays (diziler)](docs/04/04-collections.md#array)
+1. [Slices (dizi kesitleri)](docs/04/04-collections.md#slice)
+1. [Structs (yapılar)](docs/04/05-struct.md)
+1. [Pointer (işaretçi) Kavramı](docs/04/06-pointer.md)
+1. [Struct Methods ve Receivers](docs/04/07-struct-methods-receivers.md)
+1. [Maps](docs/04/08-map.md)
+1. [Tip Dönüştürmek](docs/04/09-tip-donusturmek.md)
 
 ## Bölüm 05: Fonksiyonlar
 
-1. Function Signature (fonksiyon imzası)
-1. Argüman / Parametre
-1. Return Values (fonksiyodan geriye dönen değerler)
-1. Recursivity (özyineleme)
-1. Closure / Anonim Fonksiyonlar ve Function Scope (kapsama alanı)
-1. Deferring (erteleme)
+1. [Function Signature (fonksiyon imzası)](docs/05/01-fonksiyonlar.md#signature)
+1. [Argüman / Parametre](docs/05/01-fonksiyonlar.md#argumanlar)
+1. [Return Values (fonksiyodan geriye dönen değerler)](docs/05/01-fonksiyonlar.md#return-values)
+1. [Recursivity (özyineleme)](docs/05/01-fonksiyonlar.md#recursivity)
+1. [Closure / Anonim Fonksiyonlar ve Function Scope (kapsama alanı)](docs/05/01-fonksiyonlar.md#closure)
+1. [Deferring (erteleme)](docs/05/01-fonksiyonlar.md#defer)
 
 ## Bölüm 06: Durum Kontrolleri
 
