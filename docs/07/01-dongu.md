@@ -4,7 +4,7 @@
 
 ---
 
-## C-Style
+## `C`-Style
 
 @wip
 

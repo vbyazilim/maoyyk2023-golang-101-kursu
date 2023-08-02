@@ -70,63 +70,63 @@ Golang programlama dili kursu.
 
 ## Bölüm 08: Interface
 
-1. Tanımı
-1. Tip Olarak **empty interface** ya da `any`
-1. Tip Kontrol Meknizması
-1. Davranış Olarak `interface`
+1. [Tanımı](docs/08/01-interface.md)
+1. [Tip Olarak **empty interface** ya da `any`](docs/08/01-interface.md)
+1. [Tip Kontrol Meknizması](docs/08/01-interface.md)
+1. [Davranış Olarak `interface`](docs/08/01-interface.md)
 
 ## Bölüm 09: Error
 
-1. `error` Nedir?
-1. Custom Error Types (özelleştirilmiş error tipi oluşturmak)
-1. Wrapping (sarmalama)
-1. Unwrapping (sarmalı açma)
-1. Error Tip Kontrolleri: `errors.Is` ve `errors.As`
-1. Yaygın Pratikler
-1. `panic` ve `recover`
+1. [`error` Nedir?](docs/09/01-error.md)
+1. [Custom Error Types](docs/09/01-error.md#custom-error-types) (özelleştirilmiş error tipi oluşturmak)
+1. [Wrapping](docs/09/01-error.md#wrapping) (sarmalama)
+1. [Unwrapping](docs/09/01-error.md#unwrapping) (sarmalı açma)
+1. [`error` Tip Kontrolleri](docs/09/01-error.md#tip-kontrolleri): `errors.Is` ve `errors.As`
+1. [`panic` ve `recover`](docs/09/01-error.md#panic-ve-recover)
+1. [Yaygın Pratikler](docs/09/01-error.md#yaygin-pratikler)
 
 ## Bölüm 10: `nil`
 
-1. `nil` Nedir?
-1. Nerelerde ve Ne İçin Kullanınır?
+1. [`nil` Nedir?](docs/10/01-nil.md)
+1. [Nerelerde ve Ne İçin Kullanınır?](docs/10/01-nil.md)
 
 ## Bölüm 11: Generics
 
-1. Nedir? Ne Amaçla Kullanılır
-1. Generic Types
-1. Generic Functions
-1. Generic Interfaces
+1. [Nedir? Ne Amaçla Kullanılır](docs/11/01-generics.md)
+1. [Generic Types](docs/11/01-generics.md)
+1. [Generic Functions](docs/11/01-generics.md)
+1. [Generic Interfaces](docs/11/01-generics.md)
 
 ## Bölüm 12: Reflection
 
-1. Ne İşe Yarar? Faydaları ve Zararları
-1. Tip Kontrolleri
+1. [Ne İşe Yarar? Faydaları ve Zararları](docs/12/01-reflection.md)
+1. [Tip Kontrolleri](docs/12/01-reflection.md)
 1. @wip
 
-## Bölüm 12: JSON İle Çalışmak
+## Bölüm 13: JSON İle Çalışmak
 
-1. `json:"TAG"`
-1. Encoding (Marshal)
-1. Decoding (Unmarshal)
-1. Generic Interface
-1. Reference Types
-1. Streaming Encoders ve Decoders
+1. [`json:"TAG"`](docs/13/01-json-ile-calismak.md)
+1. [Encoding (Marshal)](docs/13/01-json-ile-calismak.md)
+1. [Decoding (Unmarshal)](docs/13/01-json-ile-calismak.md)
+1. [Generic Interface](docs/13/01-json-ile-calismak.md)
+1. [Reference Types](docs/13/01-json-ile-calismak.md)
+1. [Streaming Encoders ve Decoders](docs/13/01-json-ile-calismak.md)
 
-## Bölüm 13: Test
+## Bölüm 14: Test
 
-1. Test Nedir? Neden Yazılır?
-1. Test Nasıl Çalıştırılır
-1. Examples ve `godoc` Nedir?
-1. Race Detection Nedir?
-1. SetUp ve TearDown Nedir?
-1. Table Driven Test Nedir?
-1. Testlerin Paralel Çalıştırılması?
-1. Code Coverage Nedir?
-1. Benchmarking ve Profiling Nedir?
-1. Escape Analysis
-1. Memory ve CPU Profiling Temelleri
+1. [Test Nedir? Neden Yazılır?](docs/14/01-test.md)
+1. [Test Nasıl Çalıştırılır](docs/14/01-test.md)
+1. [Examples ve `godoc` Nedir?](docs/14/01-test.md)
+1. [Race Detection Nedir?](docs/14/01-test.md)
+1. [SetUp ve TearDown Nedir?](docs/14/01-test.md)
+1. [Table Driven Test Nedir?](docs/14/02-table-driven-test.md)
+1. [Testlerin Paralel Çalıştırılması?](docs/14/02-test.md)
+1. [Code Coverage Nedir?](docs/14/03-test-coverage.md)
+1. [Benchmarking ve Profiling Nedir?](docs/14/04-profiling.md)
+1. [Escape Analysis](docs/14/04-profiling.md)
+1. [Memory ve CPU Profiling Temelleri](docs/14/04-profiling.md)
 
-## Bölüm 14: Concurrency
+## Bölüm 15: Concurrency
 
 1. Nedir? Golang’in Concurrency Stratejisi Nedir?
 1. Goroutine Nedir?
@@ -139,26 +139,28 @@ Golang programlama dili kursu.
 
 ## Bölüm 16: İsimlendirme Kuralları
 
-1. Naming Conventions
-1. Değişken İsimlendirmesi
-1. Fonksiyon İsimlendirmesi
-1. Method’ların İsimlendirmesi
-1. Interface’lerin İsimlendirmesi
-1. Paketlerin İsimlendirmesi
+1. [Naming Conventions](docs/16/01-naming-conventions.md)
+1. [Değişken İsimlendirmesi](docs/16/01-naming-conventions.md)
+1. [Fonksiyon İsimlendirmesi](docs/16/01-naming-conventions.md)
+1. [Method’ların İsimlendirmesi](docs/16/01-naming-conventions.md)
+1. [Interface’lerin İsimlendirmesi](docs/16/01-naming-conventions.md)
+1. [Paketlerin İsimlendirmesi](docs/16/01-naming-conventions.md)
 
 ## Bölüm 17: Golang Paketi Geliştirmek
 
-1. `golangci-linter` Kurulumu ve Konfigürasyonu
-1. Paketi Dağıtmak / Paylaşmak
-1. Go Modülü Anatomisi
+1. [`golangci-linter` Kurulumu ve Konfigürasyonu](docs/17/01-kurulumlar.md)
+1. [Go Modülü Anatomisi](docs/17/02-go-modul-anotomisi.md)
+1. [Geliştirilmiş Paket Örneği](docs/17/03-ornek-paket.md)
+1. [Paketi Dağıtmak / Paylaşmak](docs/17/04-paketi-dagitmak.md)
 
 ## Bölüm 18: In-Memory Key-Value Store
 
-1. `http` Paketini Kullanarak Rest-API Tasarlamak
-1. Domain Driven Design prensibini Kullanmak
-1. http server’ın Unit Testleri
-1. Uygulamanın Docker Container’ından Çalıştırılması
-1. GitHub Actions ile Linter/Checker Kullanımı
+1. [`http` Paketini Kullanarak Rest-API Tasarlamak](docs/18/01-http-paketi.md)
+1. [Domain Driven Design prensibini Kullanmak](docs/18/02-ddd-basics.md)
+1. [Geliştirme Ön Hazırlık](docs/18/03-development.md)
+1. [GitHub Actions ile Linter/Checker Kullanımı](docs/18/03-development.md)
+1. [http server’ın Unit Testleri](docs/18/04-testing.md)
+1. [Uygulamanın Docker Container’ından Çalıştırılması](docs/18/05-docker.md)
 
 ---
 
