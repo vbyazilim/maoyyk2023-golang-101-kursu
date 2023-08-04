@@ -68,6 +68,10 @@ Bunlara ek olarak;
 - `byte` : `uint8` için takma isim (alias)
 - `rune` : `int32` için takma isim (alias)
 - `any` : `interface{}` (empty interface) için takma isim (alias)
+- `uint` : üzerinde çalıştığı mimariye göre 32 ya da 64bit’lik pozitif tamsayılar
+- `int` : üzerinde çalıştığı mimariye göre 32 ya da 64bit’lik (signed) tamsayılar
+- `uintptr` : işaretçi (pointer) değerinin yorumlanmamış bitlerini saklamak için yeterince büyük pozitif tamsayılar
+
 
 **Gömülü gelen fonksiyonlar**  
 
@@ -94,21 +98,103 @@ Bunlara ek olarak;
 
 ---
 
-## Operatörler ve İşaretçiler
+## Operatörler
 
-@wip
+    +    &     +=    &=     &&    ==    !=    (    )
+    -    |     -=    |=     ||    <     <=    [    ]
+    *    ^     *=    ^=     <-    >     >=    {    }
+    /    <<    /=    <<=    ++    =     :=    ,    ;
+    %    >>    %=    >>=    --    !     ...   .    :
+         &^          &^=          ~
+
+Aritmetik işlemler, mantık işlemleri, büyük/küçük kontrolleri, tek sefer
+(unary) işlemleri, bit kaydırma, kısa değişken tanımlama, diziler ve kesitler
+olmak üzere bir kısım operatör karakterleri bulunur.
+
+## İşaretçiler (Identifiers)
+
+Değişken, sabit ya da tip tanımlamarı yaptığımız şeylere **identifier**
+diyoruz. Yani `a := 5` dediğimizde `a` bir işaretçi yani identifier oluyor.
+Go’daki geçerli (valid) işaretçi tanımlamarına bazı örnekler;
+
+```go
+a 
+_x1
+BuExportEdilebilir
+uğur
+```
+
+Sayısal tanımlamalarda da;
+
+```go
+42        // 10’luk sayı
+0600      // 8’lik sayı
+0xFF      // 16’lık sayı
+0.        // Kesirli ondalıklı
+1.2       // Kesirli ondalıklı
+072.40    // == 72.40
+1.e+0
+011i      // == 11i
+170141183460469231731687303715884105727 // çılgın
+```
+
+şeklinde kullanılabiliyor. Unicode yani 32-bit’lik karakterler için `rune`
+kullanıyoruz, bu tür ifade şekline **Rune Literal** (rune kalıbı) deniyor:
+
+```go
+'a'
+'ä'
+'本'
+'\t'
+'\000'
+'\007'
+'\377'
+'\x07'
+'\xff'
+'\u12e4'
+'\U00101234'
+```
 
 ---
 
 ## Built-in Veri Tipleri
 
-@wip
+Standart kütüphane bir kısım hazır veri tipi ile birlikte geliyor, kabaca;
+
+- **Strings** : Metinsel tipler
+- **Booleans** : `true` / `false` mantıksal veri tipleri
+- **Numerics** : `int` / `float` ve `complex` familyası
+- **Composite (Unnamed) Types** (Bileşik İsimsiz Tipler) : Array, Slice, Struct, Map
 
 ---
 
 ## Kod Stili
 
-@wip
+2 tür yorum (comment) yazma stili var;
+
+1. **Line Comment** : `// bu bir yorum satırı` şeklinde
+1. **General Comment** : `/* bu bir yorum satırı */` şeklinde
+
+Line delimeter yani kod ifadesi satırları (code statements) `C`, `JavaScript`
+ya da `PHP` dilindeki gibi `;` ile bitmiyor, go bunu compile time (derleme
+anında) kendisi ekliyor. `;` sadece **inner-scope** yani sadece iç kapsam
+durumlarında kullanılıyor;
+
+```go
+// short-if declaration - kısa if bildirimi - inner-scope
+// v değişkeni sadece {} içinde yaşar
+if v := math.Pow(x, n); v < lim {
+	return v
+}
+print(v) // error
+
+// i sadece {} içinde yaşar
+for i := 5; i< 9; i++  {
+  fmt.Println(i)
+}
+print(i) // error
+```
+
 
 ---
 
