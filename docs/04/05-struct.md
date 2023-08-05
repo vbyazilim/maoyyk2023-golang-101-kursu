@@ -554,4 +554,4 @@ type Person struct {
 }
 ```
 
-ve başka bir paketten `person` paketini `import` edip kullansak, [örnek kod](x);
+ve başka bir paketten `person` paketini `import` edip kullansak, [örnek kod](../src/04/05-struct-field-access);
