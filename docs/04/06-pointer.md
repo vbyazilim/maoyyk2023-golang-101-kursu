@@ -1,3 +1,5 @@
-# Bölüm 04/06: Pointer
+# Bölüm 04/06: Veri Tipleri
+
+## Pointer
 
 @wip

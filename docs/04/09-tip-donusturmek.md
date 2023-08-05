@@ -1,3 +1,5 @@
-# Bölüm 04/09: Tip Dönüştürmek
+# Bölüm 04/09: Veri Tipleri
+
+## Tip Dönüştürmek
 
 @wip
