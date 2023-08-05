@@ -4,5 +4,5 @@ package person
 type Person struct {
 	FirstName string // Exportable
 	LastName  string // Exportable
-	secret    string // Unexportable (private)
+	secret    string // nolint Unexportable (private)
 }

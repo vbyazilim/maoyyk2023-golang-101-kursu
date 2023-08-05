@@ -524,6 +524,10 @@ func main() {
 }
 ```
 
+Promote edilen field’lara kolay erişim olmasına rağmen, yeni bir kopya (instance)
+çıkarılacağı zaman, açık açık gömülü struct ve alanlarını yazmak gerekir. Yani
+`p1.city` ile ulaşırız ama `p1.city = ...` şeklinde bir ifade yazamayız.
+
 Peki bir şekilde bu alanların bazılarını erişime açmak kapamak gerekse? 
 
 Nesne yönelimli dillerin sınıf konusunda bahsi çokça geçen **public/private
@@ -555,3 +559,256 @@ type Person struct {
 ```
 
 ve başka bir paketten `person` paketini `import` edip kullansak, [örnek kod](../../src/04/05-struct-field-access);
+
+```go
+package main
+
+import (
+	"fmt"
+
+	"github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/04/05-struct-field-access/person"
+)
+
+func main() {
+	p := person.Person{} // boş bir kopya (instance)
+
+	p.FirstName = "Uğur"
+	p.LastName = "Özyılmazel"
+
+	fmt.Printf("p: %#v\n", p) // p: person.Person{FirstName:"Uğur", LastName:"Özyılmazel", secret:""}
+
+	fmt.Println(p.secret) // p.secret undefined (type person.Person has no field or method secret)
+}
+```
+
+`p.secret` dış dünyadan erişime kapalı. `secret` sadece içeriden erişilen bir
+şey. Bu bakımdan `person` paketi içinde hem bu `secret` field’ına atama yapan
+hem de `secret`’a erişmeyi sağlacak bir **Getter** ve **Setter** metodlarına
+ihtiyacımız olacak; [örnek kod](../../src/04/05-struct-field-access-getter);
+
+`person.go`
+
+```go
+package person
+
+// Person represents the Person model.
+type Person struct {
+	FirstName string // Exportable
+	LastName  string // Exportable
+	secret    string // Unexportable (private)
+}
+
+// Secret returns private secret field.
+func (u Person) Secret() string {
+	return u.secret
+}
+
+// SetSecret sets private secret value.
+func (u *Person) SetSecret(s string) {
+	u.secret = s
+}
+```
+
+
+`main.go`
+
+```go
+package main
+
+import (
+	"fmt"
+
+	"github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/04/05-struct-field-access-getter/person"
+)
+
+func main() {
+	p := person.Person{} // boş bir kopya (instance)
+
+	p.FirstName = "Uğur"
+	p.LastName = "Özyılmazel"
+
+	fmt.Printf("%+v\n", p) // {FirstName:Uğur LastName:Özyılmazel secret:}
+
+	p.SetSecret("<secret>")
+
+	fmt.Printf("%+v\n", p)  // {FirstName:Uğur LastName:Özyılmazel secret:<secret>}
+	fmt.Println(p.Secret()) // <secret>
+}
+```
+
+Struct’lar **value type** oldukları için karşılaştırılabilirler (comparable):
+
+https://go.dev/play/p/v8KG2KFp6Xl
+
+```go
+package main
+
+import "fmt"
+
+type person struct {
+	name string
+}
+
+func main() {
+	p1 := person{"Uğur"}
+	p2 := person{"Uğur"}
+
+	fmt.Printf("%v\n", p1)       // Uğur
+	fmt.Printf("%v\n", p2)       // Uğur
+	fmt.Printf("%v\n", p1 == p2) // true
+}
+```
+
+Bu karşılaştırma için alanların tipine de bağlıdır, eğer alan tipleri
+**comparable** değilse karşılaştırma yapılamaz:
+
+https://go.dev/play/p/vNOLwgPPhnJ
+
+```go
+package main
+
+import (
+	"fmt"
+)
+
+type image struct {
+	data map[int]int
+}
+
+func main() {
+	image1 := image{data: map[int]int{0: 155}}
+	image2 := image{data: map[int]int{0: 155}}
+
+	if image1 == image2 {
+		fmt.Println("image1 and image2 are equal")
+	}
+}
+// invalid operation: image1 == image2 
+// (struct containing map[int]int cannot be compared)
+```
+
+Son olarak, struct tasarlarken hafızada kaplayacağı yeri de düşünmemiz
+gerekebilir. Alanların tiplerinin kapladığı yere göre küçükten büyüğe göre
+sıralama yapmak iyi bir pratiktir:
+
+https://go.dev/play/p/Ab2qYHxklau
+
+```go
+package main
+
+import (
+	"fmt"
+	"unsafe"
+)
+
+type bad struct {
+	field1 bool    // bool -> 1 byte, padding yüzünden 8 byte yedi
+	field2 int64   // int64 -> 8 byte
+	field3 bool    // bool -> 1 byte, padding yüzünden 8 byte yedi
+	field4 float64 // float64 -> 8 byte
+
+	// aslında 18 byte'lık yer kaplaması lazımken;
+	// 7 + 7 = 14 byte daha geldi
+	// 32 byte oldu
+}
+
+type good struct {
+	field2 int64   // int64 -> 8 byte
+	field4 float64 // int64 -> 8 byte
+	field1 bool    // bool -> 1 byte
+	field3 bool    // bool -> 1 byte
+
+	// aslında 18 byte'lık yer kaplaması lazımken;
+	// bool'ları 8'in içine sığdırdı (1+1=2), padding'i sağlamak için 6 byte ekledi
+	// 24 byte oldu
+}
+
+func main() {
+	fmt.Println(unsafe.Sizeof(bad{}), "bytes")  // 32 bytes
+	fmt.Println(unsafe.Sizeof(good{}), "bytes") // 24 bytes
+}
+```
+
+Her alan için minimum `8 byte`’lık blok (chunk) rezerve ediyor. Yetmezse bir 8
+daha ekliyor (slice capacity gibi düşünün) eğer 8’den az gelirse 8’e
+tamamlıyor, buna da **padding** deniyor.
+
+Struct alanlarının ya da bir tipin hafızada kaç byte harcadığını `unsafe`
+paketini kullanarak bulabilirsiniz:
+
+https://go.dev/play/p/1LtOv0__law
+
+```go
+package main
+
+import (
+	"fmt"
+	"unsafe"
+)
+
+type user struct {
+	email    string
+	isActive bool
+}
+
+func main() {
+	var a []int
+	var b string
+
+	u := user{} // yeni bir user instance
+
+	fmt.Println(unsafe.Sizeof(a))          // 24 byte
+	fmt.Println(unsafe.Sizeof(b))          // 16 byte
+	fmt.Println(unsafe.Sizeof(u.isActive)) // 1 byte
+}
+```
+
+Go bu işi kolay çözmek için bir tool yayınladı: `fieldalignment`
+
+```go
+go install golang.org/x/tools/go/analysis/passes/fieldalignment/cmd/fieldalignment@latest
+```
+
+Kurulumu yaptıktan sonra, eğitim projesi altından;
+
+```bash
+$ cd /path/to/maoyyk2023-golang-101-kursu/
+$ fieldalignment src/04/05-struct-field-alignment/main.go
+main.go:6:10: struct of size 56 could be 48
+```
+
+Dosyanın üzerine yazarak otomatik düzeltme yapmak için;
+
+```bash
+$ fieldalignment -fix src/04/05-struct-field-alignment/main.go  # main.go dosyasını değiştirir
+```
+
+Şu struct:
+
+```go
+type Bad struct {
+	Field1 bool    // 1 (+7) = 8
+	Field2 int64   // 8
+	Field3 bool    // 1 (+7) = 8
+	Field4 float64 // 8
+	Field5 []bool  // 24
+	// 8 + 8 + 8 + 24 = 56
+}
+```
+
+Düzenleme sonrası;
+
+```go
+type Bad struct {
+	Field5 []bool  // 24
+	Field2 int64   // 8
+	Field4 float64 // 8
+	Field1 bool    // 1 + 1 = 2 (+6) = 8
+	Field3 bool    // ----^
+	// 24 + 8 + 8 + 8 = 48
+}
+```
+
+şeklini aldı. Konu ile ilgili [şirket blogumuzda bir makale][01] de yayınlamıştık.
+
+[01]: https://vbyazilim.com/blog/2022/11/28/struct-field-alignment-in-golang/

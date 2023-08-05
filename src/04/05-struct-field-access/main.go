@@ -14,5 +14,5 @@ func main() {
 
 	fmt.Printf("p: %#v\n", p) // p: person.Person{FirstName:"Uğur", LastName:"Özyılmazel", secret:""}
 
-	fmt.Println(p.secret) // p.secret undefined (type person.Person has no field or method secret)
+	// fmt.Println(p.secret) // p.secret undefined (type person.Person has no field or method secret)
 }
