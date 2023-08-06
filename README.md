@@ -88,7 +88,7 @@ Golang programlama dili kursu.
 ## Bölüm 10: `nil`
 
 1. [`nil` Nedir?](docs/10/01-nil.md)
-1. [Nerelerde ve Ne İçin Kullanınır?](docs/10/01-nil.md)
+1. [Nerelerde ve Ne İçin Kullanınır?](docs/10/01-nil.md#nerelerde-kullanilir)
 
 ## Bölüm 11: Generics
 
