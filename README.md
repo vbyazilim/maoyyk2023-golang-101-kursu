@@ -71,9 +71,9 @@ Golang programlama dili kursu.
 ## Bölüm 08: Interface
 
 1. [Tanımı](docs/08/01-interface.md)
-1. [Tip Olarak **empty interface** ya da `any`](docs/08/01-interface.md)
-1. [Tip Kontrol Meknizması](docs/08/01-interface.md)
-1. [Davranış Olarak `interface`](docs/08/01-interface.md)
+1. [Tip Olarak **empty interface** ya da `any`](docs/08/01-interface.md#empty-interface)
+1. [Tip Kontrol Meknizması](docs/08/01-interface.md#tip-kontrol-mekanizmasi)
+1. [Davranış Olarak `interface`](docs/08/01-interface.md#satisfying interface)
 
 ## Bölüm 09: Error
 
