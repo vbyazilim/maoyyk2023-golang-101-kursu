@@ -65,8 +65,8 @@ Golang programlama dili kursu.
 1. [`C` stili döngü](docs/07/01-dongu.md#c-style)
 1. [`range`](docs/07/01-dongu.md#range)
 1. [`break` ve `continue`](docs/07/01-dongu.md#break-ve-continue)
-1. [`for` Kullanımı](docs/07/01-dongu.md)
-1. [Label Kullanımı](docs/07/01-dongu.md)
+1. [`for` ve Koşul Kullanımı](docs/07/01-dongu.md#for-ve-kosul)
+1. [Label Kullanımı](docs/07/01-dongu.md#label-kullanimi)
 
 ## Bölüm 08: Interface
 
