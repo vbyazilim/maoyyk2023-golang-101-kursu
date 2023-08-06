@@ -811,4 +811,34 @@ type Bad struct {
 
 şeklini aldı. Konu ile ilgili [şirket blogumuzda bir makale][01] de yayınlamıştık.
 
+### Empty Struct
+
+`0` byte yer tutan boş bir struct:
+
+https://go.dev/play/p/2b4hMxnuXRM
+
+```go
+package main
+
+import (
+	"fmt"
+	"unsafe"
+)
+
+func main() {
+	a := struct{}{}
+
+	fmt.Println(a)                // {}
+	fmt.Println(unsafe.Sizeof(a)) // 0
+}
+```
+
+Nerelerde kullanırız?
+
+- [Concurrency][02] konusunda `channel` kullanımında
+- [Map][03]’de value olarak
+
+
 [01]: https://vbyazilim.com/blog/2022/11/28/struct-field-alignment-in-golang/
+[02]: ../15/01-concurrency.md
+[03]: ../04/08-map.md
