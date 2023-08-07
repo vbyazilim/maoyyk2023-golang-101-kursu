@@ -502,3 +502,20 @@ func main() {
 	fmt.Printf("len: %v cap: %v\n", len(userSliceWithCapacity), cap(userSliceWithCapacity)) // len: 1 cap: 1
 }
 ```
+
+Son olarak unutmamamız gereken bir konu; fonksiyona argüman olarak slice
+göndermek gerekirse;
+
+- Pointer’mı yollamalı?
+- Direk slice’ı mı yollamalı?
+
+```go
+func checkUsers(users []string)   // ?
+
+func checkUsers(users *[]string)  // ?
+```
+
+Büyük çoğunlukla (örnekteki gibi ise) direk slice’ı yollarız. Bazı durumlarda
+**pointer to slice** göndeririz (gob, json, xml decoding, unmarshal gibi.)
+
+[01]: https://www.willem.dev/articles/should-you-use-pointers-to-slices/
