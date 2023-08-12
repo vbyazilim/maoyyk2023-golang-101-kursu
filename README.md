@@ -140,11 +140,11 @@ Golang programlama dili kursu.
 ## Bölüm 16: İsimlendirme Kuralları
 
 1. [Naming Conventions](docs/16/01-naming-conventions.md)
-1. [Değişken İsimlendirmesi](docs/16/01-naming-conventions.md)
-1. [Fonksiyon İsimlendirmesi](docs/16/01-naming-conventions.md)
-1. [Method’ların İsimlendirmesi](docs/16/01-naming-conventions.md)
-1. [Interface’lerin İsimlendirmesi](docs/16/01-naming-conventions.md)
-1. [Paketlerin İsimlendirmesi](docs/16/01-naming-conventions.md)
+1. [Değişken İsimlendirmesi](docs/16/01-naming-conventions.md#degisken-adlari)
+1. [Fonksiyon İsimlendirmesi](docs/16/01-naming-conventions.md#fonksiyon-adlari)
+1. [Method’ların İsimlendirmesi](docs/16/01-naming-conventions.md#metod-adlari)
+1. [Interface’lerin İsimlendirmesi](docs/16/01-naming-conventions.md#interface-adlari)
+1. [Paketlerin İsimlendirmesi](docs/16/01-naming-conventions.md#paket-adlari)
 
 ## Bölüm 17: Golang Paketi Geliştirmek
 
