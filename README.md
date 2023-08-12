@@ -39,6 +39,7 @@ Golang programlama dili kursu.
 1. [Arrays (diziler)](docs/04/04-collections.md#array)
 1. [Slices (dizi kesitleri)](docs/04/04-collections.md#slice)
 1. [Structs (yapılar)](docs/04/05-struct.md)
+1. [Struct Annotations](docs/04/05-struct-annotations.md)
 1. [Pointer (işaretçi) Kavramı](docs/04/06-pointer.md)
 1. [Struct Methods ve Receivers](docs/04/07-struct-methods-receivers.md)
 1. [Maps](docs/04/08-map.md)
