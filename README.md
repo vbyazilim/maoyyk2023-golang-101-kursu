@@ -106,9 +106,10 @@ Golang programlama dili kursu.
 
 ## Bölüm 13: JSON İle Çalışmak
 
-1. [`json:"TAG"`](docs/13/01-json-ile-calismak.md)
-1. [Encoding (Marshal)](docs/13/01-json-ile-calismak.md)
-1. [Decoding (Unmarshal)](docs/13/01-json-ile-calismak.md)
+1. [Genel Bilgi](docs/13/01-json-ile-calismak.md)
+1. [Encoding (Marshal)](docs/13/01-json-ile-calismak.md#encodingjson-marshal)
+1. [Decoding (Unmarshal)](docs/13/01-json-ile-calismak.md#encodingjson-unmarshal)
+1. [`json:"TAG"`](docs/13/01-json-ile-calismak.md#)
 1. [Generic Interface](docs/13/01-json-ile-calismak.md)
 1. [Reference Types](docs/13/01-json-ile-calismak.md)
 1. [Streaming Encoders ve Decoders](docs/13/01-json-ile-calismak.md)
