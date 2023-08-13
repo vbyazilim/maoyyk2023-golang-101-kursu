@@ -111,7 +111,7 @@ Golang programlama dili kursu.
 1. [Decoding (Unmarshal)](docs/13/01-json-ile-calismak.md#encodingjson-unmarshal)
 1. [`json:"TAG"`](docs/13/01-json-ile-calismak.md#jsonfield-tagi)
 1. [Custom Decoding](docs/13/01-json-ile-calismak.md#custom-decoding)
-1. [Generic Interface](docs/13/01-json-ile-calismak.md)
+1. [Generic Interface](docs/13/01-json-ile-calismak.md#generic-interface)
 1. [Reference Types](docs/13/01-json-ile-calismak.md)
 1. [Streaming Encoders ve Decoders](docs/13/01-json-ile-calismak.md)
 

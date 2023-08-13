@@ -614,3 +614,119 @@ func main() {
 Son alan; `"this": "This",` ile başlayan kısım işlenmedi ama `user`’ın son
 değeri `User` struct’ının zero-value (empty)’larıyla doldu. Yani bu decode
 işleminde **3 tane elemanı** olan bir slice çıktı.
+
+---
+
+## Generic Interface
+
+Elimizde raw string olduğunda bunu `map[string]any`’e cast ederek, içindeki
+diğer verilere de ulaşabiliriz.
+
+Eğer bazı alanların opsiyonel olmasını istiyorsak, özellikle `struct`’a
+`Unmarshal` ederken, struct içine bir tane joker alan koyup bunu
+`map[string]any` yapıyoruz ve eksik alanları bu map’ten siliyoruz:
+
+https://go.dev/play/p/u1mm5nr-jJx
+
+[Örnek](../../src/13/json-generic-interface)
+
+```go
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"log"
+)
+
+// User holds user data
+type User struct {
+	Name      string `json:"name"`
+	Email     string
+	Age       int
+	Optionals map[string]any `json:"-"`
+}
+
+func main() {
+	incoming := `{
+		"name": "Uğur",
+		"email": "vigo@example.com",
+		"age": 51,
+		"foo": 1,
+		"bar": "2"
+	}`
+
+	u := User{}
+	if err := json.Unmarshal([]byte(incoming), &u.Optionals); err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println("u.Optionals", u.Optionals)
+	// u.Optionals map[age:51 bar:2 email:vigo@example.com foo:1 name:Uğur]
+
+	if v, ok := u.Optionals["name"].(string); ok {
+		u.Name = string(v)
+		delete(u.Optionals, "name")
+	}
+	if v, ok := u.Optionals["email"].(string); ok {
+		u.Email = string(v)
+		delete(u.Optionals, "email")
+	}
+	if v, ok := u.Optionals["age"].(float64); ok {
+		u.Age = int(v)
+		delete(u.Optionals, "age")
+	}
+
+	fmt.Printf("u: %+v\n", u)
+	// u: {Name:Uğur Email:vigo@example.com Age:51 Optionals:map[bar:2 foo:1]}
+
+	if u.Email != "" {
+		fmt.Println("u.Email", u.Email)
+		// u.Email vigo@example.com
+	}
+	if u.Age != 0 {
+		fmt.Println("u.Age", u.Age)
+		// u.Age 51
+	}
+
+	if len(u.Optionals) > 0 {
+		fmt.Printf("you have %d invalid field(s)\n", len(u.Optionals))
+		// you have 2 invalid field(s)
+
+		for v := range u.Optionals {
+			fmt.Printf("%q\n", v)
+		}
+		// "foo"
+		// "bar"
+	}
+}
+```
+
+`Unmarshal` işlemine başlamadan önce, gelen verinin json’a uygun olup
+olmadığını doğrulamak için `json.Valid` kullanıyoruz;
+
+https://go.dev/play/p/Z0a7mVQpXoU
+
+```go
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+)
+
+func main() {
+	goodJSON := `{"example": 1}`
+	badJSON := `{"example":2:]}}`
+
+	fmt.Println("goodJSON is valid?", json.Valid([]byte(goodJSON)))
+	// goodJSON is valid? true
+
+	fmt.Println("badJSON is valid?", json.Valid([]byte(badJSON)))
+	// badJSON is valid? false
+}
+// goodJSON is valid? true
+// badJSON is valid? false
+```
+
+---
