@@ -94,9 +94,12 @@ Golang programlama dili kursu.
 ## Bölüm 11: Generics
 
 1. [Nedir? Ne Amaçla Kullanılır](docs/11/01-generics.md)
-1. [Generic Types](docs/11/01-generics.md)
-1. [Generic Functions](docs/11/01-generics.md)
-1. [Generic Interfaces](docs/11/01-generics.md)
+1. [Fonksiyonlarda Genericler](docs/11/01-generics.md#fonksiyonlarda-genericler)
+1. [Custom Tiplerde Generic](docs/11/01-generics.md#custom-tiplerde-genericler)
+1. [Generic Fonksiyon Çağrıları](docs/11/01-generics.md#generic-fonksiyon-cagrilari)
+1. [Generic Tipi struct’da Kullanmak](docs/11/01-generics.md#generic-tipi-structlarda-kullanmak)
+1. [Generic Tipi map’lerde Kullanmak](docs/11/01-generics.md#generic-tipleri-maplerde-kullanmak)
+1. [Generic Gerçek Hayat Örneği](docs/11/01-generics.md#generic-gercek-hayat-ornegi)
 
 ## Bölüm 12: Reflection
 

@@ -17,7 +17,7 @@ olan **type parameters** (tür parametreleri) tanıtıldı. Bu, go dilinde
 
 ---
 
-# Fonksiyonlarda Generic’ler
+## Fonksiyonlarda Generic’ler
 
 Go’da generic fonksiyonlar, fonksiyonun parametrelerinde ve dönüş değerlerinde
 tür parametreleri kullanılarak tanımlanır.
@@ -62,6 +62,8 @@ Bu şekilde tanımlanan fonksiyon, `int` veya `float64` türü için çalışır
 
 https://go.dev/play/p/aEoTFQBln_Q
 
+[Örnek](../../src/11/generics-functions)
+
 ```go
 package main
 
@@ -91,6 +93,8 @@ func sum[T int | int8 | int16 | float32 | float64](a T, b T) T {
 Bu sorunu çözmek için bir `interface` kullanabiliriz:
 
 https://go.dev/play/p/dMFFc30TJH_t
+
+[Örnek](../../src/11/generics-functions-interface)
 
 ```go
 package main
@@ -125,6 +129,8 @@ sonra;
 
 https://go.dev/play/p/a-AQTFUfZ3T
 
+[Örnek](../../src/11/generics-constraints)
+
 ```go
 package main
 
@@ -150,7 +156,7 @@ func main() {
 
 ---
 
-# Custom tiplerde Generic’ler
+## Custom tiplerde Generic’ler
 
 Şimdi başa dönüp tekrar add fonksiyonunu ele alalım. Bu fonksiyonu, custom bir
 tipte kullanmak istediğimizi varsayalım:
@@ -190,6 +196,8 @@ bu fonksiyonu `SchoolNumber` türü için kullanabiliriz:
 
 https://go.dev/play/p/20l3bUMhJY4
 
+[Örnek](../../src/11/generics-custom-types)
+
 ```go
 package main
 
@@ -211,7 +219,7 @@ func main() {
 
 ---
 
-# Generic fonksiyon çağrıları
+## Generic Fonksiyon Çağrıları
 
 Şimdi generic fonksiyon çağrılarını ele alalım. Generic fonksiyonları çağırmak
 için, fonksiyonun parametrelerindeki **tür parametrelerini** belirtmemiz
@@ -239,6 +247,8 @@ func numMutator(values numbers, fn mapperFunc) numbers {
 Bu fonksiyonu aşağıdaki gibi çağırabiliriz:
 
 https://go.dev/play/p/4BJEzwJ9s5E
+
+[Örnek](../../src/11/generics-function-calls)
 
 ```go
 package main
@@ -272,6 +282,8 @@ Bu fonksiyon sadece `int` türü için çalışır. Yine generic fonksiyonlar
 kullanarak bu fonksiyonu farklı türler için kullanabiliriz:
 
 https://go.dev/play/p/iE4yCG6yjy8
+
+[Örnek](../../src/11/generics-function-calls-and-types)
 
 ```go
 package main
@@ -309,6 +321,8 @@ ya da `float64` türü için:
 
 https://go.dev/play/p/kH2Q2ilzqwA
 
+[Örnek](../../src/11/generics-function-calls-and-types2)
+
 ```go
 package main
 
@@ -344,21 +358,35 @@ func main() {
 
 ---
 
-# Generic tipi structlarda kullanmak
+## Generic tipi `struct`larda Kullanmak
 
-Generic tipleri fonksiyonlarda olduğu gibi structlarda da kullanabiliriz. Örneğin, aşağıdaki gibi bir struct tanımlayabiliriz:
+Generic tipleri fonksiyonlarda olduğu gibi `struct`’larda da kullanabiliriz.
+Örneğin, aşağıdaki gibi bir struct tanımlayabiliriz:
+
+https://go.dev/play/p/xpzfCN2fDST
+
+[Örnek](../../src/11/generics-in-structs)
 
 ```go
+package main
 
+import (
+	"fmt"
+
+	"golang.org/x/exp/constraints"
+)
+
+// GradeType defines generic grade type.
 type GradeType interface {
-    constraints.Ordered
+	constraints.Ordered
 }
 
+// AgeType defines generic age type.
 type AgeType interface {
-    constraints.Ordered
+	constraints.Ordered
 }
 
-
+// Student represents generic student type model.
 type Student[gradeType GradeType, ageType AgeType] struct {
 	Name  string
 	Age   gradeType
@@ -366,46 +394,65 @@ type Student[gradeType GradeType, ageType AgeType] struct {
 }
 
 func main() {
-    student := Student[int, float64]{
-        Name: "John",
-        Age:  20,
-        Grade: 10.21,
-    }
-    fmt.Println(student) --> {John 20 10.21}
+	student := Student[int, float64]{
+		Name:  "John",
+		Age:   20,
+		Grade: 10.21,
+	}
+
+	fmt.Printf("%+v\n", student) // {Name:John Age:20 Grade:10.21}
 }
 ```
 
 ---
 
-# Generic tipleri maplerde kullanmak
+## Generic tipleri `map`’lerde kullanmak
 
-Generic tipleri maplerde de kullanabiliriz. Öncelikle generic bir map tanımlayalım:
+Generic tipleri `map`’lerde de kullanabiliriz. Öncelikle generic bir map
+tanımlayalım:
+
+https://go.dev/play/p/daZVdBfA-xz
+
+[Örnek](../../src/11/generics-in-maps)
 
 ```go
+package main
 
+import "fmt"
+
+// GenericMap represents generic map type.
 type GenericMap[K comparable, V int | string] map[K]V
 
 func main() {
-    m := GenericMap[string, int]{
-        "one": 1,
-        "two": 2,
-        "three": 3,
-    }
-    fmt.Println(m) --> map[one:1 two:2 three:3]
+	m := GenericMap[string, int]{
+		"one":   1,
+		"two":   2,
+		"three": 3,
+	}
+
+	fmt.Printf("%v\n", m) // map[one:1 three:3 two:2]
 }
 ```
 
-Not: comparable is an interface that is implemented by all comparable types (booleans, numbers, strings, pointers, channels, arrays of comparable types, structs whose fields are all comparable types)
+`comparable` aslında bir `interface`, tüm `comparable` (karşılaştırılabilir)
+tipler bu `interface`’i implemente eder;
+
+- boolean’ler
+- nümerikler
+- strings’ler
+- pointer’lar
+- channels
+- karşılaştırılabilir elementlerden oluşan diziler (arrays of comparable types)
+- alanı karşılaştırılabilir elementlerden oluşan struct’lar (whose fields are all comparable types)
 
 ---
 
-# Generic gerçek hayat örneği
+## Generic Gerçek Hayat Örneği
 
-Şimdi genericlerin gerçek hayatta nasıl kullanıldığına bakalım. Örneğin, bir veritabanı oluştuyorsunuz.
-
-Bu veritabanında User ve UserGrade adında iki tablonuz var.
-
-Veritabanına kayıtları eklemek için aşağıdaki gibi bir fonksiyon tanımlayabilirsiniz:
+Genericlerin gerçek hayatta nasıl kullanıldığına bakalım. Örneğin, bir
+veritabanı oluştuyorsunuz. Bu veritabanında `User` ve `UserGrade` adında iki
+tablonuz var. Veritabanına kayıtları eklemek için aşağıdaki gibi bir fonksiyon
+tanımlayabilirsiniz:
 
 ```go
 func InsertUser(user User) {
@@ -416,64 +463,99 @@ func InsertUserGrade(userGrade UserGrade) {
     // insert user grade into database
 }
 ```
-Bu durumda her tablo için ayrı bir fonksiyon tanımlamamız gerekir. Bu da kod tekrarına neden olur ve hata ayıklamayı zorlaştırır.
 
-Bu problemin çözümü için önce User ve UserGrade tipleri için standart bir interface tanımlayalım:
+Bu durumda her tablo için ayrı bir fonksiyon tanımlamamız gerekir. Bu da kod
+tekrarına neden olur ve hata ayıklamayı zorlaştırır.
+
+Bu problemin çözümü için önce `User` ve `UserGrade` tipleri için standart bir
+`interface` tanımlayalım:
 
 ```go
-
-type Base interface {
-    TableName() string // User veya UserGrade insert edilecek tablonun adını döndürür.
+type Modelizer interface {
+	TableName() string
 }
 
-User tablosunu değiştirelim:
-
 type User struct {
-    Base
-    ID int
-    Name string
+	ID   int
+	Name string
 }
 
 func (u User) TableName() string {
-	return "users"
+	return "user"
 }
 
-UserGrade tablosunu değiştirelim:
-
 type UserGrade struct {
-    Base
-    ID int
-    Grade int
+	ID     int
+	UserID int
+	Grade  int
 }
 
 func (u UserGrade) TableName() string {
-	return "user_grades"
+	return "user_grade"
 }
 ```
 
-Şimdi InsertUser ve InsertUserGrade fonksiyonlarını aşağıdaki gibi tanımlayabiliriz:
+Şimdi `InsertUser` ve `InsertUserGrade` fonksiyonlarını aşağıdaki gibi tanımlayabiliriz:
 
 ```go
-
-func Insert[T Base](t T) {
-    fmt.Println("Inserting into", t.TableName())
+func Insert[T Modelizer](t T) {
+	fmt.Println("Inserting into:", t.TableName())
+	// do real insert operation
 }
 ```
 
 Bu fonksiyonu aşağıdaki gibi çağırabiliriz:
 
+https://go.dev/play/p/kPpj-QPx2oJ
+
 ```go
+package main
+
+import "fmt"
+
+type Modelizer interface {
+	TableName() string
+}
+
+type User struct {
+	ID   int
+	Name string
+}
+
+func (u User) TableName() string {
+	return "user"
+}
+
+type UserGrade struct {
+	ID     int
+	UserID int
+	Grade  int
+}
+
+func (u UserGrade) TableName() string {
+	return "user_grade"
+}
+
+func Insert[T Modelizer](t T) {
+	fmt.Println("Inserting into:", t.TableName())
+	// do real insert operation
+}
 
 func main() {
-    user := User{
-        ID : 1,
-        Name: "John",
-    }
-    Insert(user)
-    userGrade := UserGrade{
-        ID : 1,
-        Grade: 10,
-    }
-    Insert(userGrade)
+	user := User{
+		ID:   1,
+		Name: "Uğur Özyılmazel",
+	}
+
+	Insert(user)
+	// Inserting into: user
+
+	userGrade := UserGrade{
+		ID:     1,
+		UserID: 1,
+		Grade:  100,
+	}
+	Insert(userGrade)
+	// Inserting into: user_grade
 }
 ```
