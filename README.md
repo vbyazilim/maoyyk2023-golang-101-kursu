@@ -104,8 +104,6 @@ Golang programlama dili kursu.
 ## Bölüm 12: Reflection
 
 1. [Ne İşe Yarar? Faydaları ve Zararları](docs/12/01-reflection.md)
-1. [Tip Kontrolleri](docs/12/01-reflection.md)
-1. @wip
 
 ## Bölüm 13: JSON İle Çalışmak
 
@@ -148,7 +146,7 @@ Golang programlama dili kursu.
 1. [Naming Conventions](docs/16/01-naming-conventions.md)
 1. [Değişken İsimlendirmesi](docs/16/01-naming-conventions.md#degisken-adlari)
 1. [Fonksiyon İsimlendirmesi](docs/16/01-naming-conventions.md#fonksiyon-adlari)
-1. [Method’ların İsimlendirmesi](docs/16/01-naming-conventions.md#metod-adlari)
+1. [Method’ların İsimlendirmesi](docs/16/01-naming-conventions.md#metot-adlari)
 1. [Interface’lerin İsimlendirmesi](docs/16/01-naming-conventions.md#interface-adlari)
 1. [Paketlerin İsimlendirmesi](docs/16/01-naming-conventions.md#paket-adlari)
 

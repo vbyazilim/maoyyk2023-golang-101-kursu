@@ -290,7 +290,7 @@ func main() {
 Şimdi [örneğe](../../src/13/json-marshal-custom-time) bakalım, `struct`
 alanları içinde gezen, tag’leri bulan ve özelleştirilmiş `time` kullanan bir
 yapı bulunuyor. `go`, `Marshal` işlemi yaparken, eğer custom type varsa ve bu
-type’ın `MarshalJSON()` metodu varsa onu kullanıyor. `describeStruct` ise
+type’ın `MarshalJSON()` metotu varsa onu kullanıyor. `describeStruct` ise
 `reflect` paketini kullanarak struct içinde geziyor.
 
 https://go.dev/play/p/fsbNbTOMVav

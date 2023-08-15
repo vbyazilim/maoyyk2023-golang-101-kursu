@@ -32,7 +32,7 @@ func main() {
 `fmt.Print` familyası, verilen şeyi print edeceği zaman şuna bakar, acaba
 gelen argümanın tipi, `Stringer` `interface`’ini **satisfy** ediyor mu? Yani;
 pas edilen tip ne ise, `Stringer`’da tanımlanan davranışlardan `String()`
-metoduna sahip mi?
+metotuna sahip mi?
 
 ```go
 type Stringer interface {
@@ -41,7 +41,7 @@ type Stringer interface {
 ```
 
 Herhangi bir tipin `Stringer`’ı tatmin edebilmesi için, mutlaka `String()`
-diye bir metodu olmalı ver geriye `string` dönmeli. Davranıştan kastedilen şey
+diye bir metotu olmalı ver geriye `string` dönmeli. Davranıştan kastedilen şey
 bu. Bu bakımdan `interface` tanımı yapılırken mutlaka ilgili `interface`’in
 adı `er` eki ile biter (İngilizce).
 
@@ -51,7 +51,7 @@ type error interface {
 }
 ```
 
-Her kim ki `Error()` diye metodu olup geriye `string` döner, o artık `error`
+Her kim ki `Error()` diye metotu olup geriye `string` döner, o artık `error`
 olarak kullanılabilir.
 
 ```go
@@ -101,11 +101,11 @@ Rob Pike ne demişti?
 
 `Reader` diye bir `interface` ismi duyduğumuzda aklımıza şu gelmeli:
 
-> Hmmm, demek ki `Read` diye bir metodu var
+> Hmmm, demek ki `Read` diye bir metotu var
 
 ya da `ReadCloser` diye bir `interface` ismi duyduğumuzda;
 
-> Kesin `Read` ve `Close` diye metodları var
+> Kesin `Read` ve `Close` diye metotları var
 
 Go geleneği olarak, `FooBarer` -> `ReadCloser`, `WriteCloser` gibi ifade
 edilir. Birazdan göreceğiz, aynı struct’lar gibi `interface`’lerde bir biri
@@ -126,12 +126,12 @@ Dolayısıyla, `Reader` şu şekilde olsa;
 type Reader interface {}
 ```
 
-Bundan ne anlarız? Hiçbir metodu olmayan, **boş bir interface**! Bize
-söylediği bir şey var mı? bir metod? davranış? **yok**... Peki hemen şu soru
+Bundan ne anlarız? Hiçbir metotu olmayan, **boş bir interface**! Bize
+söylediği bir şey var mı? bir metot? davranış? **yok**... Peki hemen şu soru
 gelmeli, acaba hangi tipler bu interface’i tatmin (satisfy) edebilir? Cevap
 tüm tipler, sonradan tanımlı tipler, her şey! Neden? Bu interface’in bize
 sunduğu, bizim implemente etmemiz (geliştirmemzi, yazmamız) gereken **hiç bir
-metodu** yok!
+metotu** yok!
 
 Boş `interface` somut bir tip değildir (concrete type)
 
@@ -325,14 +325,14 @@ Ancak `interface{}` ya da `any` olan bir tip’i `.(TYPE)` yöntemiyle başka
 
 ## Satisfying Interface
 
-Yani interface’i tatmin etmek, onun bize söylediği metodlara sahip olan bir
+Yani interface’i tatmin etmek, onun bize söylediği metotlara sahip olan bir
 tip üretmek. Ortada bir interface varsa ve biz onu mutlu etmek istiyorsak mutlaka bize
 söylediği tüm davranışlarını bizim de yapmamız (implemente etmemiz) gerekir.
 
 Örneğin insanlar konuşabilir, robotlar da. Eğer insanların ve robotların
-`Talk()` diye bir metodu olursa aralarında konuşabilirler? Bizim için
+`Talk()` diye bir metotu olursa aralarında konuşabilirler? Bizim için
 konuşacak şeyin insan ya da robot olmasının bir önemi yok, önemli olan tek şey
-`Talk()` metodu olması.
+`Talk()` metotu olması.
 
 Go’daki tek **abstract type**’dır (soyut tür) `interface`. Bu da şu demek,
 direkt olarak kullanılamazlar ve sadece arayüz görevini üstlenirler.
@@ -518,7 +518,7 @@ type Handler interface {
 }
 ```
 
-Gereken tek şey `ServeHTTP` metodu olan bir tip, `http.ResponseWriter`ve
+Gereken tek şey `ServeHTTP` metotu olan bir tip, `http.ResponseWriter`ve
 `http.*Request` alması yeterli. İşte go’yu güçlü kılan en büyük özellik bu!
 
 Bu konu ile ilgili güzel bir [makale][01]
@@ -606,8 +606,8 @@ Hep aklımızda Rob Pike’ın şu sözü çınlamalı:
 
 > The bigger the interface, the weaker the abstraction.
 
-Yani interface ne kadar büyük olursa o kadar çok metodu implemente etmek
-zorunda kalacağız. Mümkün mertebe metod sayısını küçük tutalım. Ne yazık ki
+Yani interface ne kadar büyük olursa o kadar çok metotu implemente etmek
+zorunda kalacağız. Mümkün mertebe metot sayısını küçük tutalım. Ne yazık ki
 bunu ne kadar bilim düşünsek de, bir rest-api geliştirdiğinizde interface’ler
 ne yazık ki çok büyüyor...
 
@@ -624,14 +624,14 @@ type MegaCharger interface {
 }
 ```
 
-Tüm metodları bizim de ilgili tipimizde yazmamız gerekecek! Şöyle de bir
+Tüm metotları bizim de ilgili tipimizde yazmamız gerekecek! Şöyle de bir
 espiri var:
 
 > Strongest abstraction is the empty interface!
 
-Yani en süper soyutlama hiç metodu olmayan boş interface’lerdir!
+Yani en süper soyutlama hiç metotu olmayan boş interface’lerdir!
 
-Acaba metodlarını yazdığınız, implemente ettiğiniz interface’i gerçekten tam
+Acaba metotlarını yazdığınız, implemente ettiğiniz interface’i gerçekten tam
 olarak implemente edebildiniz mi? Bunun için **Compile Time Proof** taktiğini
 kullanırız:
 

@@ -102,7 +102,7 @@ client := grpc.NewClient(grpc.WithTimeout(10 * time.Seconds))
 
 ---
 
-## Metod Adları
+## Metot Adları
 
 Yaptıkları **eylemi anlatacak şekilde** adlandırılmalıdır. Fonksiyon
 adlandırmasının **tam tersidir**:
@@ -237,7 +237,7 @@ https://go.dev/blog/package-names
 - Sınıfa ya da türe göre adlandırmayın
 - Paket düzeyindeki değişkenler, tüm programı kapsadığı için daha uzun
   tanımlayıcıları (method adı, değişken adı vs...) olmalıdır.
-- Başka paketlerin ya da fonksiyon / metodların da kullanabileceği isimlerden kaçının
+- Başka paketlerin ya da fonksiyon / metotların da kullanabileceği isimlerden kaçının
 - İçeriği bağlamında doğru miktarda bilgi taşıyan **en kısa adı** kullanın
 
 ```go

@@ -18,7 +18,7 @@ varolur. `nil`’in tipi yoktur, go ile beraber gelen ön tanımlı **bir şey**
 
 # Nerelerde Kullanılır
 
-- pointer alan metod, fonksiyon’da argüman geçilmiş mi?
+- pointer alan metot, fonksiyon’da argüman geçilmiş mi?
 - struct `nil` mi?
 - slice `nil` mi?
 - map `nil` mi?

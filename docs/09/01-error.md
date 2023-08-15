@@ -8,7 +8,7 @@ type error interface {
 }
 ```
 
-Herhangi bir tip, eğer `Error() string` metoduna sahipse o artık go için
+Herhangi bir tip, eğer `Error() string` metotuna sahipse o artık go için
 gerçek (valid) bir error değeri olur. Go’da hata mesajları mutlaka 
 **küçük harfle başlar!**
 
@@ -384,7 +384,7 @@ if errors.As(err, &cErr) {
 
 `errors.As`, `err` hata zincirinde `customError`’ü bulmaya çalışır, bulursa `cErr`’ün içini
 set eder ve `true` döner, bulamazsa `false` döner. Eğer `true` dönmüşse artık `cErr`’de
-ilgili hatanın tüm metodları vs mevcut olur.
+ilgili hatanın tüm metotları vs mevcut olur.
 
 Dikkat ettiyseniz pointer’ın pointer’ını verdik `errors.As`’e:
 
@@ -478,7 +478,7 @@ Hatta Rob Pike derki:
 > Don’t panic
 
 Bazen henüz yazılmamış, daha sonra yazılacak kod için **placeholder** (yer
-tutucu) olarak kullanılır, metodu yazarken henüz kodu planlamadık ama kodu
+tutucu) olarak kullanılır, metotu yazarken henüz kodu planlamadık ama kodu
 **compile** etmek istiyoruz, bu durumlarda da kullanırız:
 
 ```go

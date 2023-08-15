@@ -583,7 +583,7 @@ func main() {
 
 `p.secret` dış dünyadan erişime kapalı. `secret` sadece içeriden erişilen bir
 şey. Bu bakımdan `person` paketi içinde hem bu `secret` field’ına atama yapan
-hem de `secret`’a erişmeyi sağlacak bir **Getter** ve **Setter** metodlarına
+hem de `secret`’a erişmeyi sağlacak bir **Getter** ve **Setter** metotlarına
 ihtiyacımız olacak; [örnek kod](../../src/04/05-struct-field-access-getter);
 
 `person.go`

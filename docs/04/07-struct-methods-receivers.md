@@ -69,7 +69,7 @@ func main() {
 }
 ```
 
-`area()`, `Circle` struct’ına ait metod (method) oluyor. `(c Circle)` ise
+`area()`, `Circle` struct’ına ait metot (method) oluyor. `(c Circle)` ise
 alıcı (receiver) oluyor. `Circle`’ın kendisine `c` üzerinden erişiyoruz.
 `area()` sadece içeriden veri okuduğu için, yani **read-only** olduğu için
 **value receiver** oluyor.
@@ -112,7 +112,7 @@ func main() {
 
 - Eğer struct’a ait alanlarda (field/property) değişiklik yapacaksak **pointer receiver**
 - Sadece değer okuyup işlem yapacaksak **value receiever**
-- Eğerki sadece bir metod pointer receiver bile olacaksa tüm metodları pointer receiver olarak
+- Eğerki sadece bir metot pointer receiver bile olacaksa tüm metotları pointer receiver olarak
   tanımlamak
 
-iyi pratiklerdendir. İyi bir go struct metodlarında tek tip receiver olur.
+iyi pratiklerdendir. İyi bir go struct metotlarında tek tip receiver olur.
