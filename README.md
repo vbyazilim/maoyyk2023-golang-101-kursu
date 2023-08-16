@@ -133,14 +133,14 @@ Golang programlama dili kursu.
 
 ## Bölüm 15: Concurrency
 
-1. Nedir? Golang’in Concurrency Stratejisi Nedir?
-1. Goroutine Nedir?
-1. `go` Kelimesiyle Başlayan Anonim Fonksiyonlar
-1. WaitGroup Nedir?
-1. Mutex Nedir?
-1. Channels
-1. Context
-1. Concurrency Pratikleri (yaygın kullanılan desenler)
+1. [Nedir? Golang’in Concurrency Stratejisi Nedir?](docs/15/01-concurrency.md)
+1. [Goroutine Nedir?](docs/15/01-concurrency.md#goroutine)
+1. [`go` Kelimesiyle Başlayan Anonim Fonksiyonlar](docs/15/01-concurrency.md#go-anahtar-kelimesi)
+1. [WaitGroup Nedir?](docs/15/01-concurrency.md#waitgroup)
+1. [Channels](docs/15/02-channels.md)
+1. [Mutex Nedir?](docs/15/01-concurrency.md)
+1. [Context](docs/15/01-concurrency.md)
+1. [Concurrency Pratikleri (yaygın kullanılan desenler)](docs/15/01-concurrency.md)
 
 ## Bölüm 16: İsimlendirme Kuralları
 
