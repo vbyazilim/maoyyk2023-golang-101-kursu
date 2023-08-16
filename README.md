@@ -121,14 +121,15 @@ Golang programlama dili kursu.
 1. [Test Nedir? Neden Yazılır?](docs/14/01-test.md)
 1. [Test Nasıl Çalıştırılır](docs/14/01-test.md)
 1. [Examples ve `godoc` Nedir?](docs/14/01-test.md)
-1. [Race Detection Nedir?](docs/14/01-test.md)
-1. [SetUp ve TearDown Nedir?](docs/14/01-test.md)
+1. [Race Detection Nedir?](docs/14/01-test.md#data-race-detection)
 1. [Table Driven Test Nedir?](docs/14/02-table-driven-test.md)
-1. [Testlerin Paralel Çalıştırılması?](docs/14/02-test.md)
+1. [Sub Tests](docs/14/02-table-driven-test.md#sub-tests)
+1. [SetUp ve TearDown Nedir?](docs/14/01-test.md#setup-ve-teardown)
+1. [Testlerin Paralel Çalıştırılması?](docs/14/02-test.md#paralel-test)
 1. [Code Coverage Nedir?](docs/14/03-test-coverage.md)
-1. [Benchmarking ve Profiling Nedir?](docs/14/04-profiling.md)
-1. [Escape Analysis](docs/14/04-profiling.md)
-1. [Memory ve CPU Profiling Temelleri](docs/14/04-profiling.md)
+1. [Benchmarking Nedir?](docs/14/04-profiling.md#benchmarking)
+1. [Escape Analysis](docs/14/04-profiling.md#escape-analysis)
+1. [Memory ve CPU Profiling Temelleri](docs/14/04-profiling.md#memory-ve-cpu-profiling-temelleri)
 
 ## Bölüm 15: Concurrency
 

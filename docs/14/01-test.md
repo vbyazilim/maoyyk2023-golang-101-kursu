@@ -346,6 +346,53 @@ $ go test -v -json github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-
 {"Time":"2023-08-15T18:10:23.539555+03:00","Action":"pass","Package":"github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-greet/greet","Elapsed":0}
 ```
 
+Keza diğer bir komut satırı argümanı da `-list`. `-list <regex>` ile test
+fonksiyonlarını çalıştırır ve listeler;
+
+```bash
+$ go test -v -list Say ./...
+?   	github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/02/01-init	[no test files]
+?   	github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/04/05-struct-custom-tag	[no test files]
+?   	github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/04/05-struct-field-access	[no test files]
+?   	github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/04/05-struct-field-access/person	[no test files]
+?   	github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/04/05-struct-field-access-getter	[no test files]
+?   	github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/04/05-struct-field-access-getter/person	[no test files]
+?   	github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/04/05-struct-field-alignment	[no test files]
+?   	github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/04/05-struct-validate	[no test files]
+?   	github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/11/generics-constraints	[no test files]
+?   	github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/11/generics-custom-types	[no test files]
+?   	github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/11/generics-function-calls	[no test files]
+?   	github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/11/generics-function-calls-and-types	[no test files]
+?   	github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/11/generics-function-calls-and-types2	[no test files]
+?   	github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/11/generics-functions	[no test files]
+?   	github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/11/generics-functions-interface	[no test files]
+?   	github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/11/generics-in-maps	[no test files]
+?   	github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/11/generics-in-structs	[no test files]
+?   	github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/12/reflect-clearvalue	[no test files]
+?   	github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/12/reflect-typecheck	[no test files]
+?   	github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/13/json-custom-decode	[no test files]
+?   	github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/13/json-generic-interface	[no test files]
+?   	github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/13/json-marshal-custom-time	[no test files]
+?   	github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/13/json-streaming	[no test files]
+?   	github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-greet	[no test files]
+ok  	github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-datarace/kvstore	0.680s
+TestSayHi
+TestSayHiWithNoArgs
+TestSayHiWithArgs
+ExampleSayHi
+ExampleSayHi_withNoArg
+ExampleSayHi_withArgs
+ok  	github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-greet/greet	0.550s
+```
+
+`go test`’in aldığı tüm parametrelerin detaylarını:
+
+```bash
+$ go help testflag
+```
+
+ile görebilirsiniz.
+
 ---
 
 ## Data Race Detection
@@ -379,5 +426,190 @@ Doğru olan durum ise şöyle olmalıydı;
 
 Benzer senaryo bizim için **go routine** kullandığımız zaman yaşanacak. İşte
 bu tür kaçakları test esnasında yakalamak için `-race` parametresini
-kullanıyoruz:
+kullanıyoruz. Şimdi aynısı go ile yapalım:
 
+[Örnek](../../src/14/test-datarace)
+
+```go
+package kvstore
+
+import "errors"
+
+var errKeyNotFound = errors.New("key not found")
+
+// Store is key-value store!
+type Store struct {
+	db map[string]string
+}
+
+// Set new key to store.
+func (s *Store) Set(k, v string) error {
+	s.db[k] = v
+	return nil
+}
+
+// Get accepts key, returns value and error.
+func (s *Store) Get(k string) (string, error) {
+	v, ok := s.db[k]
+	if !ok {
+		return "", errKeyNotFound
+	}
+	return v, nil
+}
+
+// New returns new Store instance.
+func New(db map[string]string) Store {
+	return Store{db: db}
+}
+```
+
+Test ise;
+
+```go
+package kvstore_test
+
+import (
+	"testing"
+
+	"github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-datarace/kvstore"
+)
+
+func TestDataRace(t *testing.T) {
+	st := make(map[string]string)
+	done := make(chan struct{})
+
+	s := kvstore.New(st)
+	_ = s.Set("foo", "bar")
+
+	go func() {
+		_ = s.Set("foo", "data race...")
+		done <- struct{}{}
+	}()
+
+	want := "bar"
+	got, _ := s.Get("foo") // always returns "bar"
+	<-done                 // after line 19, blocking ends... map changes but doesn't affect got variable!
+
+	// fmt.Println(s.Get("foo")) data race... <nil>
+
+	if got != want {
+		t.Errorf("want: %v; got: %v", want, got)
+	}
+}
+```
+
+Önce testi düz çalıştıralım:
+
+```bash
+$ go test -v github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-datarace/kvstore
+=== RUN   TestDataRace
+--- PASS: TestDataRace (0.00s)
+PASS
+ok  	github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-datarace/kvstore	0.608s
+```
+
+Test `pass` etti, yani testi geçtik, halbuki:
+
+```bash
+$ go test -v -race github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-datarace/kvstore
+=== RUN   TestDataRace
+==================
+WARNING: DATA RACE
+Write at 0x00c00011e450 by goroutine 7:
+  runtime.mapaccess2_faststr()
+      /opt/homebrew/Cellar/go/1.21.0/libexec/src/runtime/map_faststr.go:108 +0x42c
+  github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-datarace/kvstore.(*Store).Set()
+      /Users/vigo/Development/VBYazilim/maoyyk2023-golang-101-kursu/src/14/test-datarace/kvstore/kvstore.go:14 +0x5c
+  github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-datarace/kvstore_test.TestDataRace.func1()
+      /Users/vigo/Development/VBYazilim/maoyyk2023-golang-101-kursu/src/14/test-datarace/kvstore/kvstore_test.go:17 +0x38
+
+Previous read at 0x00c00011e450 by goroutine 6:
+  runtime.mapaccess1_faststr()
+      /opt/homebrew/Cellar/go/1.21.0/libexec/src/runtime/map_faststr.go:13 +0x40c
+  github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-datarace/kvstore.(*Store).Get()
+      /Users/vigo/Development/VBYazilim/maoyyk2023-golang-101-kursu/src/14/test-datarace/kvstore/kvstore.go:20 +0x1b8
+  github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-datarace/kvstore_test.TestDataRace()
+      /Users/vigo/Development/VBYazilim/maoyyk2023-golang-101-kursu/src/14/test-datarace/kvstore/kvstore_test.go:22 +0x1dc
+  testing.tRunner()
+      /opt/homebrew/Cellar/go/1.21.0/libexec/src/testing/testing.go:1595 +0x194
+  testing.(*T).Run.func1()
+      /opt/homebrew/Cellar/go/1.21.0/libexec/src/testing/testing.go:1648 +0x40
+
+Goroutine 7 (running) created at:
+  github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-datarace/kvstore_test.TestDataRace()
+      /Users/vigo/Development/VBYazilim/maoyyk2023-golang-101-kursu/src/14/test-datarace/kvstore/kvstore_test.go:16 +0x190
+  testing.tRunner()
+      /opt/homebrew/Cellar/go/1.21.0/libexec/src/testing/testing.go:1595 +0x194
+  testing.(*T).Run.func1()
+      /opt/homebrew/Cellar/go/1.21.0/libexec/src/testing/testing.go:1648 +0x40
+
+Goroutine 6 (running) created at:
+  testing.(*T).Run()
+      /opt/homebrew/Cellar/go/1.21.0/libexec/src/testing/testing.go:1648 +0x5d8
+  testing.runTests.func1()
+      /opt/homebrew/Cellar/go/1.21.0/libexec/src/testing/testing.go:2054 +0x80
+  testing.tRunner()
+      /opt/homebrew/Cellar/go/1.21.0/libexec/src/testing/testing.go:1595 +0x194
+  testing.runTests()
+      /opt/homebrew/Cellar/go/1.21.0/libexec/src/testing/testing.go:2052 +0x6d8
+  testing.(*M).Run()
+      /opt/homebrew/Cellar/go/1.21.0/libexec/src/testing/testing.go:1925 +0x904
+  main.main()
+      _testmain.go:49 +0x294
+==================
+==================
+WARNING: DATA RACE
+Write at 0x00c000166088 by goroutine 7:
+  github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-datarace/kvstore.(*Store).Set()
+      /Users/vigo/Development/VBYazilim/maoyyk2023-golang-101-kursu/src/14/test-datarace/kvstore/kvstore.go:14 +0x68
+  github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-datarace/kvstore_test.TestDataRace.func1()
+      /Users/vigo/Development/VBYazilim/maoyyk2023-golang-101-kursu/src/14/test-datarace/kvstore/kvstore_test.go:17 +0x38
+
+Previous read at 0x00c000166088 by goroutine 6:
+  github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-datarace/kvstore.(*Store).Get()
+      /Users/vigo/Development/VBYazilim/maoyyk2023-golang-101-kursu/src/14/test-datarace/kvstore/kvstore.go:20 +0x1c4
+  github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-datarace/kvstore_test.TestDataRace()
+      /Users/vigo/Development/VBYazilim/maoyyk2023-golang-101-kursu/src/14/test-datarace/kvstore/kvstore_test.go:22 +0x1dc
+  testing.tRunner()
+      /opt/homebrew/Cellar/go/1.21.0/libexec/src/testing/testing.go:1595 +0x194
+  testing.(*T).Run.func1()
+      /opt/homebrew/Cellar/go/1.21.0/libexec/src/testing/testing.go:1648 +0x40
+
+Goroutine 7 (running) created at:
+  github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-datarace/kvstore_test.TestDataRace()
+      /Users/vigo/Development/VBYazilim/maoyyk2023-golang-101-kursu/src/14/test-datarace/kvstore/kvstore_test.go:16 +0x190
+  testing.tRunner()
+      /opt/homebrew/Cellar/go/1.21.0/libexec/src/testing/testing.go:1595 +0x194
+  testing.(*T).Run.func1()
+      /opt/homebrew/Cellar/go/1.21.0/libexec/src/testing/testing.go:1648 +0x40
+
+Goroutine 6 (running) created at:
+  testing.(*T).Run()
+      /opt/homebrew/Cellar/go/1.21.0/libexec/src/testing/testing.go:1648 +0x5d8
+  testing.runTests.func1()
+      /opt/homebrew/Cellar/go/1.21.0/libexec/src/testing/testing.go:2054 +0x80
+  testing.tRunner()
+      /opt/homebrew/Cellar/go/1.21.0/libexec/src/testing/testing.go:1595 +0x194
+  testing.runTests()
+      /opt/homebrew/Cellar/go/1.21.0/libexec/src/testing/testing.go:2052 +0x6d8
+  testing.(*M).Run()
+      /opt/homebrew/Cellar/go/1.21.0/libexec/src/testing/testing.go:1925 +0x904
+  main.main()
+      _testmain.go:49 +0x294
+==================
+    testing.go:1465: race detected during execution of test
+--- FAIL: TestDataRace (0.00s)
+=== NAME  
+    testing.go:1465: race detected during execution of test
+FAIL
+FAIL	github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-datarace/kvstore	0.526s
+FAIL
+```
+
+---
+
+## Kaynaklar
+
+- https://go.dev/blog/examples
+- https://elliotchance.medium.com/godoc-tips-tricks-cda6571549b
+- https://go.dev/blog/race-detector
