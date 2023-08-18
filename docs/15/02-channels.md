@@ -893,6 +893,181 @@ func task(n int) int {
 
 ---
 
+## `nil` Channel
+
+```go
+package main
+
+import "fmt"
+
+var ch chan bool
+
+func main() {
+	fmt.Println(ch == nil) // true
+
+	<-ch // fatal error: all goroutines are asleep - deadlock!
+}
+```
+
+---
+
+## Channel’a `nil` Göndermek
+
+[Örnek](../../src/15/channels/send-nil)
+
+https://go.dev/play/p/h1A45dC2x3k
+
+```bash
+$ go run -race src/15/channels/send-nil/main.go
+```
+
+kod:
+
+```go
+package main
+
+/*
+Package main implements channel merge and demonstrates setting channel to nil
+
+	https://medium.com/justforfunc/why-are-there-nil-channels-in-go-9877cc0b2308
+
+	Original code is authored by: Francesc Campoy
+
+*/
+
+import (
+	"crypto/rand"
+	"fmt"
+	"math/big"
+	"time"
+)
+
+func merge(a, b <-chan int) <-chan int {
+	c := make(chan int)
+	go func() {
+		defer close(c)
+
+		// a ya da b channel'ı açık olduğu sürece
+		for a != nil || b != nil {
+			select {
+			case v, ok := <-a:
+				if !ok {
+					fmt.Println("a is done")
+					a = nil
+					continue
+				}
+				c <- v
+			case v, ok := <-b:
+				if !ok {
+					fmt.Println("b is done")
+					b = nil
+					continue
+				}
+				c <- v
+			}
+		}
+	}()
+	return c
+}
+
+func produceChan(vs ...int) <-chan int {
+	c := make(chan int)
+	go func() {
+		for _, v := range vs {
+			c <- v
+			randomInt, _ := rand.Int(rand.Reader, big.NewInt(1000))
+
+			// sanki bir işlem oluyormuş gibi...
+			time.Sleep(time.Duration(int(randomInt.Int64())+1) * time.Millisecond)
+		}
+		close(c)
+	}()
+	return c
+}
+
+func main() {
+	a := produceChan(1, 3, 5, 7)
+	b := produceChan(2, 4, 6, 8)
+
+	c := merge(a, b)
+
+	for v := range c {
+		fmt.Println(v)
+	}
+}
+```
+
+---
+
+## Drop Pattern
+
+[Örnek](../../src/15/channels/drop-pattern)
+
+https://go.dev/play/p/2fx8kUobwCi
+
+```bash
+$ go run -race src/15/channels/drop-pattern/main.go 
+```
+
+kod:
+
+```go
+package main
+
+/*
+Package main implements drop pattern approach
+
+Amacımız sanki çok yoğun bir ağ ortamında herkes canlı video izliyor.
+Ağdaki yoğunluktan dolayı akışı bozmadan bazı paketleri drop edip hayatın
+devam etmesini sağlıyoruz.
+*/
+
+import (
+	"fmt"
+	"time"
+)
+
+func main() {
+	capacity := 5
+	ch := make(chan string, capacity) // 5 string slotu olan buffered channel
+
+	go func() {
+		// bu goroutine'de receive eden tarafız, channel'a yazılanı (send) buradan
+		// okuyoruz
+		for v := range ch {
+			fmt.Printf("(receive): %q\n", v)
+		}
+	}()
+
+	packages := 20
+	// küçük bir event-loop simülasyonu yapıyoruz,
+	// sanki bir network içindeyiz ve tcp paketlerini okuyoruz
+	for p := 0; p < packages; p++ { // 20 paket okur gibi...
+
+		// hem send hem de receive aynı anda olmak üzere
+		// select ile çoklu channel işlemleri yapabiliriz
+		select {
+		case ch <- fmt.Sprintf("paket %d", p): // channel'a yazıyoruz, buffer dolunca duracak
+			fmt.Printf("(send): paket %d\n", p)
+		default: // non-blocking, buffer dolunca burası hep çalışacak
+			// buffer dolunca bloklamadan devam et
+			// bu sayese;
+			// network gecikme maaliyetinden kurtulduk
+			// channel üzerinde baskı oluşturma maaliyetinden kurtulduk
+			// bu iş bir timeout azaltması değil, kapasite azaltmasıdır.
+			fmt.Printf("..(drop): paket %d\n", p) // buffer dolunca drop!
+		}
+	}
+
+	close(ch) // for p := range ch burasını sonlandırır
+	fmt.Println("bitiyor")
+
+	time.Sleep(time.Second)
+}
+```
+
+---
+
 ## Kaynaklar
 
 - https://go.dev/blog/pipelines

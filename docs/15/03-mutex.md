@@ -94,10 +94,6 @@ https://go.dev/play/p/k974sMo66ZD
 
 ```bash
 $ go run -race src/15/sync-map/main.go   # DATA RACE varsa çıksın! -race
-
-# şimdi ayrı bir shell session açıp:
-$ hey "http://localhost:9000"   # 200 tane get isteği atacak.
-$ http "http://localhost:9000"  # bakalım counter kaç oldu?
 ```
 
 kod:
@@ -154,16 +150,144 @@ func main() {
 Hemen örneğe bakalım; basit bir webserver. Her istek geldiğinde hafızadaki
 değeri **1** arttırıyor (sanki??)!
 
-[örnek](../../src/15/mutext-in-channel)
-
-xxxxxxxxxxxxxxxx
+[örnek](../../src/15/mutex-in-channel)
 
 ```bash
-$ go run -race src/15/mutext-in-channel/main.go   # DATA RACE varsa çıksın! -race
+$ go run -race src/15/mutex-in-channel/main.go   # DATA RACE varsa çıksın! -race
+
+# şimdi ayrı bir shell session açıp:
+$ hey "http://localhost:9000"   # 200 tane get isteği atacak.
+$ http "http://localhost:9000"  # bakalım counter kaç oldu?
+```
+
+kod:
+
+```go
+package main
+
+import (
+	"fmt"
+	"log"
+	"net/http"
+)
+
+var counter = make(chan int)
+
+func main() {
+	go generator()
+
+	http.HandleFunc("/", handler)
+
+	fmt.Println("listening on :9000")
+	log.Fatal(http.ListenAndServe(":9000", nil)) // nolint
+}
+
+func handler(w http.ResponseWriter, r *http.Request) {
+	log.Printf("[%s] %s", r.Method, r.URL.String())
+	fmt.Fprintf(w, "number %d", <-counter)
+}
+
+func generator() {
+	for i := 0; ; i++ {
+		counter <- i
+	}
+}
 ```
 
 ---
 
 ## `sync/atomic`
 
-@wip
+Bazı durumlarda **mutex** işini **cpu instruction**’larını kullanarak da
+çözebiliriz. Örneğimizde toplamda **10 goroutine** ile 0’dan-100’e kadar
+sayarak, `counter` değerini atomic olarak arttırıyoruz:
+
+[örnek](../../src/15/mutex-atomic-waitgroup)
+
+https://go.dev/play/p/6AtJqNlGx18
+
+```bash
+$ go run -race src/15/mutex-atomic-waitgroup/main.go   # DATA RACE varsa çıksın! -race
+```
+
+kod:
+
+```go
+package main
+
+import (
+	"fmt"
+	"sync"
+	"sync/atomic"
+)
+
+var counter int64
+
+func main() {
+	var wg sync.WaitGroup
+
+	fmt.Printf("[start] - %d\n", counter)
+
+	for i := 0; i < 10; i++ {
+		wg.Add(1)
+
+		go func() {
+			for j := 0; j < 100; j++ {
+				atomic.AddInt64(&counter, 1)
+			}
+			wg.Done()
+		}()
+	}
+
+	wg.Wait()
+
+	fmt.Printf("[end] - %d\n", counter)
+}
+```
+
+Aynı işi **done channel pattern**’i kullanarak yapalım:
+
+[örnek](../../src/15/mutex-atomic-done-channel)
+
+https://go.dev/play/p/G_ZM6by6Dph
+
+```bash
+$ go run -race src/15/mutex-atomic-done-channel/main.go   # DATA RACE varsa çıksın! -race
+```
+
+kod:
+
+```go
+package main
+
+import (
+	"fmt"
+	"sync/atomic"
+)
+
+var counter int64
+
+func main() {
+	done := make(chan struct{})
+
+	fmt.Printf("[start] - %d\n", counter)
+
+	// 10 tane goroutine
+	for i := 0; i < 10; i++ {
+		go func() {
+			for j := 0; j < 100; j++ {
+				atomic.AddInt64(&counter, 1)
+			}
+			done <- struct{}{} // goroutine işi bitti
+		}()
+	}
+
+	// 10 goroutine var, 10 kere okumamız lazım
+	for i := 0; i < 10; i++ {
+		<-done // biteni al
+	}
+	close(done)
+
+	fmt.Printf("[end] - %d\n", counter)
+}
+```

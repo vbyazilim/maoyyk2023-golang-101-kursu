@@ -148,8 +148,7 @@ Golang programlama dili kursu.
 1. [Ticker](docs/15/02-channels.md#ticker)
 1. [Worker Pattern](docs/15/02-channels.md#worker-pattern)
 1. [Mutex Nedir?](docs/15/03-mutex.md)
-1. [Context](docs/15/01-concurrency.md)
-1. [Concurrency Pratikleri (yaygın kullanılan desenler)](docs/15/01-concurrency.md)
+1. [Context](docs/15/04-context.md)
 
 ## Bölüm 16: İsimlendirme Kuralları
 
