@@ -163,7 +163,7 @@ Golang programlama dili kursu.
 
 1. [`golangci-linter` Kurulumu ve Konfigürasyonu](docs/17/01-kurulumlar.md)
 1. [Go Modülü Anatomisi](docs/17/02-go-modul-anotomisi.md)
-1. [Geliştirilmiş Paket Örneği](docs/17/03-ornek-paket.md)
+1. [`stringutils` Paketi](docs/17/03-ornek-paket.md)
 1. [Paketi Dağıtmak / Paylaşmak](docs/17/04-paketi-dagitmak.md)
 
 ## Bölüm 18: In-Memory Key-Value Store
