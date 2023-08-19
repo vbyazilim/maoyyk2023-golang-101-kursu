@@ -50,6 +50,15 @@ func main(){
 }
 ```
 
+`Context` bir ağaç (tree) yapısı şeklindedir. Mutlaka **Parent / Root Context**
+olur. Parent / Root Context asla **cancel** olmaz ama bundan türeyen **child**
+Context’lerde bu tür cancel operasyonları yapılabilir.
+
+Genelde parent / root olarak `context.Background()` kullanırız. Bazen
+`context.TODO()` da kullanılabilir. `context.TODO()` bize `nil` olmayan boş
+bir `context` döner. Uygulama içinde bir context ihtiyacı olduğunu ama nasıl
+kullanacağımıza tam karar vermediğimiz durumlarda `context.TODO()` kullanırız.
+
 ---
 
 ## WithTimeout
