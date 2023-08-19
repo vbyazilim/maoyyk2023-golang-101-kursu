@@ -613,3 +613,4 @@ FAIL
 - https://go.dev/blog/examples
 - https://elliotchance.medium.com/godoc-tips-tricks-cda6571549b
 - https://go.dev/blog/race-detector
+- https://en.wikipedia.org/wiki/Race_condition

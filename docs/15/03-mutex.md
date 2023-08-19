@@ -88,12 +88,12 @@ eş zamanlı işlerde güvenle kullanabileceğimiz bir `map`. `map`’in tipi:
 Bu tür kullanımlar olduğunda performans olarak `Mutex` ve `RWMutex`’e göre
 lock etme işlerinde **gözle görülür** derecede performanslı çalışır.
 
-[örnek](../../src/15/sync-map)
+[örnek](../../src/15/mutex/sync-map)
 
 https://go.dev/play/p/k974sMo66ZD
 
 ```bash
-$ go run -race src/15/sync-map/main.go   # DATA RACE varsa çıksın! -race
+$ go run -race src/15/mutex/sync-map/main.go   # DATA RACE varsa çıksın! -race
 ```
 
 kod:
@@ -150,10 +150,10 @@ func main() {
 Hemen örneğe bakalım; basit bir webserver. Her istek geldiğinde hafızadaki
 değeri **1** arttırıyor (sanki??)!
 
-[örnek](../../src/15/mutex-in-channel)
+[örnek](../../src/15/mutex/in-channel)
 
 ```bash
-$ go run -race src/15/mutex-in-channel/main.go   # DATA RACE varsa çıksın! -race
+$ go run -race src/15/mutex/in-channel/main.go   # DATA RACE varsa çıksın! -race
 
 # şimdi ayrı bir shell session açıp:
 $ hey "http://localhost:9000"   # 200 tane get isteği atacak.
@@ -202,12 +202,12 @@ Bazı durumlarda **mutex** işini **cpu instruction**’larını kullanarak da
 çözebiliriz. Örneğimizde toplamda **10 goroutine** ile 0’dan-100’e kadar
 sayarak, `counter` değerini atomic olarak arttırıyoruz:
 
-[örnek](../../src/15/mutex-atomic-waitgroup)
+[örnek](../../src/15/mutex/atomic-waitgroup)
 
 https://go.dev/play/p/6AtJqNlGx18
 
 ```bash
-$ go run -race src/15/mutex-atomic-waitgroup/main.go   # DATA RACE varsa çıksın! -race
+$ go run -race src/15/mutex/atomic-waitgroup/main.go   # DATA RACE varsa çıksın! -race
 ```
 
 kod:
@@ -247,12 +247,12 @@ func main() {
 
 Aynı işi **done channel pattern**’i kullanarak yapalım:
 
-[örnek](../../src/15/mutex-atomic-done-channel)
+[örnek](../../src/15/mutex/atomic-done-channel)
 
 https://go.dev/play/p/G_ZM6by6Dph
 
 ```bash
-$ go run -race src/15/mutex-atomic-done-channel/main.go   # DATA RACE varsa çıksın! -race
+$ go run -race src/15/mutex/atomic-done-channel/main.go   # DATA RACE varsa çıksın! -race
 ```
 
 kod:
@@ -291,3 +291,10 @@ func main() {
 	fmt.Printf("[end] - %d\n", counter)
 }
 ```
+
+---
+
+## Kaynaklar
+
+- https://gobyexample.com/mutexes
+- https://yourbasic.org/golang/mutex-explained/
