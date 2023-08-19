@@ -63,12 +63,12 @@ kullanacağımıza tam karar vermediğimiz durumlarda `context.TODO()` kullanır
 
 ## WithTimeout
 
-[örnek](../../src/15/context-with-timeout)
+[örnek](../../src/15/context/with-timeout)
 
 https://go.dev/play/p/biXpvephej1
 
 ```bash
-$ go run src/15/context-with-timeout/main.go 
+$ go run src/15/context/with-timeout/main.go 
 timeout!!! context deadline exceeded
 ```
 
@@ -104,12 +104,12 @@ func main() {
 
 ## WithCancel
 
-[örnek](../../src/15/context-with-cancel)
+[örnek](../../src/15/context/with-cancel)
 
 https://go.dev/play/p/vZ2FD2wyDjN
 
 ```bash
-$ go run src/15/context-with-cancel/main.go 
+$ go run src/15/context/withcancel/main.go 
 ```
 
 kod:
@@ -166,12 +166,12 @@ func main() {
 
 ## WithDeadline
 
-[örnek](../../src/15/context-with-dead-line)
+[örnek](../../src/15/context/with-dead-line)
 
 https://go.dev/play/p/3_c7JD2sKJG
 
 ```bash
-$ go run src/15/context-with-dead-line/main.go 
+$ go run src/15/context/with-dead-line/main.go 
 ```
 
 kod:
@@ -216,12 +216,12 @@ LOOP:
 
 ## WithValue
 
-[örnek](../../src/15/context-with-value)
+[örnek](../../src/15/context/with-value)
 
 https://go.dev/play/p/wFyT4vdYsey
 
 ```bash
-$ go run src/15/context-with-value/main.go 
+$ go run src/15/context/with-value/main.go 
 ```
 
 kod:
@@ -269,6 +269,12 @@ func main() {
 	}
 }
 ```
+
+---
+
+## Context, WaitGroup, Channels ve Deadline
+
+@wip
 
 ---
 
