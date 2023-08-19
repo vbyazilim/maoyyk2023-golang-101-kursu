@@ -274,7 +274,59 @@ func main() {
 
 ## Context, WaitGroup, Channels ve Deadline
 
-@wip
+Elimizde `1000` tane mesaj var, bunları dış dünyada bir web api’ya (servise)
+göndermek istiyoruz. İstek eğer 300 milisaniyeden uzun sürerse işlemi iptal
+etmek istiyoruz, 10 tane `worker` ile bu mesajları eritmek istiyoruz.
+
+[örnek](../../src/15/context/waitgroup-channel-deadline)
+
+https://go.dev/play/p/Kift5XwSh2q
+
+```bash
+$ go run -race src/15/context/waitgroup-channel-deadline/main.go 
+-> (sending ?) - workerID 3 mesaj 7 süre 207ms
+-> (sending ?) - workerID 2 mesaj 1 süre 429ms
+-> (sending ?) - workerID 4 mesaj 4 süre 719ms
+-> (sending ?) - workerID 0 mesaj 0 süre 922ms
+-> (sending ?) - workerID 5 mesaj 6 süre 447ms
+-> (sending ?) - workerID 8 mesaj 3 süre 452ms
+-> (sending ?) - workerID 6 mesaj 8 süre 178ms
+-> (sending ?) - workerID 9 mesaj 5 süre 174ms
+-> (sending ?) - workerID 7 mesaj 9 süre 76ms
+-> (sending ?) - workerID 1 mesaj 2 süre 990ms
+(sent) - workerID 7 mesaj 9 süre 76ms
+-> (sending ?) - workerID 7 mesaj 10 süre 773ms
+(sent) - workerID 9 mesaj 5 süre 174ms
+-> (sending ?) - workerID 9 mesaj 11 süre 34ms
+(sent) - workerID 6 mesaj 8 süre 178ms
+-> (sending ?) - workerID 6 mesaj 12 süre 752ms
+(sent) - workerID 3 mesaj 7 süre 207ms
+-> (sending ?) - workerID 3 mesaj 13 süre 556ms
+(sent) - workerID 9 mesaj 11 süre 34ms
+-> (sending ?) - workerID 9 mesaj 14 süre 526ms
+(sent) - workerID 4 mesaj 4 süre 719ms
+---> (timeout) - workerID 4
+---> (timeout/cancel) mesaj: 15
+(sent) - workerID 3 mesaj 13 süre 556ms
+---> (timeout) - workerID 3
+(sent) - workerID 9 mesaj 14 süre 526ms
+---> (timeout) - workerID 9
+(sent) - workerID 6 mesaj 12 süre 752ms
+---> (timeout) - workerID 6
+(sent) - workerID 7 mesaj 10 süre 773ms
+(closed) - workerID 7
+(sent) - workerID 8 mesaj 3 süre 452ms
+(closed) - workerID 8
+(sent) - workerID 1 mesaj 2 süre 990ms
+(closed) - workerID 1
+(sent) - workerID 2 mesaj 1 süre 429ms
+---> (timeout) - workerID 2
+(sent) - workerID 0 mesaj 0 süre 922ms
+---> (timeout) - workerID 0
+(sent) - workerID 5 mesaj 6 süre 447ms
+(closed) - workerID 5
+bitti
+```
 
 ---
 
