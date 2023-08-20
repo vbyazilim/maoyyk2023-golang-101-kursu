@@ -170,10 +170,10 @@ Golang programlama dili kursu.
 
 1. [`http` Paketini Kullanarak Rest-API Tasarlamak](docs/18/01-http-paketi.md)
 1. [Domain Driven Design prensibini Kullanmak](docs/18/02-ddd-basics.md)
-1. [Geliştirme Ön Hazırlık](docs/18/03-development.md)
-1. [GitHub Actions ile Linter/Checker Kullanımı](docs/18/03-development.md)
+1. [Geliştirme](docs/18/03-development.md)
 1. [http server’ın Unit Testleri](docs/18/04-testing.md)
 1. [Uygulamanın Docker Container’ından Çalıştırılması](docs/18/05-docker.md)
+1. [GitHub Actions ile Linter/Checker Kullanımı](docs/18/06-github-actions.md)
 
 ---
 
