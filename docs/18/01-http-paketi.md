@@ -3,7 +3,8 @@
 Basit bir rest-api geliştireceğiz. Küçük ve basit bir [REDIS][01] klonu. Klon
 ama çok primitif bir klon. Key/Value çiftlerini hafızada tutan, listeleme,
 ekleme, silme, okuma ve güncelleme yani `CRUDL` (Create, Read, Update, Delete,
-List) operasyonları yapabileceğimiz bir servis.
+List) operasyonları yapabileceğimiz bir servis. Diğer bir amacımız da hiçbir
+ek paket kullanmadan, go ile gelen paketleri kullanarak bu servisi geliştirmek.
 
 Nelere ihtiyacımız var;
 
