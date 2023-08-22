@@ -1,5 +1,6 @@
 ![Version](https://img.shields.io/badge/version-0.0.0-orange.svg?style=for-the-badge)
 ![Go Version](https://img.shields.io/badge/go-1.20.6-orange.svg?style=for-the-badge)
+![Powered by Rake](https://img.shields.io/badge/powered_by-rake-blue?logo=ruby)
 
 # Mustafa Akgül Özgür Yazılım Yaz Kampı 2023
 
