@@ -117,7 +117,9 @@ $ tree .
 $ touch src/internal/storage/memory/kvstorage/base.go
 ```
 
-Şimdi projeyi kod editöründe açalım ve `base.go` dosyasına şunu yazalım ve kaydedelim:
+Şimdi projeyi kod editöründe açalım ve
+`src/internal/storage/memory/kvstorage/base.go` dosyasına şunu yazalım ve
+kaydedelim:
 
 ```go
 package kvstorage
@@ -175,6 +177,13 @@ func New(options ...StorageOption) Storer {
 }
 ```
 
+sonra;
+
+```bash
+$ git add .
+$ git commit -m 'start storage implementation'
+```
+
 Şimdi tüm metotları implemente edelim:
 
 ```bash
@@ -202,7 +211,7 @@ $ mkdir -p src/internal/kverror
 $ touch src/internal/kverror/kverror.go
 ```
 
-`kverror.go`
+`src/internal/kverror/kverror.go`
 
 ```go
 package kverror
@@ -275,9 +284,16 @@ func New(m string, l bool) KVError {
 }
 ```
 
+sonra;
+
+```bash
+$ git add src/internal/kverror/kverror.go
+$ git commit -m 'implement custom error type'
+```
+
 ---
 
-`delete.go`
+`src/internal/storage/memory/kvstorage/delete.go`
 
 ```go
 package kvstorage
@@ -297,7 +313,7 @@ func (ms *memoryStorage) Delete(key string) error {
 
 ---
 
-`get.go`
+`src/internal/storage/memory/kvstorage/get.go`
 
 ```go
 package kvstorage
@@ -322,7 +338,7 @@ func (ms *memoryStorage) Get(key string) (any, error) {
 
 ---
 
-`list.go`
+`src/internal/storage/memory/kvstorage/list.go`
 
 ```go
 package kvstorage
@@ -336,7 +352,7 @@ func (ms *memoryStorage) List() MemoryDB {
 
 ---
 
-`set.go`
+`src/internal/storage/memory/kvstorage/set.go`
 
 ```go
 package kvstorage
@@ -351,7 +367,7 @@ func (ms *memoryStorage) Set(key string, value any) any {
 
 ---
 
-`update.go`
+`src/internal/storage/memory/kvstorage/update.go`
 
 ```go
 package kvstorage
@@ -362,6 +378,13 @@ func (ms *memoryStorage) Update(key string, value any) (any, error) {
 	}
 	return ms.Set(key, value), nil
 }
+```
+
+sonra;
+
+```bash
+$ git add .
+$ git commit -m 'implement memory storage'
 ```
 
 Nedir son durum ?
@@ -394,7 +417,7 @@ $ mkdir -p src/internal/service/kvstoreservice
 $ touch src/internal/service/kvstoreservice/base.go
 ```
 
-`base.go`
+`src/internal/service/kvstoreservice/base.go`
 
 ```go
 package kvstoreservice
@@ -476,7 +499,7 @@ $ tree .
 
 ---
 
-`delete.go`
+`src/internal/service/kvstoreservice/delete.go`
 
 ```go
 package kvstoreservice
@@ -501,7 +524,7 @@ func (s *kvStoreService) Delete(ctx context.Context, key string) error {
 
 ---
 
-`get.go`
+`src/internal/service/kvstoreservice/get.go`
 
 ```go
 package kvstoreservice
@@ -530,7 +553,7 @@ func (s *kvStoreService) Get(ctx context.Context, key string) (*ItemResponse, er
 
 ---
 
-`list.go`
+`src/internal/service/kvstoreservice/list.go`
 
 ```go
 package kvstoreservice
@@ -562,7 +585,7 @@ func (s *kvStoreService) List(ctx context.Context) (*ListResponse, error) {
 
 ---
 
-`requests.go`
+`src/internal/service/kvstoreservice/requests.go`
 
 ```go
 package kvstoreservice
@@ -582,7 +605,7 @@ type UpdateRequest struct {
 
 ---
 
-`responses.go`
+`src/internal/service/kvstoreservice/responses.go`
 
 ```go
 package kvstoreservice
@@ -599,7 +622,7 @@ type ListResponse []ItemResponse
 
 ---
 
-`set.go`
+`src/internal/service/kvstoreservice/set.go`
 
 ```go
 package kvstoreservice
@@ -625,7 +648,7 @@ func (s *kvStoreService) Set(ctx context.Context, sr *SetRequest) (*ItemResponse
 
 ---
 
-`update.go`
+`src/internal/service/kvstoreservice/update.go`
 
 ```go
 package kvstoreservice
@@ -650,6 +673,13 @@ func (s *kvStoreService) Update(ctx context.Context, sr *UpdateRequest) (*ItemRe
 		}, nil
 	}
 }
+```
+
+sonra;
+
+```bash
+$ git add .
+$ git commit -m 'implement service layer'
 ```
 
 ---
@@ -692,12 +722,15 @@ $ tree .
                 ├── basehttphandler
                 │   └── basehttphandler.go
                 └── kvstorehandler
-                    └── base.go
-
-13 directories, 18 files
+                    ├── base.go
+                    ├── delete.go
+                    ├── get.go
+                    ├── list.go
+                    ├── set.go
+                    └── update.go
 ```
 
-`basehttphandler.go`
+`src/internal/transport/http/basehttphandler/basehttphandler.go`
 
 ```go
 package basehttphandler
@@ -732,7 +765,7 @@ func (h *Handler) JSON(w http.ResponseWriter, status int, d any) {
 
 ---
 
-`base.go`
+`src/internal/transport/http/kvstorehandler/base.go`
 
 ```go
 package kvstorehandler
@@ -810,7 +843,7 @@ func New(options ...StoreHandlerOption) KVStoreHTTPHandler {
 
 ---
 
-`delete.go`
+`src/internal/transport/http/kvstorehandler/delete.go`
 
 ```go
 package kvstorehandler
@@ -902,7 +935,7 @@ func (h *kvstoreHandler) Delete(w http.ResponseWriter, r *http.Request) {
 
 ---
 
-`get.go`
+`src/internal/transport/http/kvstorehandler/get.go`
 
 ```bash
 package kvstorehandler
@@ -1003,7 +1036,7 @@ func (h *kvstoreHandler) Get(w http.ResponseWriter, r *http.Request) {
 
 ---
 
-`list.go`
+`src/internal/transport/http/kvstorehandler/list.go`
 
 ```go
 package kvstorehandler
@@ -1090,7 +1123,7 @@ func (h *kvstoreHandler) List(w http.ResponseWriter, r *http.Request) {
 
 ---
 
-`requests.go`
+`src/internal/transport/http/kvstorehandler/requests.go`
 
 ```go
 package kvstorehandler
@@ -1110,7 +1143,7 @@ type UpdateRequest struct {
 
 ---
 
-`responses.go`
+`src/internal/transport/http/kvstorehandler/responses.go`
 
 ```go
 package kvstorehandler
@@ -1127,7 +1160,7 @@ type ListResponse []ItemResponse
 
 ---
 
-`set.go`
+`src/internal/transport/http/kvstorehandler/set.go`
 
 ```go
 package kvstorehandler
@@ -1300,7 +1333,7 @@ func (h *kvstoreHandler) Set(w http.ResponseWriter, r *http.Request) {
 
 ---
 
-`update.go`
+`src/internal/transport/http/kvstorehandler/update.go`
 
 ```go
 package kvstorehandler
@@ -1434,6 +1467,13 @@ func (h *kvstoreHandler) Update(w http.ResponseWriter, r *http.Request) {
 }
 ```
 
+sonra;
+
+```bash
+$ git add .
+$ git commit -m 'implement http handlers'
+```
+
 ---
 
 ## releaseinfo paketi
@@ -1443,7 +1483,7 @@ $ mkdir -p src/releaseinfo
 $ touch src/releaseinfo/releaseinfo.go
 ```
 
-`releaseinfo.go`
+`src/releaseinfo/releaseinfo.go`
 
 ```go
 package releaseinfo
@@ -1453,6 +1493,13 @@ const Version string = "0.1.0"
 
 // BuildInformation holds current build information.
 var BuildInformation string
+```
+
+sonra;
+
+```bash
+$ git add src/releaseinfo/releaseinfo.go
+$ git commit -m 'add release information package'
 ```
 
 ---
@@ -1497,16 +1544,19 @@ $ tree .
     │           ├── basehttphandler
     │           │   └── basehttphandler.go
     │           └── kvstorehandler
-    │               └── base.go
+    │               ├── base.go
+    │               ├── delete.go
+    │               ├── get.go
+    │               ├── list.go
+    │               ├── set.go
+    │               └── update.go
     └── releaseinfo
         └── releaseinfo.go
-
-15 directories, 21 files
 ```
 
 ---
 
-`apiserver.go`
+`src/apiserver/apiserver.go`
 
 ```go
 package apiserver
@@ -1702,7 +1752,7 @@ func New(options ...Option) error {
 
 ---
 
-`middlewares.go`
+`src/apiserver/middlewares.go`
 
 ```go
 package apiserver
@@ -1742,6 +1792,13 @@ func appendSlashMiddleware(h http.Handler) http.Handler {
 }
 ```
 
+sonra;
+
+```bash
+$ git add .
+$ git commit -m 'add apiserver'
+```
+
 ---
 
 Artık esas sunucuyu çalıştıracak kısma geldik;
@@ -1751,7 +1808,7 @@ $ mkdir -p cmd/server
 $ touch cmd/server/main.go
 ```
 
-`main.go`
+`cmd/server/main.go`
 
 ```go
 package main
@@ -1771,6 +1828,13 @@ func main() {
 		log.Fatal(err)
 	}
 }
+```
+
+sonra;
+
+```bash
+$ git add .
+$ git commit -m 'add server'
 ```
 
 ---

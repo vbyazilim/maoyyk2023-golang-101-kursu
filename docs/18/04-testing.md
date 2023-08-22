@@ -147,6 +147,13 @@ $ go test -cover -race -v github.com/<GITHUB-KULLANICI-ADINIZ>/kvstore/src/inter
 coverage: 100.0% of statements
 ```
 
+sonra;
+
+```bash
+$ git add src/internal/kverror/kverror_test.go
+$ git commit -m 'add kverror test'
+```
+
 ---
 
 ## Storage Testleri
@@ -395,6 +402,14 @@ $ go test -cover -race -v github.com/<GITHUB-KULLANICI-ADINIZ>/kvstore/src/inter
 :
 coverage: 100.0% of statements
 ```
+
+sonra;
+
+```bash
+$ git add .
+$ git commit -m 'add storage tests'
+```
+
 
 ---
 
@@ -775,6 +790,13 @@ $ go test -cover -race -v github.com/<GITHUB-KULLANICI-ADINIZ>/kvstore/src/inter
 :
 :
 coverage: 100.0% of statements
+```
+
+sonra;
+
+```bash
+$ git add .
+$ git commit -m 'add service tests'
 ```
 
 ---
@@ -1936,4 +1958,9 @@ github.com/<GITHUB-KULLANICI-ADINIZ>/kvstore/src/internal/transport/http/kvstore
 total:												(statements)		98.6%
 ```
 
-yani tüm projenin toplam test coverage’ı **98.6%**
+yani tüm projenin toplam test coverage’ı **98.6%**. Sonra;
+
+```bash
+$ git add .
+$ git commit -m 'add http handler tests'
+```
