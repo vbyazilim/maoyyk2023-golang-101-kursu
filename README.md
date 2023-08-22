@@ -174,6 +174,7 @@ Golang programlama dili kursu.
 1. [http server’ın Unit Testleri](docs/18/04-testing.md)
 1. [Uygulamanın Docker Container’ından Çalıştırılması](docs/18/05-docker.md)
 1. [GitHub Actions ile Linter/Checker Kullanımı](docs/18/06-github-actions.md)
+1. [Açık Kaynak Haline Getirmek](docs/18/07-acik-kaynak.md)
 
 ---
 
