@@ -19,12 +19,12 @@ modellemek temel amaçtır.
 ### Model
 
 DDD, gerçek dünyadaki nesneleri ve ilişkileri yazılım nesnelerine dönüştürmeyi
-içerir. Bu, karmaşık iş domain'lerini daha iyi anlamak ve yönetmek için
+içerir. Bu, karmaşık iş domain’lerini daha iyi anlamak ve yönetmek için
 kullanılır. Veritabanındaki tablo’nun karşılığı gibi düşünülebilir.
 
 ### Servis
 
-DDD'de, bazı işlemler modele ait olmayabilir. Bu durumlarda servisler
+DDD’de, bazı işlemler modele ait olmayabilir. Bu durumlarda servisler
 kullanılır. Örneğin, bir ödeme işlemi bir servis tarafından yönetilebilir.
 
 ### Repository (Storage)
