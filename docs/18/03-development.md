@@ -1941,5 +1941,6 @@ $ http DELETE "http://localhost:8000/api/v1/delete?key=success"
 ## Kaynaklar
 
 - https://github.com/avelino/awesome-go#project-layout
+- https://go.dev/blog/slog
 
 ---
