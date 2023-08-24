@@ -23,6 +23,9 @@ Go ile ilgili kaynak kodlar, eğitimler, makaler:
 1. https://arslan.io/2019/08/02/why-you-should-use-a-go-module-proxy/
 1. https://arslan.io/2019/07/03/how-to-write-idempotent-bash-scripts/
 1. https://arslan.io/2017/09/14/the-ultimate-guide-to-writing-a-go-tool/
+1. https://rakyll.org/typesystem/
+1. https://rakyll.org/http2push/
+1. https://rakyll.org/leakingctx/
 
 ---
 

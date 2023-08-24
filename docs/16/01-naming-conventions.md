@@ -227,8 +227,6 @@ Ben olsam; `type Storer interface` ya da `type Storage interface` ile ilerlerim.
 Belkide go’daki en zor, en kritik isimlendirme paket isimlendirmesidir. İsmi,
 paketin amacını anlatmalıdır. 
 
-https://go.dev/blog/package-names
-
 - İyi bir paket adında sadece harfler olur; `strings`, `strconv`, `fmt`, `io`, `os`...
 - `stringUtils`, `foo_tools`, `x11Package` gibi isimler **olmaz**!
 - `base`, `common`, `util`, `helpers` gibi genel-geçer paket adı olmamalı ***
@@ -297,8 +295,14 @@ func New(...string) Set {...}
 
 ilerler..
 
+### Kaynaklar
+
+- https://go.dev/blog/package-names
+- https://rakyll.org/style-packages/
 - https://go.dev/blog/package-names#bad-package-names-h2
 - https://github.com/vigo/stringutils-demo
+
+---
 
 Paket isminin düşünürken hep kafamda şu anı canlandırırım: `paketAdı.New()`
 ile çağıracağım; örneğin 3. parti bir servis için client geliştirmesi yapmam
