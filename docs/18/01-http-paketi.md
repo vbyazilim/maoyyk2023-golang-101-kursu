@@ -18,6 +18,25 @@ rahatlığıyla kullanabileceğimiz http sunucuyla birlikte geliyor. Hatta sadec
 sunucu değil istemcisi de var (http client). Tüm bu özellikler `net/http`
 paketi içinde.
 
+`net/http` bize neler sağlar?
+
+- Web uygulamaları yapabiliriz
+- Statik dosya sunucusu olarak kullanabiliriz
+- Routing
+- Cookie yönetimi yapabiliriz
+
+Keza pek çok popüler web frameworkleri de altta bu paketi kullanır:
+
+- https://github.com/go-chi/chi
+- https://github.com/valyala/fasthttp
+- https://github.com/labstack/echo
+- https://github.com/gofiber/fiber
+- https://github.com/gin-gonic/gin
+- https://github.com/go-kratos/kratos (microservice)
+- https://github.com/go-kit/kit (microservice)
+
+`godoc`’ta:
+
 - https://pkg.go.dev/net/http@go1.21.0 (http)
 - https://pkg.go.dev/net/http@go1.21.0#hdr-Servers (server)
 
