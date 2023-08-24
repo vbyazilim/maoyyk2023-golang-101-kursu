@@ -16,6 +16,7 @@ Golang programlama dili kursu.
 1. [Tanıtım, Öne Çıkan Kısımları](docs/01/01-tanitim.md)
 1. [Go Proverbs](docs/01/02-proverbs.md)
 1. [Kurulum](docs/01/03-kurulum.md)
+1. [VSCode Kurulumu](docs/01/04-vscode-kurulumu.md)
 
 ## Bölüm 02: Golang Uygulamasına Genel Bakış
 
@@ -24,7 +25,8 @@ Golang programlama dili kursu.
 
 ## Bölüm 03: Dil Kuralları
 
-1. [Unicode Kavramı](docs/03/01-dil-kurallari.md#unicode)
+1. [Encoding Nedir?](docs/03/01-dil-kurallari.md#encoding-nedir)
+1. [Unicode Desteği](docs/03/01-dil-kurallari.md#unicode-destegi)
 1. [Anahtar Kelimeler](docs/03/01-dil-kurallari.md#anahtar-kelimeler)
 1. [Operatörler ve İşaretçiler](docs/03/01-dil-kurallari.md#operat%C3%B6rler-ve-i%CC%87%C5%9Faret%C3%A7iler)
 1. [Built-in (gömülü gelen) Veri Tipleri](docs/03/01-dil-kurallari.md#built-in-veri-tipleri)
