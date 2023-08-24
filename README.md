@@ -26,7 +26,7 @@ Golang programlama dili kursu.
 ## Bölüm 03: Dil Kuralları
 
 1. [Encoding Nedir?](docs/03/01-dil-kurallari.md#encoding-nedir)
-1. [Unicode Desteği](docs/03/01-dil-kurallari.md#unicode-destegi)
+1. [Unicode Desteği](docs/03/01-dil-kurallari.md#unicode-desteği)
 1. [Anahtar Kelimeler](docs/03/01-dil-kurallari.md#anahtar-kelimeler)
 1. [Operatörler ve İşaretçiler](docs/03/01-dil-kurallari.md#operat%C3%B6rler-ve-i%CC%87%C5%9Faret%C3%A7iler)
 1. [Built-in (gömülü gelen) Veri Tipleri](docs/03/01-dil-kurallari.md#built-in-veri-tipleri)
