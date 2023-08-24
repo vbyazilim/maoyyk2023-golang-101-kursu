@@ -87,22 +87,22 @@ Golang programlama dili kursu.
 1. [Unwrapping](docs/09/01-error.md#unwrapping) (sarmalı açma)
 1. [`error` Tip Kontrolleri](docs/09/01-error.md#tip-kontrolleri): `errors.Is` ve `errors.As`
 1. [`panic` ve `recover`](docs/09/01-error.md#panic-ve-recover)
-1. [Yaygın Pratikler](docs/09/01-error.md#yaygin-pratikler)
+1. [Yaygın Pratikler](docs/09/01-error.md#yaygın-pratikler)
 
 ## Bölüm 10: `nil`
 
 1. [`nil` Nedir?](docs/10/01-nil.md)
-1. [Nerelerde ve Ne İçin Kullanınır?](docs/10/01-nil.md#nerelerde-kullanilir)
+1. [Nerelerde ve Ne İçin Kullanınır?](docs/10/01-nil.md#nerelerde-kullanılır)
 
 ## Bölüm 11: Generics
 
 1. [Nedir? Ne Amaçla Kullanılır](docs/11/01-generics.md)
 1. [Fonksiyonlarda Genericler](docs/11/01-generics.md#fonksiyonlarda-genericler)
 1. [Custom Tiplerde Generic](docs/11/01-generics.md#custom-tiplerde-genericler)
-1. [Generic Fonksiyon Çağrıları](docs/11/01-generics.md#generic-fonksiyon-cagrilari)
+1. [Generic Fonksiyon Çağrıları](docs/11/01-generics.md#generic-fonksiyon-çağrıları)
 1. [Generic Tipi struct’da Kullanmak](docs/11/01-generics.md#generic-tipi-structlarda-kullanmak)
 1. [Generic Tipi map’lerde Kullanmak](docs/11/01-generics.md#generic-tipleri-maplerde-kullanmak)
-1. [Generic Gerçek Hayat Örneği](docs/11/01-generics.md#generic-gercek-hayat-ornegi)
+1. [Generic Gerçek Hayat Örneği](docs/11/01-generics.md#generic-gerçek-hayat-örneği)
 
 ## Bölüm 12: Reflection
 
@@ -122,8 +122,8 @@ Golang programlama dili kursu.
 ## Bölüm 14: Test
 
 1. [Test Nedir? Neden Yazılır?](docs/14/01-test.md)
-1. [Test Nasıl Çalıştırılır](docs/14/01-test.md)
-1. [Examples ve `godoc` Nedir?](docs/14/01-test.md)
+1. [Test Nasıl Çalıştırılır](docs/14/01-test.md#test-nasıl-çalıştırılır)
+1. [Examples ve `godoc` Nedir?](docs/14/01-test.md#examples-ve-godoc)
 1. [Race Detection Nedir?](docs/14/01-test.md#data-race-detection)
 1. [Table Driven Test Nedir?](docs/14/02-table-driven-test.md)
 1. [Sub Tests](docs/14/02-table-driven-test.md#sub-tests)

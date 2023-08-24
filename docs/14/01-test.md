@@ -1,5 +1,7 @@
 # Bölüm 14/01: Test
 
+## Test Nedir? Neden Yazılır?
+
 Yazdığımız kodun, fonksiyonun, metotların çalıştığını garanti etmek için
 uygulanan yöntemdir. Basit mantık şu, fonksiyon girdi (input) alır, bir iş
 yapar ve çıktı (output) üretir. Toplama işlemi yapan bir fonksiyon, iki tane
@@ -132,6 +134,10 @@ func ExampleSayHi_withArgs() {
 }
 ```
 
+---
+
+## Test Nasıl Çalıştırılır
+
 Test etmek istediğimiz senaryoları `Test` kelimesiyle başlatan test
 fonksiyonları şeklinde yazıyoruz. `Test<NEYİ_TEST_EDIYORUZ?>`. Bizim için 3 konu vardı;
 
@@ -179,6 +185,10 @@ cache’i silmek istersek;
 ```bash
 $ go clean -testcache
 ```
+
+---
+
+## Examples ve godoc
 
 yeterlidir. Hemen `Example`’lar ne işe yarıyor onu görelim. Öncelikle
 `godoc`’u kuralım:
