@@ -28,7 +28,7 @@ Golang programlama dili kursu.
 1. [Encoding Nedir?](docs/03/01-dil-kurallari.md#encoding-nedir)
 1. [Unicode Desteği](docs/03/01-dil-kurallari.md#unicode-desteği)
 1. [Anahtar Kelimeler](docs/03/01-dil-kurallari.md#anahtar-kelimeler)
-1. [Operatörler ve İşaretçiler](docs/03/01-dil-kurallari.md#operat%C3%B6rler-ve-i%CC%87%C5%9Faret%C3%A7iler)
+1. [Operatörler ve İşaretçiler](docs/03/01-dil-kurallari.md#operatörler)
 1. [Built-in (gömülü gelen) Veri Tipleri](docs/03/01-dil-kurallari.md#built-in-veri-tipleri)
 1. [Kod Stili](docs/03/01-dil-kurallari.md#kod-stili)
 1. [Sabitler](docs/03/02-sabitler.md)
@@ -51,7 +51,7 @@ Golang programlama dili kursu.
 ## Bölüm 05: Fonksiyonlar
 
 1. [Function Signature (fonksiyon imzası)](docs/05/01-fonksiyonlar.md#signature)
-1. [Argüman / Parametre](docs/05/01-fonksiyonlar.md#argumanlar)
+1. [Argüman / Parametre](docs/05/01-fonksiyonlar.md#argümanlar)
 1. [Return Values (fonksiyodan geriye dönen değerler)](docs/05/01-fonksiyonlar.md#return-values)
 1. [Recursivity (özyineleme)](docs/05/01-fonksiyonlar.md#recursivity)
 1. [Closure / Anonim Fonksiyonlar ve Function Scope (kapsama alanı)](docs/05/01-fonksiyonlar.md#closure)
@@ -76,8 +76,8 @@ Golang programlama dili kursu.
 
 1. [Tanımı](docs/08/01-interface.md)
 1. [Tip Olarak **empty interface** ya da `any`](docs/08/01-interface.md#empty-interface)
-1. [Tip Kontrol Meknizması](docs/08/01-interface.md#tip-kontrol-mekanizmasi)
-1. [Davranış Olarak `interface`](docs/08/01-interface.md#satisfying interface)
+1. [Tip Kontrol Meknizması](docs/08/01-interface.md#tip-kontrol-mekanizması)
+1. [Davranış Olarak `interface`](docs/08/01-interface.md#satisfying-interface)
 
 ## Bölüm 09: Error
 
