@@ -133,6 +133,9 @@ func main() {
 içindeki fonksiyon diğer kulvarda çalışıyor ve `main` o kulvarın işini
 bitirmesini beklemeden işini bitirip çıkıyor.
 
+Go runtime bize sadece şunu garanti ediyor: goroutine, gelecekte bir zamanda
+kesin çalışacak! Ama ne zaman bilmiyoruz :)
+
 ![Goroutine Main Finishes](diagrams/goroutine-main-finishes.gif)
 
 `main()` fonksiyonu `go func(){...}()` fonksiyonundan önce bitti ve
@@ -295,7 +298,7 @@ bir iş yapmadık ama loop içindeki goroutine’i `go func(url string){...}(url
 ```go
 for _, url := range urls {
 	go func() {
-		fmt.Println("url", url)  // <-- bu her zaman 
+		fmt.Println("url", url)  // <-- bu her zaman aynı değer
 		wg.Done()
 	}()
 }
@@ -308,6 +311,7 @@ olacaktı! Bazen son eleman bazen de random bi eleman olacaktı. Neden? çünki
 `url`’in değeri goroutine çalışmadan önce değişecekti ve goroutine bundan
 haberdar olmayacaktı! Tüm goroutine’ler aynı değişkeni paylaşacaktı!
 
+**Nasıl durduracağını (stop) bilmiyorsan o goroutine’i başlatma!**
 
 ---
 

@@ -1,5 +1,6 @@
-![Version](https://img.shields.io/badge/version-0.0.0-orange.svg?style=for-the-badge)
+![Version](https://img.shields.io/badge/version-0.1.2-orange.svg?style=for-the-badge)
 ![Go Version](https://img.shields.io/badge/go-1.20.6-orange.svg?style=for-the-badge)
+![Powered by Rake](https://img.shields.io/badge/powered_by-rake-blue?logo=ruby&style=for-the-badge)
 
 # Mustafa Akgül Özgür Yazılım Yaz Kampı 2023
 
@@ -163,17 +164,22 @@ Golang programlama dili kursu.
 
 1. [`golangci-linter` Kurulumu ve Konfigürasyonu](docs/17/01-kurulumlar.md)
 1. [Go Modülü Anatomisi](docs/17/02-go-modul-anotomisi.md)
-1. [Geliştirilmiş Paket Örneği](docs/17/03-ornek-paket.md)
+1. [`stringutils` Paketi](docs/17/03-ornek-paket.md)
 1. [Paketi Dağıtmak / Paylaşmak](docs/17/04-paketi-dagitmak.md)
 
 ## Bölüm 18: In-Memory Key-Value Store
 
 1. [`http` Paketini Kullanarak Rest-API Tasarlamak](docs/18/01-http-paketi.md)
 1. [Domain Driven Design prensibini Kullanmak](docs/18/02-ddd-basics.md)
-1. [Geliştirme Ön Hazırlık](docs/18/03-development.md)
-1. [GitHub Actions ile Linter/Checker Kullanımı](docs/18/03-development.md)
+1. [Geliştirme](docs/18/03-development.md)
 1. [http server’ın Unit Testleri](docs/18/04-testing.md)
 1. [Uygulamanın Docker Container’ından Çalıştırılması](docs/18/05-docker.md)
+1. [GitHub Actions ile Linter/Checker Kullanımı](docs/18/06-github-actions.md)
+1. [Açık Kaynak Haline Getirmek](docs/18/07-acik-kaynak.md)
+
+## Bonus
+
+1. [Faydalı Linkler](docs/bonus/01-links.md)
 
 ---
 

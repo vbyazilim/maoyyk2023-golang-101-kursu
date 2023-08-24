@@ -48,7 +48,7 @@ Otomatik olarak **pass by value** olarak giden tipler:
 **pass by reference** olanlar;
 
 - pointer
-- string’ler (immutable)
+- string’ler (immutable) ?
 - slice’lar
 - map’ler
 - channel’lar

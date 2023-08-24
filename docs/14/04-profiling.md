@@ -391,7 +391,9 @@ Entering interactive mode (type "help" for commands, "o" for options)
 
     (pprof) web
 
-`svg` dosyası oluşturur.
+`svg` [dosyası](diagrams/pprof001.svg) oluşturur.
+
+![pproof](diagrams/pprof001.svg)
 
 Şimdi **memory** açısından bakalım:
 

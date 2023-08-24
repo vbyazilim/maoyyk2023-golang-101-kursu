@@ -73,6 +73,7 @@ func init(){
 	fmt.Println("init fonksiyonu çağırıldı")
 }
 
+// go run main.go
 // init fonksiyonu çağırıldı
 // main fonksiyonundan merhaba!
 ```
@@ -126,6 +127,7 @@ func main() {
 	codeutils.PrintString("Hello World")
 }
 ```
+Not: `demo` paketi, modül adıdır. `go.mod` dosyası içinde tanımlıdır.
 
 `codeutils.go` de şöyle olsa;
 

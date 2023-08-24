@@ -8,6 +8,8 @@ bile kullanabilirsiniz:
 
 https://go.dev/play/p/ulIuTtHW0tf
 
+Note: Encoding, metinleri bilgisayarlar tarafından anlaşılabilir verilere dönüştürme işlemidir. Metinler insanlar için okunabilir karakterlerden oluşurken, bilgisayarlar ikili (binary) verileri işler. Encoding, metin karakterlerini sayısal değerlerle eşleştirerek veya ikili temsillerini belirleyerek gerçekleştirilir.
+
 ```go
 package main
 

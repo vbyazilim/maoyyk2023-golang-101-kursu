@@ -354,6 +354,9 @@ kapatmayın, sadece sender (`ch <- true`) channel’ı kapatmalıdır!
 Kanalı kapatacak olan işin bittiğinden emin olan olmalıdır. Sender olan `count()`
 fonksiyonu, loop’un bittiği anı o biliyor. Kapatacak olan da o!
 
+Channel’a yazan (sender) her zaman kaç tane goroutine olduğunu bilir ama
+okuyan (receiver) bunu bilemez. `close` den **her zaman yazan (sender)** olmalıdır!
+
 Aynı örnekte ufak bir değişiklik yapalım:
 
 [Örnek](../../src/15/channels/open-close-check)
