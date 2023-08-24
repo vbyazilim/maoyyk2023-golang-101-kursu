@@ -16,6 +16,7 @@ Golang programlama dili kursu.
 1. [Tanıtım, Öne Çıkan Kısımları](docs/01/01-tanitim.md)
 1. [Go Proverbs](docs/01/02-proverbs.md)
 1. [Kurulum](docs/01/03-kurulum.md)
+1. [VSCode Kurulumu](docs/01/04-vscode-kurulumu.md)
 
 ## Bölüm 02: Golang Uygulamasına Genel Bakış
 
@@ -24,9 +25,10 @@ Golang programlama dili kursu.
 
 ## Bölüm 03: Dil Kuralları
 
-1. [Unicode Kavramı](docs/03/01-dil-kurallari.md#unicode)
+1. [Encoding Nedir?](docs/03/01-dil-kurallari.md#encoding-nedir)
+1. [Unicode Desteği](docs/03/01-dil-kurallari.md#unicode-desteği)
 1. [Anahtar Kelimeler](docs/03/01-dil-kurallari.md#anahtar-kelimeler)
-1. [Operatörler ve İşaretçiler](docs/03/01-dil-kurallari.md#operat%C3%B6rler-ve-i%CC%87%C5%9Faret%C3%A7iler)
+1. [Operatörler ve İşaretçiler](docs/03/01-dil-kurallari.md#operatörler)
 1. [Built-in (gömülü gelen) Veri Tipleri](docs/03/01-dil-kurallari.md#built-in-veri-tipleri)
 1. [Kod Stili](docs/03/01-dil-kurallari.md#kod-stili)
 1. [Sabitler](docs/03/02-sabitler.md)
@@ -49,7 +51,7 @@ Golang programlama dili kursu.
 ## Bölüm 05: Fonksiyonlar
 
 1. [Function Signature (fonksiyon imzası)](docs/05/01-fonksiyonlar.md#signature)
-1. [Argüman / Parametre](docs/05/01-fonksiyonlar.md#argumanlar)
+1. [Argüman / Parametre](docs/05/01-fonksiyonlar.md#argümanlar)
 1. [Return Values (fonksiyodan geriye dönen değerler)](docs/05/01-fonksiyonlar.md#return-values)
 1. [Recursivity (özyineleme)](docs/05/01-fonksiyonlar.md#recursivity)
 1. [Closure / Anonim Fonksiyonlar ve Function Scope (kapsama alanı)](docs/05/01-fonksiyonlar.md#closure)
@@ -74,8 +76,8 @@ Golang programlama dili kursu.
 
 1. [Tanımı](docs/08/01-interface.md)
 1. [Tip Olarak **empty interface** ya da `any`](docs/08/01-interface.md#empty-interface)
-1. [Tip Kontrol Meknizması](docs/08/01-interface.md#tip-kontrol-mekanizmasi)
-1. [Davranış Olarak `interface`](docs/08/01-interface.md#satisfying interface)
+1. [Tip Kontrol Meknizması](docs/08/01-interface.md#tip-kontrol-mekanizması)
+1. [Davranış Olarak `interface`](docs/08/01-interface.md#satisfying-interface)
 
 ## Bölüm 09: Error
 
@@ -85,22 +87,22 @@ Golang programlama dili kursu.
 1. [Unwrapping](docs/09/01-error.md#unwrapping) (sarmalı açma)
 1. [`error` Tip Kontrolleri](docs/09/01-error.md#tip-kontrolleri): `errors.Is` ve `errors.As`
 1. [`panic` ve `recover`](docs/09/01-error.md#panic-ve-recover)
-1. [Yaygın Pratikler](docs/09/01-error.md#yaygin-pratikler)
+1. [Yaygın Pratikler](docs/09/01-error.md#yaygın-pratikler)
 
 ## Bölüm 10: `nil`
 
 1. [`nil` Nedir?](docs/10/01-nil.md)
-1. [Nerelerde ve Ne İçin Kullanınır?](docs/10/01-nil.md#nerelerde-kullanilir)
+1. [Nerelerde ve Ne İçin Kullanınır?](docs/10/01-nil.md#nerelerde-kullanılır)
 
 ## Bölüm 11: Generics
 
 1. [Nedir? Ne Amaçla Kullanılır](docs/11/01-generics.md)
 1. [Fonksiyonlarda Genericler](docs/11/01-generics.md#fonksiyonlarda-genericler)
 1. [Custom Tiplerde Generic](docs/11/01-generics.md#custom-tiplerde-genericler)
-1. [Generic Fonksiyon Çağrıları](docs/11/01-generics.md#generic-fonksiyon-cagrilari)
+1. [Generic Fonksiyon Çağrıları](docs/11/01-generics.md#generic-fonksiyon-çağrıları)
 1. [Generic Tipi struct’da Kullanmak](docs/11/01-generics.md#generic-tipi-structlarda-kullanmak)
 1. [Generic Tipi map’lerde Kullanmak](docs/11/01-generics.md#generic-tipleri-maplerde-kullanmak)
-1. [Generic Gerçek Hayat Örneği](docs/11/01-generics.md#generic-gercek-hayat-ornegi)
+1. [Generic Gerçek Hayat Örneği](docs/11/01-generics.md#generic-gerçek-hayat-örneği)
 
 ## Bölüm 12: Reflection
 
@@ -120,13 +122,13 @@ Golang programlama dili kursu.
 ## Bölüm 14: Test
 
 1. [Test Nedir? Neden Yazılır?](docs/14/01-test.md)
-1. [Test Nasıl Çalıştırılır](docs/14/01-test.md)
-1. [Examples ve `godoc` Nedir?](docs/14/01-test.md)
+1. [Test Nasıl Çalıştırılır](docs/14/01-test.md#test-nasıl-çalıştırılır)
+1. [Examples ve `godoc` Nedir?](docs/14/01-test.md#examples-ve-godoc)
 1. [Race Detection Nedir?](docs/14/01-test.md#data-race-detection)
 1. [Table Driven Test Nedir?](docs/14/02-table-driven-test.md)
 1. [Sub Tests](docs/14/02-table-driven-test.md#sub-tests)
-1. [SetUp ve TearDown Nedir?](docs/14/01-test.md#setup-ve-teardown)
-1. [Testlerin Paralel Çalıştırılması?](docs/14/02-test.md#paralel-test)
+1. [SetUp ve TearDown Nedir?](docs/14/02-table-driven-test.md#setup-ve-teardown)
+1. [Testlerin Paralel Çalıştırılması?](docs/14/02-table-driven-test.md#paralel-test)
 1. [Code Coverage Nedir?](docs/14/03-test-coverage.md)
 1. [Benchmarking Nedir?](docs/14/04-profiling.md#benchmarking)
 1. [Escape Analysis](docs/14/04-profiling.md#escape-analysis)
@@ -154,11 +156,11 @@ Golang programlama dili kursu.
 ## Bölüm 16: İsimlendirme Kuralları
 
 1. [Naming Conventions](docs/16/01-naming-conventions.md)
-1. [Değişken İsimlendirmesi](docs/16/01-naming-conventions.md#degisken-adlari)
-1. [Fonksiyon İsimlendirmesi](docs/16/01-naming-conventions.md#fonksiyon-adlari)
-1. [Method’ların İsimlendirmesi](docs/16/01-naming-conventions.md#metot-adlari)
-1. [Interface’lerin İsimlendirmesi](docs/16/01-naming-conventions.md#interface-adlari)
-1. [Paketlerin İsimlendirmesi](docs/16/01-naming-conventions.md#paket-adlari)
+1. [Değişken İsimlendirmesi](docs/16/01-naming-conventions.md#değişken-adları)
+1. [Fonksiyon İsimlendirmesi](docs/16/01-naming-conventions.md#fonksiyon-adları)
+1. [Method’ların İsimlendirmesi](docs/16/01-naming-conventions.md#metot-adları)
+1. [Interface’lerin İsimlendirmesi](docs/16/01-naming-conventions.md#interface-adları)
+1. [Paketlerin İsimlendirmesi](docs/16/01-naming-conventions.md#paket-adları)
 
 ## Bölüm 17: Golang Paketi Geliştirmek
 

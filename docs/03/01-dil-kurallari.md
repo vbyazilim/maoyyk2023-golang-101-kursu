@@ -1,6 +1,24 @@
 # Bölüm 03/01: Dil Kuralları
 
-## Unicode
+## Encoding Nedir?
+
+**Encoding**, metin karakterlerini bilgisayarların anlayabileceği sayısal
+değerlere çevirme işlemidir. Bu sayısal değerler, metinleri depolamak, iletmek
+ve işlemek için kullanılır.
+
+**UTF-8** (Unicode Transformation Format - 8bit), Unicode karakter setini
+temsil etmek için kullanılan bir metin kodlama standardıdır. UTF-8, farklı
+karakterleri değişen uzunluklarda bayt dizileri olarak temsil eder.
+
+Temel olarak, İngilizce harfleri ve sembolleri 1 byte’la temsil ederken, diğer
+dillerdeki karakterleri daha fazla byte’la ifade eder. Bu özelliği sayesinde
+hem İngilizce metinleri hem de farklı dillerdeki karakterleri aynı kodlama
+altında destekler. Bu nedenle, günümüzde genellikle tercih edilen bir metin
+kodlama standardıdır.
+
+---
+
+## Unicode Desteği
 
 Go’nun varsayılan karakter kodlaması (encoding) `UTF-8`. Bu ne anlama geliyor?
 Siz kod yazarken değişken/sabit ya da fonksiyon adı olarak **TÜRKÇE** karakterler
