@@ -98,7 +98,7 @@ Bunlara ek olarak;
 - `close`
 - `complex`
 - `copy`
-- `delete`, 
+- `delete`
 - `imag`
 - `len`
 - `make`
