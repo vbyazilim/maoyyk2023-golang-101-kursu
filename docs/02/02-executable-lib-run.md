@@ -81,13 +81,21 @@ $ ls -al "$(go env GOPATH)/bin"
 $ echo $PATH
 
 $ # go install PACKAGE@TAG
-$ go install github.com/vigo/statoo@latest
-#            ^                      ^
-#            +--- paket adı         +--- hangi revizyon? en son tag’i indir
+$ go install github.com/vigo/statoo/v2@latest
+#            ^                         ^
+#            +--- paket adı            +--- hangi revizyon? en son tag’i indir
 
 # tüm release’ler: https://github.com/vigo/statoo/releases
+
 # eski versiyon için:
-# go install github.com/vigo/statoo@v2.0.0
+$ go list -m -versions github.com/vigo/statoo@latest
+github.com/vigo/statoo v0.1.0 v0.1.1 v0.1.2 v0.1.3 v0.2.0 v0.2.1 v0.2.2 v0.2.3 v1.0.0 v1.0.1 v1.1.0 v1.1.1 v1.1.2 v1.1.3 v1.2.0 v1.2.1 v1.2.2 v1.2.3 v1.3.0 v1.3.1 v1.4.0
+
+$ go list -m -versions github.com/vigo/statoo/v2@latest
+github.com/vigo/statoo/v2 v2.0.3
+
+# go install github.com/vigo/statoo@latest  # v1 familyasındaki son sürüm
+# go install github.com/vigo/statoo@v1.0.0  # v1.0.0
 ```
 
 ---
