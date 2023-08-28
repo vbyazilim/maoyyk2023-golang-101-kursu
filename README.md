@@ -183,6 +183,10 @@ Golang programlama dili kursu.
 
 1. [Faydalı Linkler](docs/bonus/01-links.md)
 
+## Quiz
+
+1. [Quiz 1](docs/quiz/01-go-cash-register.md)
+
 ---
 
 ## Katkı
