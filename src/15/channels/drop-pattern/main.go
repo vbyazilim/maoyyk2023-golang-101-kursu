@@ -37,7 +37,7 @@ func main() {
 			fmt.Printf("(send): paket %d\n", p)
 		default: // non-blocking, buffer dolunca burası hep çalışacak
 			// buffer dolunca bloklamadan devam et
-			// bu sayese;
+			// bu sayede;
 			// network gecikme maaliyetinden kurtulduk
 			// channel üzerinde baskı oluşturma maaliyetinden kurtulduk
 			// bu iş bir timeout azaltması değil, kapasite azaltmasıdır.
