@@ -109,7 +109,7 @@ func main() {
 https://go.dev/play/p/vZ2FD2wyDjN
 
 ```bash
-$ go run src/15/context/withcancel/main.go 
+$ go run src/15/context/with-cancel/main.go 
 ```
 
 kod:

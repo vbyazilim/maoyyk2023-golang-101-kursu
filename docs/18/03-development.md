@@ -94,7 +94,7 @@ $ git commit -m 'add gitignore file'
 ```bash
 $ go mod init github.com/<GITHUB-KULLANICI-ADINIZ>/kvstore
 $ git add .
-$ git ci -m 'add go.mod file'
+$ git commit -m 'add go.mod file'
 ```
 
 İlk olarak storage katmanından başlıyoruz;
