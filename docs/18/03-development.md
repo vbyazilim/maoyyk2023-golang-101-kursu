@@ -143,7 +143,7 @@ type MemoryDB map[string]any
 
 // Storer defines storage behaviours.
 type Storer interface {
-	Set(key string, value any) any
+	Set(key string, value any) (any, error)
 	Get(key string) (any, error)
 	Update(key string, value any) (any, error)
 	Delete(key string) error
@@ -357,11 +357,22 @@ func (ms *memoryStorage) List() MemoryDB {
 ```go
 package kvstorage
 
-func (ms *memoryStorage) Set(key string, value any) any {
+import (
+	"fmt"
+
+	"github.com/<GITHUB-KULLANICI-ADINIZ>/kvstore/src/internal/kverror"
+)
+
+func (ms *memoryStorage) Set(key string, value any) (any, error) {
+	if _, err := ms.Get(key); err == nil {
+		return nil, fmt.Errorf("%w", kverror.ErrKeyExists.AddData("'"+key+"' already exist"))
+	}
+
 	ms.mu.Lock()
 	defer ms.mu.Unlock()
+
 	ms.db[key] = value
-	return value
+	return value, nil
 }
 ```
 
@@ -376,7 +387,12 @@ func (ms *memoryStorage) Update(key string, value any) (any, error) {
 	if _, err := ms.Get(key); err != nil { // can not update! key doesn't exist
 		return nil, err
 	}
-	return ms.Set(key, value), nil
+
+	ms.mu.Lock()
+	defer ms.mu.Unlock()
+
+	ms.db[key] = value
+	return value, nil
 }
 ```
 
@@ -629,6 +645,7 @@ package kvstoreservice
 
 import (
 	"context"
+	"fmt"
 )
 
 func (s *kvStoreService) Set(ctx context.Context, sr *SetRequest) (*ItemResponse, error) {
@@ -636,11 +653,13 @@ func (s *kvStoreService) Set(ctx context.Context, sr *SetRequest) (*ItemResponse
 	case <-ctx.Done():
 		return nil, ctx.Err()
 	default:
-		value := s.storage.Set(sr.Key, sr.Value)
+		if _, err := s.storage.Set(sr.Key, sr.Value); err != nil {
+			return nil, fmt.Errorf("kvstoreservice.Set storage.Set err: %w", err)
+		}
 
 		return &ItemResponse{
 			Key:   sr.Key,
-			Value: value,
+			Value: sr.Value,
 		}, nil
 	}
 }
@@ -1489,7 +1508,7 @@ $ touch src/releaseinfo/releaseinfo.go
 package releaseinfo
 
 // Version is the current version of service.
-const Version string = "0.1.0"
+const Version string = "0.0.0"
 
 // BuildInformation holds current build information.
 var BuildInformation string
@@ -1569,7 +1588,6 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
-	"sync"
 	"syscall"
 	"time"
 
@@ -1674,7 +1692,7 @@ func New(options ...Option) error {
 
 	mux := http.NewServeMux()
 
-	mux.HandleFunc("/healthz/live", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/healthz/live/", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
 
@@ -1686,7 +1704,7 @@ func New(options ...Option) error {
 		})
 		_, _ = w.Write(j)
 	})
-	mux.HandleFunc("/healthz/ready", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/healthz/ready/", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
 
@@ -1717,9 +1735,6 @@ func New(options ...Option) error {
 	apiError := make(chan error, 1)
 	signal.Notify(shutdown, syscall.SIGINT, syscall.SIGTERM)
 
-	var wg sync.WaitGroup
-	wg.Add(1)
-
 	go func() {
 		logger.Info("starting api server", "listening", api.Addr, "env", apisrvr.serverEnv)
 		apiError <- api.ListenAndServe()
@@ -1741,9 +1756,6 @@ func New(options ...Option) error {
 			}
 			return fmt.Errorf("could not stop server gracefully: %w", err)
 		}
-
-		wg.Done()
-		wg.Wait()
 	}
 
 	return nil

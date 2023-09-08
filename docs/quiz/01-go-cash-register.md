@@ -1,10 +1,12 @@
-# Go Cash Regist Assignment
+# Go Cash Register Assignment
 
 ## Amaç
 
 Go dilinde basit bir kasa kayıt programı oluşturun. Bu program, bir liste
 içindeki ürünleri işleyebilmeli ve olası indirimleri uygulayarak toplam tutarı
 hesaplayabilmelidir.
+
+---
 
 ## Gereklilikler
 

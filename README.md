@@ -182,6 +182,7 @@ Golang programlama dili kursu.
 ## Bonus
 
 1. [Faydalı Linkler](docs/bonus/01-links.md)
+1. [kvstore](https://github.com/vbyazilim/kvstore)
 
 ## Quiz
 

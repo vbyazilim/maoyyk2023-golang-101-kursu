@@ -288,10 +288,13 @@ func TestSet(t *testing.T) {
 		kvstorage.WithMemoryDB(memoryStorage),
 	)
 
-	storage.Set(key, "value")
+	val, err := storage.Set(key, "value")
+	if err != nil {
+		t.Errorf("want: value, got: %v, err: %v", val, err)
+	}
 
-	if _, ok := memoryStorage[key]; !ok {
-		t.Error("value not equal")
+	if _, err := storage.Set(key, "xxx"); err == nil {
+		t.Error("error not occurred")
 	}
 }
 ```
@@ -386,8 +389,6 @@ $ tree .
     │               └── base.go
     └── releaseinfo
         └── releaseinfo.go
-
-17 directories, 28 files
 ```
 
 şimdi testi çalıştıralım; önce paketleri bulalım;
@@ -474,8 +475,6 @@ $ tree .
     │               └── update.go
     └── releaseinfo
         └── releaseinfo.go
-
-17 directories, 39 files
 ```
 
 ---
@@ -486,29 +485,36 @@ $ tree .
 package kvstoreservice_test
 
 import (
-	"errors"
-
 	"github.com/<GITHUB-KULLANICI-ADINIZ>/kvstore/src/internal/storage/memory/kvstorage"
 )
 
-var (
-	errStorageDelete = errors.New("storage delete error")
-	errStorageGet    = errors.New("storage get error")
-	errStorageUpdate = errors.New("storage update error")
-)
+var _ kvstorage.Storer = (*mockStorage)(nil) // compile time proof
 
 type mockStorage struct {
 	deleteErr error
 	getErr    error
 	updateErr error
-	memoryDB  kvstorage.MemoryDB
+	setErr    error
+
+	memoryDB kvstorage.MemoryDB
 }
 
-func (m *mockStorage) Delete(_ string) error {
+func (m *mockStorage) Delete(k string) error {
+	if m.deleteErr == nil {
+		delete(m.memoryDB, k)
+		return nil
+	}
 	return m.deleteErr
 }
 
-func (m *mockStorage) Get(_ string) (any, error) {
+func (m *mockStorage) Get(k string) (any, error) {
+	if m.getErr == nil {
+		v, ok := m.memoryDB[k]
+		if !ok {
+			return nil, m.getErr
+		}
+		return v, nil
+	}
 	return nil, m.getErr
 }
 
@@ -516,11 +522,28 @@ func (m *mockStorage) List() kvstorage.MemoryDB {
 	return m.memoryDB
 }
 
-func (m *mockStorage) Set(_ string, _ any) any {
-	return nil
+func (m *mockStorage) Set(k string, v any) (any, error) {
+	if m.setErr == nil {
+		if _, ok := m.memoryDB[k]; ok {
+			return nil, m.setErr
+		}
+
+		m.memoryDB[k] = v
+		return v, nil
+
+	}
+	return nil, m.setErr
 }
 
-func (m *mockStorage) Update(_ string, _ any) (any, error) {
+func (m *mockStorage) Update(k string, v any) (any, error) {
+	if m.updateErr == nil {
+		if _, ok := m.memoryDB[k]; !ok {
+			return nil, m.updateErr
+		}
+
+		m.memoryDB[k] = v
+		return v, nil
+	}
 	return nil, m.updateErr
 }
 ```
@@ -535,15 +558,17 @@ package kvstoreservice_test
 import (
 	"context"
 	"errors"
-	"strings"
 	"testing"
 
+	"github.com/<GITHUB-KULLANICI-ADINIZ>/kvstore/src/internal/kverror"
 	"github.com/<GITHUB-KULLANICI-ADINIZ>/kvstore/src/internal/service/kvstoreservice"
 )
 
 func TestDeleteWithCancel(t *testing.T) {
 	mockStorage := &mockStorage{}
-	kvsStoreService := kvstoreservice.New(kvstoreservice.WithStorage(mockStorage))
+	kvsStoreService := kvstoreservice.New(
+		kvstoreservice.WithStorage(mockStorage),
+	)
 
 	ctx, cancel := context.WithCancel(context.Background())
 	cancel()
@@ -555,24 +580,42 @@ func TestDeleteWithCancel(t *testing.T) {
 
 func TestDeleteWithStorageError(t *testing.T) {
 	mockStorage := &mockStorage{
-		deleteErr: errStorageDelete,
+		deleteErr: kverror.ErrKeyNotFound,
 	}
-	kvsStoreService := kvstoreservice.New(kvstoreservice.WithStorage(mockStorage))
+	kvsStoreService := kvstoreservice.New(
+		kvstoreservice.WithStorage(mockStorage),
+	)
 
-	if err := kvsStoreService.Delete(context.Background(), "key"); !strings.Contains(
-		err.Error(),
-		"kvstoreservice.Set storage.Delete",
-	) {
+	err := kvsStoreService.Delete(context.Background(), "key")
+	if err == nil {
 		t.Error("error not occurred")
+	}
+
+	var kvErr *kverror.Error
+
+	if !errors.As(err, &kvErr) {
+		t.Error("error must be kverror.ErrKeyNotFound")
 	}
 }
 
 func TestDelete(t *testing.T) {
-	mockStorage := &mockStorage{}
-	kvsStoreService := kvstoreservice.New(kvstoreservice.WithStorage(mockStorage))
+	mockStorage := &mockStorage{
+		memoryDB: map[string]any{
+			"key": "value",
+		},
+	}
+
+	kvsStoreService := kvstoreservice.New(
+		kvstoreservice.WithStorage(mockStorage),
+	)
 
 	if err := kvsStoreService.Delete(context.Background(), "key"); err != nil {
 		t.Error("error occurred")
+	}
+
+	_, ok := mockStorage.memoryDB["key"]
+	if ok {
+		t.Error("delete is not working!")
 	}
 }
 ```
@@ -587,9 +630,9 @@ package kvstoreservice_test
 import (
 	"context"
 	"errors"
-	"strings"
 	"testing"
 
+	"github.com/<GITHUB-KULLANICI-ADINIZ>/kvstore/src/internal/kverror"
 	"github.com/<GITHUB-KULLANICI-ADINIZ>/kvstore/src/internal/service/kvstoreservice"
 )
 
@@ -607,24 +650,48 @@ func TestGetWithCancel(t *testing.T) {
 
 func TestGetWithStorageError(t *testing.T) {
 	mockStorage := &mockStorage{
-		getErr: errStorageGet,
+		getErr: kverror.ErrKeyNotFound, // get raises ErrKeyNotFound
 	}
 	kvsStoreService := kvstoreservice.New(kvstoreservice.WithStorage(mockStorage))
 
-	if _, err := kvsStoreService.Get(context.Background(), "key"); !strings.Contains(
-		err.Error(),
-		"kvstoreservice.Set storage.Get",
-	) {
+	res, err := kvsStoreService.Get(context.Background(), "key")
+	if err == nil {
 		t.Error("error not occurred")
+	}
+
+	if res != nil {
+		t.Errorf("response must be nil!")
+	}
+
+	var kvErr *kverror.Error
+
+	if !errors.As(err, &kvErr) {
+		t.Error("error must be kverror.ErrKeyNotFound")
 	}
 }
 
 func TestGet(t *testing.T) {
-	mockStorage := &mockStorage{}
+	mockStorage := &mockStorage{
+		memoryDB: map[string]any{
+			"key": "value",
+		},
+	}
 	kvsStoreService := kvstoreservice.New(kvstoreservice.WithStorage(mockStorage))
 
-	if _, err := kvsStoreService.Get(context.Background(), "key"); err != nil {
+	res, err := kvsStoreService.Get(context.Background(), "key")
+	if err != nil {
 		t.Error("error occurred")
+	}
+
+	if res == nil {
+		t.Error("result should not be nil")
+	}
+
+	if res != nil {
+		val := *res
+		if val.Value != "value" {
+			t.Errorf("want: value, got: %s", val.Value)
+		}
 	}
 }
 ```
@@ -682,12 +749,15 @@ import (
 	"errors"
 	"testing"
 
+	"github.com/<GITHUB-KULLANICI-ADINIZ>/kvstore/src/internal/kverror"
 	"github.com/<GITHUB-KULLANICI-ADINIZ>/kvstore/src/internal/service/kvstoreservice"
 )
 
 func TestSetWithCancel(t *testing.T) {
 	mockStorage := &mockStorage{}
-	kvsStoreService := kvstoreservice.New(kvstoreservice.WithStorage(mockStorage))
+	kvsStoreService := kvstoreservice.New(
+		kvstoreservice.WithStorage(mockStorage),
+	)
 
 	ctx, cancel := context.WithCancel(context.Background())
 	cancel()
@@ -697,20 +767,60 @@ func TestSetWithCancel(t *testing.T) {
 	}
 }
 
+func TestSetWithStorageError(t *testing.T) {
+	mockStorage := &mockStorage{
+		setErr: kverror.ErrKeyExists,
+	}
+	kvsStoreService := kvstoreservice.New(
+		kvstoreservice.WithStorage(mockStorage),
+	)
+
+	serviceRequest := kvstoreservice.SetRequest{
+		Key:   "vigo",
+		Value: "lego",
+	}
+
+	res, err := kvsStoreService.Set(context.Background(), &serviceRequest)
+
+	if res != nil {
+		t.Errorf("response must be nil!")
+	}
+
+	var kvErr *kverror.Error
+
+	if !errors.As(err, &kvErr) {
+		t.Error("error must be kverror.ErrKeyExists")
+	}
+}
+
 func TestSet(t *testing.T) {
 	mockStorage := &mockStorage{
-		memoryDB: map[string]any{
-			"key": "value",
-		},
+		memoryDB: map[string]any{},
 	}
-	kvsStoreService := kvstoreservice.New(kvstoreservice.WithStorage(mockStorage))
+	kvsStoreService := kvstoreservice.New(
+		kvstoreservice.WithStorage(mockStorage),
+	)
 
 	setRequest := kvstoreservice.SetRequest{
-		Key:   "key",
-		Value: "value",
+		Key:   "username",
+		Value: "vigo",
 	}
-	if _, err := kvsStoreService.Set(context.Background(), &setRequest); err != nil {
-		t.Error("error occurred")
+
+	res, err := kvsStoreService.Set(context.Background(), &setRequest)
+	if err != nil {
+		t.Errorf("error occurred, err: %v", err)
+	}
+
+	if res == nil {
+		t.Error("result should not be nil")
+	}
+
+	if res != nil {
+		val := *res
+
+		if val.Value != "vigo" {
+			t.Errorf("want: vigo, got: %s", val.Value)
+		}
 	}
 }
 ```
@@ -725,15 +835,17 @@ package kvstoreservice_test
 import (
 	"context"
 	"errors"
-	"strings"
 	"testing"
 
+	"github.com/<GITHUB-KULLANICI-ADINIZ>/kvstore/src/internal/kverror"
 	"github.com/<GITHUB-KULLANICI-ADINIZ>/kvstore/src/internal/service/kvstoreservice"
 )
 
 func TestUpdateWithCancel(t *testing.T) {
 	mockStorage := &mockStorage{}
-	kvsStoreService := kvstoreservice.New(kvstoreservice.WithStorage(mockStorage))
+	kvsStoreService := kvstoreservice.New(
+		kvstoreservice.WithStorage(mockStorage),
+	)
 
 	ctx, cancel := context.WithCancel(context.Background())
 	cancel()
@@ -745,19 +857,26 @@ func TestUpdateWithCancel(t *testing.T) {
 
 func TestUpdateWithStorageError(t *testing.T) {
 	mockStorage := &mockStorage{
-		updateErr: errStorageUpdate,
+		updateErr: kverror.ErrKeyNotFound, // raises kverror.ErrKeyNotFound
 	}
-	kvsStoreService := kvstoreservice.New(kvstoreservice.WithStorage(mockStorage))
+	kvsStoreService := kvstoreservice.New(
+		kvstoreservice.WithStorage(mockStorage),
+	)
 
 	updateRequest := kvstoreservice.UpdateRequest{
 		Key:   "key",
 		Value: "value",
 	}
-	if _, err := kvsStoreService.Update(context.Background(), &updateRequest); !strings.Contains(
-		err.Error(),
-		"kvstoreservice.Set storage.Update",
-	) {
-		t.Error("error not occurred")
+
+	res, err := kvsStoreService.Update(context.Background(), &updateRequest)
+	if res != nil {
+		t.Errorf("response must be nil!")
+	}
+
+	var kvErr *kverror.Error
+
+	if !errors.As(err, &kvErr) {
+		t.Error("error must be kverror.ErrKeyNotFound")
 	}
 }
 
@@ -767,14 +886,30 @@ func TestUpdate(t *testing.T) {
 			"key": "value",
 		},
 	}
-	kvsStoreService := kvstoreservice.New(kvstoreservice.WithStorage(mockStorage))
+	kvsStoreService := kvstoreservice.New(
+		kvstoreservice.WithStorage(mockStorage),
+	)
 
 	updateRequest := kvstoreservice.UpdateRequest{
 		Key:   "key",
-		Value: "value",
+		Value: "vigo",
 	}
-	if _, err := kvsStoreService.Update(context.Background(), &updateRequest); err != nil {
-		t.Error("error occurred")
+
+	res, err := kvsStoreService.Update(context.Background(), &updateRequest)
+	if err != nil {
+		t.Errorf("error occurred, err: %v", err)
+	}
+
+	if res == nil {
+		t.Error("result should not be nil")
+	}
+
+	if res != nil {
+		val := *res
+
+		if val.Value != "vigo" {
+			t.Errorf("want: vigo, got: %s", val.Value)
+		}
 	}
 }
 ```
@@ -868,8 +1003,6 @@ $ tree .
     │               └── update_test.go
     └── releaseinfo
         └── releaseinfo.go
-
-17 directories, 45 files
 ```
 
 ---
@@ -1573,7 +1706,7 @@ func TestSetErrUnknown(t *testing.T) {
 	}
 }
 
-func TestGetServiceUnknownError(t *testing.T) {
+func TestSetServiceUnknownError(t *testing.T) {
 	handler := kvstorehandler.New(
 		kvstorehandler.WithService(&mockService{
 			getErr: kverror.ErrUnknown.AddData("fake error"),
@@ -1592,7 +1725,7 @@ func TestGetServiceUnknownError(t *testing.T) {
 	}
 }
 
-func TestGetServiceNilExistingItem(t *testing.T) {
+func TestSetServiceNilExistingItem(t *testing.T) {
 	handler := kvstorehandler.New(
 		kvstorehandler.WithService(&mockService{}),
 		kvstorehandler.WithLogger(logger),
@@ -1935,14 +2068,14 @@ github.com/<GITHUB-KULLANICI-ADINIZ>/kvstore/src/internal/service/kvstoreservice
 github.com/<GITHUB-KULLANICI-ADINIZ>/kvstore/src/internal/service/kvstoreservice/delete.go:8:			Delete			100.0%
 github.com/<GITHUB-KULLANICI-ADINIZ>/kvstore/src/internal/service/kvstoreservice/get.go:8:			Get			100.0%
 github.com/<GITHUB-KULLANICI-ADINIZ>/kvstore/src/internal/service/kvstoreservice/list.go:7:			List			100.0%
-github.com/<GITHUB-KULLANICI-ADINIZ>/kvstore/src/internal/service/kvstoreservice/set.go:7:			Set			100.0%
+github.com/<GITHUB-KULLANICI-ADINIZ>/kvstore/src/internal/service/kvstoreservice/set.go:8:			Set			100.0%
 github.com/<GITHUB-KULLANICI-ADINIZ>/kvstore/src/internal/service/kvstoreservice/update.go:8:			Update			100.0%
 github.com/<GITHUB-KULLANICI-ADINIZ>/kvstore/src/internal/storage/memory/kvstorage/base.go:30:			WithMemoryDB		100.0%
 github.com/<GITHUB-KULLANICI-ADINIZ>/kvstore/src/internal/storage/memory/kvstorage/base.go:37:			New			100.0%
 github.com/<GITHUB-KULLANICI-ADINIZ>/kvstore/src/internal/storage/memory/kvstorage/delete.go:3:			Delete			100.0%
 github.com/<GITHUB-KULLANICI-ADINIZ>/kvstore/src/internal/storage/memory/kvstorage/get.go:9:			Get			100.0%
 github.com/<GITHUB-KULLANICI-ADINIZ>/kvstore/src/internal/storage/memory/kvstorage/list.go:3:			List			100.0%
-github.com/<GITHUB-KULLANICI-ADINIZ>/kvstore/src/internal/storage/memory/kvstorage/set.go:3:			Set			100.0%
+github.com/<GITHUB-KULLANICI-ADINIZ>/kvstore/src/internal/storage/memory/kvstorage/set.go:9:			Set			100.0%
 github.com/<GITHUB-KULLANICI-ADINIZ>/kvstore/src/internal/storage/memory/kvstorage/update.go:3:			Update			100.0%
 github.com/<GITHUB-KULLANICI-ADINIZ>/kvstore/src/internal/transport/http/basehttphandler/basehttphandler.go:18:	JSON			71.4%
 github.com/<GITHUB-KULLANICI-ADINIZ>/kvstore/src/internal/transport/http/kvstorehandler/base.go:33:		WithService		100.0%
@@ -1955,10 +2088,10 @@ github.com/<GITHUB-KULLANICI-ADINIZ>/kvstore/src/internal/transport/http/kvstore
 github.com/<GITHUB-KULLANICI-ADINIZ>/kvstore/src/internal/transport/http/kvstorehandler/list.go:11:		List			100.0%
 github.com/<GITHUB-KULLANICI-ADINIZ>/kvstore/src/internal/transport/http/kvstorehandler/set.go:14:		Set			100.0%
 github.com/<GITHUB-KULLANICI-ADINIZ>/kvstore/src/internal/transport/http/kvstorehandler/update.go:14:		Update			100.0%
-total:												(statements)		98.6%
+total:												(statements)		98.7%
 ```
 
-yani tüm projenin toplam test coverage’ı **98.6%**. Sonra;
+yani tüm projenin toplam test coverage’ı **98.7%**. Sonra;
 
 ```bash
 $ git add .
