@@ -1,4 +1,4 @@
-![Version](https://img.shields.io/badge/version-0.1.4-orange.svg?style=for-the-badge)
+![Version](https://img.shields.io/badge/version-0.1.5-orange.svg?style=for-the-badge)
 ![Go Version](https://img.shields.io/badge/go-1.20.6-orange.svg?style=for-the-badge)
 ![Powered by Rake](https://img.shields.io/badge/powered_by-rake-blue?logo=ruby&style=for-the-badge)
 
