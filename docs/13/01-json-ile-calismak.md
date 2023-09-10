@@ -287,7 +287,7 @@ func main() {
 }
 ```
 
-Şimdi [örneğe](../../src/13/json-marshal-custom-time) bakalım, `struct`
+Şimdi [örneğe](https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/13/json-marshal-custom-time) bakalım, `struct`
 alanları içinde gezen, tag’leri bulan ve özelleştirilmiş `time` kullanan bir
 yapı bulunuyor. `go`, `Marshal` işlemi yaparken, eğer custom type varsa ve bu
 type’ın `MarshalJSON()` metotu varsa onu kullanıyor. `describeStruct` ise
@@ -551,7 +551,7 @@ işi biraz daha kontrollü yapmak gerekebilir. Bu durumda `json.NewDecoder`
 kullanırız. Beklenmeyen bir alan geldiğinde hata yakalama ile bunu yakalayıp
 istersek işlemi ilerletmeyebiliriz.
 
-Şimdi [örneğe](../../src/13/json-custom-decode) bakalım;
+Şimdi [örneğe](https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/13/json-custom-decode) bakalım;
 
 https://go.dev/play/p/hCGfrUGRn5-
 
@@ -686,7 +686,7 @@ Eğer bazı alanların opsiyonel olmasını istiyorsak, özellikle `struct`’a
 
 https://go.dev/play/p/u1mm5nr-jJx
 
-[Örnek](../../src/13/json-generic-interface)
+[Örnek](https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/13/json-generic-interface)
 
 ```go
 package main
@@ -796,7 +796,7 @@ gelen veri json array şeklinde değil;
 
 https://go.dev/play/p/H95BTncScTb
 
-[Örnek](../../src/13/json-streaming)
+[Örnek](https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/13/json-streaming)
 
 ```go
 package main

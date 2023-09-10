@@ -83,7 +83,7 @@ func (foo)ServeHTTP(http.ResponseWriter, *http.Request){
 
 artık `foo` bir HTTP Handler olarak kullanılabilir.
 
-[örnek](../../src/18/basic-http-server)
+[örnek](https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/18/basic-http-server)
 
 https://go.dev/play/p/8dMERh1XZvg
 
@@ -104,7 +104,7 @@ gerekiyor. Bunun için **request multiplexer**’a [ihtiyacımız][05] var.
 
 Hemen godoc’tan bir örneğe bakalım:
 
-[örnek](../../src/18/basic-mux)
+[örnek](https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/18/basic-mux)
 
 https://go.dev/play/p/T38GlxCvEpL
 

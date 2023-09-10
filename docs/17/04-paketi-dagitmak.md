@@ -9,7 +9,7 @@ olmazlarını ekleyelim, hemen [örnek projeden][01] gereken dosyaları alalım:
 - `LICENSE`
 - `CODE_OF_CONDUCT.md`
 
-### `README.md`
+## `README.md`
 
 İyi bir `README` dosyasında;
 

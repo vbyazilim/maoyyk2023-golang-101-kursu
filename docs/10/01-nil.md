@@ -1,5 +1,7 @@
 # Bölüm 10/01: `nil`
 
+## `nil`
+
 `nil` aslında ön tanımlı bir anahtar kelimde değil (25 anahtar kelimeden biri
 değil, `break`, `func` vs...) Kendine ait özel bir değeri var. Aslında `nil`
 şu tipler için **uninitialized** değeridir:
@@ -16,7 +18,7 @@ varolur. `nil`’in tipi yoktur, go ile beraber gelen ön tanımlı **bir şey**
 
 ---
 
-# Nerelerde Kullanılır
+## Nerelerde Kullanılır
 
 - pointer alan metot, fonksiyon’da argüman geçilmiş mi?
 - struct `nil` mi?

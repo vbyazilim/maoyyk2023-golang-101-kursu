@@ -9,7 +9,7 @@ yardığımıyla bu analizi yapmamızı sağlıyor.
 Test için `*testing.T` kullanırken, benchmarking için `*testing.B` kullanıyor
 olacağız. Şimdi örnek paketimize bakalım.
 
-[Örnek](../../src/14/test-benchmarking)
+[Örnek](https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/14/test-benchmarking)
 
 Bir string’i terse çevirmek için iki fonksiyonumuz var. Biri `Reverse` diğeri
 de `ReverseVigo`. İkisi de kendilerine verilen string’i terse çeviriyor. Arada
@@ -236,7 +236,7 @@ ok  	github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-benchmarking/s
 Kodumuz içinde **HEAP**’e kaçanları nasıl buluruz? Bu işleme 
 **Escape Analysis** yani kaçış analizi deniyor. Hemen örneğe bakalım:
 
-[Örnek](../../src/14/test-escape-analysis)
+[Örnek](https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/14/test-escape-analysis)
 
 https://go.dev/play/p/umeDnd8Iwdz
 

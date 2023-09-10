@@ -1,0 +1,91 @@
+site_name: MAÖYYK 2023 - Go Kursu
+site_description: Mustafa Akgül Özgür Yazılım Yaz Kampı 2023’te verilen Go Kursu
+site_author: Uğur vigo Özyılmazel
+site_url: https://vbyazilim.github.io/maoyyk2023-golang-101-kursu/
+dev_addr: 127.0.0.1:9000
+theme:
+  name: 'material'
+  language: 'tr'
+  features:
+    - navigation.indexes
+    - navigation.top
+    - toc.integrate
+repo_name: vbyazilim/maoyyk2023-golang-101-kursu
+repo_url: https://github.com/vbyazilim/maoyyk2023-golang-101-kursu
+extra_css:
+  - stylesheets/extra.css
+markdown_extensions:
+  - toc
+  - extra
+  - codehilite
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - pymdownx.inlinehilite
+  - pymdownx.tabbed
+  - pymdownx.magiclink
+nav:
+  - "İçindekiler": "index.md"
+  - "Bölüm 01: Golang Hakkında Genel Bilgiler":
+    - "Tanıtım, Öne Çıkan Kısımları": "01/01-tanitim.md"
+    - "Go Proverbs": "01/02-proverbs.md"
+    - "Kurulum": "01/03-kurulum.md"
+    - "VSCode Kurulumu": "01/04-vscode-kurulumu.md"
+  - "Bölüm 02: Golang Uygulamasına Genel Bakış":
+    - "Paket Kavramı ve `main` Paketi": "02/01-paket-kavrami.md"
+    - "Executable, Library ve Golang Uygulamasını Çalıştırmak": "02/02-executable-lib-run.md"
+  - "Bölüm 03":
+    - "Dil Kuralları": "03/01-dil-kurallari.md"
+    - "Sabitler": "03/02-sabitler.md"
+    - "Değişkenler": "03/03-degiskenler.md"
+  - "Bölüm 04: Veri Tipleri":
+    - "Strings (metinseller)": "04/01-string.md"
+    - "Booleans (mantıksallar)": "04/02-bool.md"
+    - "Numerics (sayısallar)": "04/03-numerics.md"
+    - "Koleksiyonlar": "04/04-collections.md"
+    - "Structs (yapılar)": "04/05-struct.md"
+    - "Struct Annotations": "04/05-struct-annotations.md"
+    - "Pointer (işaretçi) Kavramı": "04/06-pointer.md"
+    - "Struct Methods ve Receivers": "04/07-struct-methods-receivers.md"
+    - "Maps": "04/08-map.md"
+    - "Tip Dönüştürmek": "04/09-tip-donusturmek.md"
+  - "Bölüm 05: Fonksiyonlar": "05/01-fonksiyonlar.md"
+  - "Bölüm 06: Durum Kontrolleri":
+    - "if, else, else if": "06/01-durum-koontrolleri-if.md"
+    - "switch/case": "06/02-durum-koontrolleri-switch.md"
+    - "label/break/goto": "06/03-label-break-goto.md"
+  - "Bölüm 07: Döngüler": "07/01-dongu.md"
+  - "Bölüm 08: Interface": "08/01-interface.md"
+  - "Bölüm 09: Error": "09/01-error.md"
+  - "Bölüm 10: nil": "10/01-nil.md"
+  - "Bölüm 11: Generics": "11/01-generics.md"
+  - "Bölüm 12: Reflection": "12/01-reflection.md"
+  - "Bölüm 13: JSON İle Çalışmak": "13/01-json-ile-calismak.md"
+  - "Bölüm 14: Test":
+    - "Test": "14/01-test.md"
+    - "Table Driven Test": "14/02-table-driven-test.md"
+    - "Test Coverage": "14/03-test-coverage.md"
+    - "Profiling": "14/04-profiling.md"
+  - "Bölüm 15: Concurrency":
+    - "Concurrency": "15/01-concurrency.md"
+    - "Channels": "15/02-channels.md"
+    - "Mutex": "15/03-mutex.md"
+    - "Context": "15/04-context.md"
+  - "Bölüm 16: İsimlendirme Kuralları": "16/01-naming-conventions.md"
+  - "Bölüm 17: Golang Paketi Geliştirmek":
+    - "golangci-linter": "17/01-kurulumlar.md"
+    - "Go Modülü Anatomisi": "17/02-go-modul-anotomisi.md"
+    - "stringutils Paketi": "17/03-ornek-paket.md"
+    - "Paketi Dağıtmak": "17/04-paketi-dagitmak.md"
+  - "Bölüm 18: In-Memory Key-Value Store":
+    - "http Paketini Kullanarak Rest-API Tasarlamak": "18/01-http-paketi.md"
+    - "Domain Driven Design prensibini Kullanmak": "18/02-ddd-basics.md"
+    - "Geliştirme": "18/03-development.md"
+    - "http server’ın Unit Testleri": "18/04-testing.md"
+    - "Uygulamanın Docker Container’ından Çalıştırılması": "18/05-docker.md"
+    - "GitHub Actions": "18/06-github-actions.md"
+    - "Açık Kaynak": "18/07-acik-kaynak.md"
+  - "Bonus":
+    - "Linkler": "bonus/01-links.md"
+    - "kvstore": "https://github.com/vbyazilim/kvstore"
+  - "Quiz":
+    - "Quiz 1": "quiz/01-go-cash-register.md"

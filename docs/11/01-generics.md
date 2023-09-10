@@ -62,7 +62,7 @@ Bu şekilde tanımlanan fonksiyon, `int` veya `float64` türü için çalışır
 
 https://go.dev/play/p/aEoTFQBln_Q
 
-[Örnek](../../src/11/generics-functions)
+[Örnek](https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/11/generics-functions)
 
 ```go
 package main
@@ -94,7 +94,7 @@ Bu sorunu çözmek için bir `interface` kullanabiliriz:
 
 https://go.dev/play/p/dMFFc30TJH_t
 
-[Örnek](../../src/11/generics-functions-interface)
+[Örnek](https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/11/generics-functions-interface)
 
 ```go
 package main
@@ -129,7 +129,7 @@ sonra;
 
 https://go.dev/play/p/a-AQTFUfZ3T
 
-[Örnek](../../src/11/generics-constraints)
+[Örnek](https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/11/generics-constraints)
 
 ```go
 package main
@@ -196,7 +196,7 @@ bu fonksiyonu `SchoolNumber` türü için kullanabiliriz:
 
 https://go.dev/play/p/20l3bUMhJY4
 
-[Örnek](../../src/11/generics-custom-types)
+[Örnek](https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/11/generics-custom-types)
 
 ```go
 package main
@@ -248,7 +248,7 @@ Bu fonksiyonu aşağıdaki gibi çağırabiliriz:
 
 https://go.dev/play/p/4BJEzwJ9s5E
 
-[Örnek](../../src/11/generics-function-calls)
+[Örnek](https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/11/generics-function-calls)
 
 ```go
 package main
@@ -283,7 +283,7 @@ kullanarak bu fonksiyonu farklı türler için kullanabiliriz:
 
 https://go.dev/play/p/iE4yCG6yjy8
 
-[Örnek](../../src/11/generics-function-calls-and-types)
+[Örnek](https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/11/generics-function-calls-and-types)
 
 ```go
 package main
@@ -321,7 +321,7 @@ ya da `float64` türü için:
 
 https://go.dev/play/p/kH2Q2ilzqwA
 
-[Örnek](../../src/11/generics-function-calls-and-types2)
+[Örnek](https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/11/generics-function-calls-and-types2)
 
 ```go
 package main
@@ -365,7 +365,7 @@ Generic tipleri fonksiyonlarda olduğu gibi `struct`’larda da kullanabiliriz.
 
 https://go.dev/play/p/xpzfCN2fDST
 
-[Örnek](../../src/11/generics-in-structs)
+[Örnek](https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/11/generics-in-structs)
 
 ```go
 package main
@@ -413,7 +413,7 @@ tanımlayalım:
 
 https://go.dev/play/p/daZVdBfA-xz
 
-[Örnek](../../src/11/generics-in-maps)
+[Örnek](https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/11/generics-in-maps)
 
 ```go
 package main

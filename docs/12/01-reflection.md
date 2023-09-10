@@ -189,7 +189,7 @@ olarak aldığı `string` türündeki alanın değerini temizlemelidir.
 
 https://go.dev/play/p/e29cVR9F2r9
 
-[Örnek](../../src/11/reflect-clearvalue)
+[Örnek](https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/11/reflect-clearvalue)
 
 ```go
 package main
@@ -277,7 +277,7 @@ Keza, yine `any` alan bir fonksiyon olsun, geçilen tipi (Kind) tespit edelim:
 
 https://go.dev/play/p/RbRn7tVQHV-
 
-[Örnek](../../src/11/reflect-typecheck)
+[Örnek](https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/11/reflect-typecheck)
 
 ```go
 package main

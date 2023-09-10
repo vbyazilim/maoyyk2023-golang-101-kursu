@@ -241,7 +241,7 @@ ve `slice`’ın sayısı kadar goroutine ateşliyoruz:
 
 https://go.dev/play/p/6naaL-Tm6WJ
 
-[Örnek](../../src/15/waitgroup)
+[Örnek](https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/15/waitgroup)
 
 ```go
 package main

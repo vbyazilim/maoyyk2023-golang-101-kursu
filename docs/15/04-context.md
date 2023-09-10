@@ -63,7 +63,7 @@ kullanacağımıza tam karar vermediğimiz durumlarda `context.TODO()` kullanır
 
 ## WithTimeout
 
-[örnek](../../src/15/context/with-timeout)
+[örnek](https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/15/context/with-timeout)
 
 https://go.dev/play/p/biXpvephej1
 
@@ -104,7 +104,7 @@ func main() {
 
 ## WithCancel
 
-[örnek](../../src/15/context/with-cancel)
+[örnek](https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/15/context/with-cancel)
 
 https://go.dev/play/p/vZ2FD2wyDjN
 
@@ -166,7 +166,7 @@ func main() {
 
 ## WithDeadline
 
-[örnek](../../src/15/context/with-dead-line)
+[örnek](https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/15/context/with-dead-line)
 
 https://go.dev/play/p/3_c7JD2sKJG
 
@@ -216,7 +216,7 @@ LOOP:
 
 ## WithValue
 
-[örnek](../../src/15/context/with-value)
+[örnek](https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/15/context/with-value)
 
 https://go.dev/play/p/wFyT4vdYsey
 
@@ -278,7 +278,7 @@ Elimizde `1000` tane mesaj var, bunları dış dünyada bir web api’ya (servis
 göndermek istiyoruz. İstek eğer 300 milisaniyeden uzun sürerse işlemi iptal
 etmek istiyoruz, 10 tane `worker` ile bu mesajları eritmek istiyoruz.
 
-[örnek](../../src/15/context/waitgroup-channel-deadline)
+[örnek](https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/15/context/waitgroup-channel-deadline)
 
 https://go.dev/play/p/Kift5XwSh2q
 

@@ -61,7 +61,7 @@ for _, tc := range tests {
 
 Testi çalıştıralım:
 
-[Örnek](../../src/14/test-table-driven)
+[Örnek](https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/14/test-table-driven)
 
 ```bash
 $ go test -v github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-table-driven/greet
@@ -77,7 +77,7 @@ daha rahat yapma ve her parçacığa erişebilecek isim verme imkanı sağlıyor
 Bu sayede istediğimiz an istediğimiz alt parçacığı çalıştırabiliyoruz. Buna
 da **sub test** deniyor:
 
-[Örnek](../../src/14/test-table-driven-sub-tests)
+[Örnek](https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/14/test-table-driven-sub-tests)
 
 ```go
 package greet_test
@@ -165,7 +165,7 @@ func TestMain(m *testing.M) {
 Eğer sub test içinden yapmak istersek; `t.Run()` öncesi ve sonrasını
 kullanırız:
 
-[Örnek](../../src/14/test-setup-teardown)
+[Örnek](https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/14/test-setup-teardown)
 
 ```go
 package greet_test
@@ -259,7 +259,7 @@ haline dönüşür.
 
 Aynı sub test örneğimizi paralel çalışan test haline getirelim:
 
-[Örnek](../../src/14/test-parallel)
+[Örnek](https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/14/test-parallel)
 
 ```go
 package greet_test

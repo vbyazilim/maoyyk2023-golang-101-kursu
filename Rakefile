@@ -26,3 +26,20 @@ task :release, [:revision] => [:is_repo_clean] do |_, args|
   args.with_defaults(revision: 'patch')
   Rake::Task['bump'].invoke(args.revision)
 end
+
+namespace :mkdocs do
+  desc "run docs server"
+  task :serve do
+    system "mkdocs serve"
+  end
+
+  desc "build docs"
+  task :build do
+    system "mkdocs build --clean"
+  end
+
+  desc "deploy to GitHub"
+  task :deploy do
+    system "mkdocs gh-deploy"
+  end
+end

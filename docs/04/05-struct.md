@@ -558,7 +558,7 @@ type Person struct {
 }
 ```
 
-ve başka bir paketten `person` paketini `import` edip kullansak, [örnek kod](../../src/04/05-struct-field-access);
+ve başka bir paketten `person` paketini `import` edip kullansak, [örnek kod](https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/04/05-struct-field-access);
 
 ```go
 package main
@@ -584,7 +584,7 @@ func main() {
 `p.secret` dış dünyadan erişime kapalı. `secret` sadece içeriden erişilen bir
 şey. Bu bakımdan `person` paketi içinde hem bu `secret` field’ına atama yapan
 hem de `secret`’a erişmeyi sağlacak bir **Getter** ve **Setter** metotlarına
-ihtiyacımız olacak; [örnek kod](../../src/04/05-struct-field-access-getter);
+ihtiyacımız olacak; [örnek kod](https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/04/05-struct-field-access-getter);
 
 `person.go`
 
@@ -840,5 +840,5 @@ Nerelerde kullanırız?
 
 
 [01]: https://vbyazilim.com/blog/2022/11/28/struct-field-alignment-in-golang/
-[02]: ../15/01-concurrency.md
-[03]: ../04/08-map.md
+[02]: https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/docs/15/01-concurrency.md
+[03]: https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/docs/04/08-map.md

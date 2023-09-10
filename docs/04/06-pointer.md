@@ -200,5 +200,5 @@ yardımıyla değiştiriyoruz yani `*memory = ` gibi...
 
 ![06 Pointer With C64](06-pointer-with-c64.gif)
 
-[01]: ../03/03-degiskenler.md
-[02]: ../13/01-json-ile-calismak.md
+[01]: https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/docs/03/03-degiskenler.md
+[02]: https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/docs/13/01-json-ile-calismak.md

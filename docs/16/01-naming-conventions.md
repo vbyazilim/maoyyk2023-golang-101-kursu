@@ -295,7 +295,7 @@ func New(...string) Set {...}
 
 ilerler..
 
-### Kaynaklar
+## Kaynaklar
 
 - https://go.dev/blog/package-names
 - https://rakyll.org/style-packages/

@@ -476,5 +476,5 @@ func main() {
 
 ---
 
-[01]: ../91/01-error.md
+[01]: https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/docs/91/01-error.md
 [02]: https://www.ardanlabs.com/blog/2013/10/functions-and-naked-returns-in-go.html

@@ -33,7 +33,7 @@ dönüşsün.
 
 https://go.dev/play/p/J3QLYdSjXtb
 
-[Örnek kod](../../src/04/05-struct-custom-tag)
+[Örnek kod](https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/04/05-struct-custom-tag)
 
 ```go
 package main
@@ -117,7 +117,7 @@ https://github.com/isacikgoz/defaults
 
 https://go.dev/play/p/-b7GxOVnxjX
 
-[Örnek kod](../../src/04/05-struct-validate)
+[Örnek kod](https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/04/05-struct-validate)
 
 ```go
 package main

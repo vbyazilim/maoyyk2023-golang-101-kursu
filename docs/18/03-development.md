@@ -125,7 +125,7 @@ kaydedelim:
 package kvstorage
 ```
 
-Go koduna başladık, hemen [linter konfigürasyon](../../.golangci.yml)
+Go koduna başladık, hemen [linter konfigürasyon](https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/.golangci.yml)
 dosyamızı root dizine atalım, sonra `base.go` dosyasını aşağıdaki gibi
 düzenleyelim;
 

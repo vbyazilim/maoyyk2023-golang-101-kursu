@@ -30,7 +30,7 @@ SayHi("uğur", "erhan")  // hi uğur
 
 Haydi şimdi koda bakalım:
 
-[Örnek](../../src/14/test-greet)
+[Örnek](https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/14/test-greet)
 
 `greet/greet.go`:
 
@@ -438,7 +438,7 @@ Benzer senaryo bizim için **go routine** kullandığımız zaman yaşanacak. İ
 bu tür kaçakları test esnasında yakalamak için `-race` parametresini
 kullanıyoruz. Şimdi aynısı go ile yapalım:
 
-[Örnek](../../src/14/test-datarace)
+[Örnek](https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/14/test-datarace)
 
 ```go
 package kvstore

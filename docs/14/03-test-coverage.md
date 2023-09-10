@@ -6,7 +6,7 @@ Bir proje ya da uygulama ya da paket geliştirdik. Peki yazdığımız kodun ne
 kadarını test ettik? Code coverage, yazılan kodun **% kaçının** test
 edildiğini ölçme işlemidir.
 
-[Örnek](../../src/14/test-code-coverage)
+[Örnek](https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/14/test-code-coverage)
 
 ```bash
 $ go test -v -cover github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-code-coverage/greet

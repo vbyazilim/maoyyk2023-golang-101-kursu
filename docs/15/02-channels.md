@@ -98,7 +98,7 @@ func sendOnly(ch chan<- int) {
 }
 ```
 
-[Örnek](../../src/15/channels/send-only)
+[Örnek](https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/15/channels/send-only)
 
 ```bash
 $ go run src/15/channels/send-only/main.go
@@ -158,7 +158,7 @@ invalid operation: cannot send to receive-only type <-chan int
 gibi hata vererek kodu düzeltmenizi ister. Şimdi ilk yaptığımız, hani
 `time.Sleep` kullanarak yaptığımız örneği **channel** kullanarak yapalım;
 
-[Örnek](../../src/15/channels/basic-goroutine-with-channel)
+[Örnek](https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/15/channels/basic-goroutine-with-channel)
 
 https://go.dev/play/p/E8EzcHasNxE
 
@@ -217,7 +217,7 @@ https://www.youtube.com/watch?v=LvgVSSpwND8
 
 ## `done` Pattern
 
-[Örnek](../../src/15/channels/done-pattern)
+[Örnek](https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/15/channels/done-pattern)
 
 https://go.dev/play/p/kHzc8P2kcji
 
@@ -280,7 +280,7 @@ durumda goroutine’ler uykuya dalar...
 
 **fatal error: all goroutines are asleep - deadlock!**
 
-[Örnek](../../src/15/channels/done-pattern)
+[Örnek](https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/15/channels/done-pattern)
 
 https://go.dev/play/p/U4ulhb8DtVC
 
@@ -359,7 +359,7 @@ okuyan (receiver) bunu bilemez. `close` den **her zaman yazan (sender)** olmalı
 
 Aynı örnekte ufak bir değişiklik yapalım:
 
-[Örnek](../../src/15/channels/open-close-check)
+[Örnek](https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/15/channels/open-close-check)
 
 https://go.dev/play/p/czqEVQxGg7J
 
@@ -432,7 +432,7 @@ func main() {
 
 https://go.dev/play/p/aZWYNsf7KnW
 
-[Örnek](../../src/15/unblock-send)
+[Örnek](https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/15/unblock-send)
 
 ```bash
 $ go run src/15/channels/unblock-send/main.go
@@ -473,7 +473,7 @@ Ya da **buffered channels** kullanmak
 Aynı örneği **syntactic sugar** kullanarak yani, zahmetsiz open/close kontrolü
 ve yeteri sayıda iterasyonla channel’ı tüketebiliriz:
 
-[Örnek](../../src/15/channels/range-over-channels)
+[Örnek](https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/15/channels/range-over-channels)
 
 https://play.golang.org/p/qTwbWZpTSmi
 
@@ -523,7 +523,7 @@ durumuna göre diğer unbuffered channels’a göre bloklama işlemi farklı ça
 
 Aslında bir tür sender ve receiver arasına **buffer** ekliyoruz:
 
-[Örnek](../../src/15/channels/unblock-send-with-buffered-ch)
+[Örnek](https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/15/channels/unblock-send-with-buffered-ch)
 
 https://go.dev/play/p/WRH9PNXlEoK
 
@@ -566,7 +566,7 @@ kadar blok olmadan receive eder, buffer boşalınca blok olur.
 Buffered channel’lar in-memory **FIFO** queue yani, ilk gönderilen (send) ilk
 alınan (receive) şeklinde çalışır.
 
-[Örnek](../../src/15/channels/buffered-channels)
+[Örnek](https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/15/channels/buffered-channels)
 
 https://go.dev/play/p/FrBCaAwfg_l
 
@@ -633,7 +633,7 @@ func main() {
 tane goroutine’imiz var, aynı anda maksimum **5 goroutine** kullanmak
 istiyoruz.
 
-[Örnek](../../src/15/channels/buffered-semaphore-pattern)
+[Örnek](https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/15/channels/buffered-semaphore-pattern)
 
 https://go.dev/play/p/u3_rB6lNDe-
 
@@ -688,7 +688,7 @@ goroutine** çalışmasını sağlıyoruz.
 
 ## Fan Out Pattern
 
-[Örnek](../../src/15/channels/buffered-fan-out-pattern)
+[Örnek](https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/15/channels/buffered-fan-out-pattern)
 
 ```bash
 $ go run src/15/channels/buffered-fan-out-pattern/main.go
@@ -735,7 +735,7 @@ func main() {
 Aynı anda birden fazla channel’ı dinlemek için kullanırız. Daha önce gördüğümüz
 `switch` statement’ına çok benzer.
 
-[Örnek](../../src/15/channels/select)
+[Örnek](https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/15/channels/select)
 
 ```bash
 $ go run src/15/channels/select/main.go
@@ -788,7 +788,7 @@ func main() {
 
 ## Ticker
 
-[Örnek](../../src/15/channels/ticker)
+[Örnek](https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/15/channels/ticker)
 
 ```bash
 $ go run src/15/channels/ticker/main.go
@@ -831,7 +831,7 @@ func main() {
 
 ## Worker Pattern
 
-[Örnek](../../src/15/channels/buffered-worker-pattern)
+[Örnek](https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/15/channels/buffered-worker-pattern)
 
 https://go.dev/play/p/zp6kAN83BTP
 
@@ -916,7 +916,7 @@ func main() {
 
 ## Channel’a `nil` Göndermek
 
-[Örnek](../../src/15/channels/send-nil)
+[Örnek](https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/15/channels/send-nil)
 
 https://go.dev/play/p/h1A45dC2x3k
 
@@ -1004,7 +1004,7 @@ func main() {
 
 ## Drop Pattern
 
-[Örnek](../../src/15/channels/drop-pattern)
+[Örnek](https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/15/channels/drop-pattern)
 
 https://go.dev/play/p/2fx8kUobwCi
 

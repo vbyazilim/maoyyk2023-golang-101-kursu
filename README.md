@@ -190,6 +190,23 @@ Golang programlama dili kursu.
 
 ---
 
+## mkdocs
+
+Otomatik doküman oluşturmak için;
+
+```bash
+pip install -r requirements.txt
+
+rake -T
+
+rake mkdocs:build       # build docs
+rake mkdocs:deploy      # deploy to GitHub
+rake mkdocs:serve       # run docs server
+rake release[revision]  # release new version major,minor,patch, default: patch
+```
+
+---
+
 ## Katkı
 
 Hata raporları ve katkı istekleri,
