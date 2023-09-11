@@ -1,0 +1,2575 @@
+
+<!doctype html>
+<html lang="tr" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Mustafa Akgül Özgür Yazılım Yaz Kampı 2023’te verilen Go Kursu">
+      
+      
+        <meta name="author" content="Uğur vigo Özyılmazel">
+      
+      
+        <link rel="canonical" href="https://vbyazilim.github.io/maoyyk2023-golang-101-kursu/08/01-interface/">
+      
+      
+        <link rel="prev" href="../../07/01-dongu/">
+      
+      
+        <link rel="next" href="../../09/01-error/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.2.8">
+    
+    
+      
+        <title>Bölüm 08: Interface - MAÖYYK 2023 - Go Kursu</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.046329b4.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#bolum-0801-interface" class="md-skip">
+          Ana içeriğe geç
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Başlık">
+    <a href="../.." title="MAÖYYK 2023 - Go Kursu" class="md-header__button md-logo" aria-label="MAÖYYK 2023 - Go Kursu" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            MAÖYYK 2023 - Go Kursu
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Bölüm 08: Interface
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Ara" placeholder="Ara" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Ara">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Temizle" aria-label="Temizle" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Arama başlatılıyor
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/vbyazilim/maoyyk2023-golang-101-kursu" title="Depoya git" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    vbyazilim/maoyyk2023-golang-101-kursu
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigasyon" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="MAÖYYK 2023 - Go Kursu" class="md-nav__button md-logo" aria-label="MAÖYYK 2023 - Go Kursu" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    MAÖYYK 2023 - Go Kursu
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/vbyazilim/maoyyk2023-golang-101-kursu" title="Depoya git" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    vbyazilim/maoyyk2023-golang-101-kursu
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    İçindekiler
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Bölüm 01: Golang Hakkında Genel Bilgiler
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Bölüm 01: Golang Hakkında Genel Bilgiler
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01/01-tanitim/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tanıtım, Öne Çıkan Kısımları
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01/02-proverbs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Go Proverbs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01/03-kurulum/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Kurulum
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01/04-vscode-kurulumu/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    VSCode Kurulumu
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Bölüm 02: Golang Uygulamasına Genel Bakış
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Bölüm 02: Golang Uygulamasına Genel Bakış
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02/01-paket-kavrami/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Paket Kavramı ve `main` Paketi
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02/02-executable-lib-run/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Executable, Library ve Golang Uygulamasını Çalıştırmak
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Bölüm 03
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Bölüm 03
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03/01-dil-kurallari/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Dil Kuralları
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03/02-sabitler/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sabitler
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03/03-degiskenler/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Değişkenler
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Bölüm 04: Veri Tipleri
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Bölüm 04: Veri Tipleri
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04/01-string/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Strings (metinseller)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04/02-bool/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Booleans (mantıksallar)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04/03-numerics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Numerics (sayısallar)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04/04-collections/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Koleksiyonlar
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04/05-struct/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Structs (yapılar)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04/05-struct-annotations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Struct Annotations
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04/06-pointer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Pointer (işaretçi) Kavramı
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04/07-struct-methods-receivers/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Struct Methods ve Receivers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04/08-map/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Maps
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04/09-tip-donusturmek/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tip Dönüştürmek
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05/01-fonksiyonlar/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bölüm 05: Fonksiyonlar
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Bölüm 06: Durum Kontrolleri
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Bölüm 06: Durum Kontrolleri
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06/01-durum-koontrolleri-if/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    if, else, else if
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06/02-durum-koontrolleri-switch/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    switch/case
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06/03-label-break-goto/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    label/break/goto
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07/01-dongu/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bölüm 07: Döngüler
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Bölüm 08: Interface
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Bölüm 08: Interface
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="İçindekiler">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      İçindekiler
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#empty-interface" class="md-nav__link">
+    Empty Interface
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tip-kontrol-mekanizmas" class="md-nav__link">
+    Tip Kontrol Mekanizması
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#satisfying-interface" class="md-nav__link">
+    Satisfying Interface
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09/01-error/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bölüm 09: Error
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10/01-nil/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bölüm 10: nil
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../11/01-generics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bölüm 11: Generics
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../12/01-reflection/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bölüm 12: Reflection
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../13/01-json-ile-calismak/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bölüm 13: JSON İle Çalışmak
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_15" >
+        
+          <label class="md-nav__link" for="__nav_15" id="__nav_15_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Bölüm 14: Test
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_15_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_15">
+            <span class="md-nav__icon md-icon"></span>
+            Bölüm 14: Test
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14/01-test/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Test
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14/02-table-driven-test/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Table Driven Test
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14/03-test-coverage/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Test Coverage
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14/04-profiling/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Profiling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_16" >
+        
+          <label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Bölüm 15: Concurrency
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_16">
+            <span class="md-nav__icon md-icon"></span>
+            Bölüm 15: Concurrency
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15/01-concurrency/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Concurrency
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15/02-channels/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Channels
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15/03-mutex/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mutex
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15/04-context/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Context
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../16/01-naming-conventions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bölüm 16: İsimlendirme Kuralları
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_18" >
+        
+          <label class="md-nav__link" for="__nav_18" id="__nav_18_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Bölüm 17: Golang Paketi Geliştirmek
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_18_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_18">
+            <span class="md-nav__icon md-icon"></span>
+            Bölüm 17: Golang Paketi Geliştirmek
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../17/01-kurulumlar/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    golangci-linter
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../17/02-go-modul-anotomisi/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Go Modülü Anatomisi
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../17/03-ornek-paket/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    stringutils Paketi
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../17/04-paketi-dagitmak/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Paketi Dağıtmak
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_19" >
+        
+          <label class="md-nav__link" for="__nav_19" id="__nav_19_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Bölüm 18: In-Memory Key-Value Store
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_19_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_19">
+            <span class="md-nav__icon md-icon"></span>
+            Bölüm 18: In-Memory Key-Value Store
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18/01-http-paketi/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    http Paketini Kullanarak Rest-API Tasarlamak
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18/02-ddd-basics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Domain Driven Design prensibini Kullanmak
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18/03-development/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Geliştirme
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18/04-testing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    http server’ın Unit Testleri
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18/05-docker/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Uygulamanın Docker Container’ından Çalıştırılması
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18/06-github-actions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GitHub Actions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18/07-acik-kaynak/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Açık Kaynak
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_20" >
+        
+          <label class="md-nav__link" for="__nav_20" id="__nav_20_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Bonus
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_20_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_20">
+            <span class="md-nav__icon md-icon"></span>
+            Bonus
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../bonus/01-links/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Linkler
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/vbyazilim/kvstore" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    kvstore
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_21" >
+        
+          <label class="md-nav__link" for="__nav_21" id="__nav_21_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Quiz
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_21_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_21">
+            <span class="md-nav__icon md-icon"></span>
+            Quiz
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quiz/01-go-cash-register/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Quiz 1
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="bolum-0801-interface">Bölüm 08/01: <code>interface</code></h1>
+<p>Go’nun en önemli konuları nedir diye sorsanız cevap olarak iki konu var derim:</p>
+<ol>
+<li>Interface</li>
+<li>Concurrency</li>
+</ol>
+<p>Bir işin nasıl yapılacağını, bir davranışı belirleyen şeydir <code>interface</code>.
+Yazdığımız kodu test edebilmek için <code>interface</code>’lere ihtiyaç duyarız.</p>
+<p>Hemen küçük bir örnek yapalım. <strong>Type aliasing</strong> konusunu gördük;</p>
+<div class="highlight"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nx">main</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="s">&quot;fmt&quot;</span>
+
+<span class="c1">// Status represents custom status.</span>
+<span class="kd">type</span><span class="w"> </span><span class="nx">Status</span><span class="w"> </span><span class="kt">string</span>
+
+<span class="c1">// Custom status codes.</span>
+<span class="kd">const</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="nx">StatusOK</span><span class="w">    </span><span class="nx">Status</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;OK&quot;</span>
+<span class="w">    </span><span class="nx">StatusERROR</span><span class="w"> </span><span class="nx">Status</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;ERROR&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">StatusOK</span><span class="p">)</span><span class="w"> </span><span class="c1">// OK</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><code>fmt.Print</code> familyası, verilen şeyi print edeceği zaman şuna bakar, acaba
+gelen argümanın tipi, <code>Stringer</code> <code>interface</code>’ini <strong>satisfy</strong> ediyor mu? Yani;
+pas edilen tip ne ise, <code>Stringer</code>’da tanımlanan davranışlardan <code>String()</code>
+metotuna sahip mi?</p>
+<div class="highlight"><pre><span></span><code><span class="kd">type</span><span class="w"> </span><span class="nx">Stringer</span><span class="w"> </span><span class="kd">interface</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">String</span><span class="p">()</span><span class="w"> </span><span class="kt">string</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Herhangi bir tipin <code>Stringer</code>’ı tatmin edebilmesi için, mutlaka <code>String()</code>
+diye bir metotu olmalı ver geriye <code>string</code> dönmeli. Davranıştan kastedilen şey
+bu. Bu bakımdan <code>interface</code> tanımı yapılırken mutlaka ilgili <code>interface</code>’in
+adı <code>er</code> eki ile biter (İngilizce).</p>
+<div class="highlight"><pre><span></span><code><span class="kd">type</span><span class="w"> </span><span class="kt">error</span><span class="w"> </span><span class="kd">interface</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">Error</span><span class="p">()</span><span class="w"> </span><span class="kt">string</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Her kim ki <code>Error()</code> diye metotu olup geriye <code>string</code> döner, o artık <code>error</code>
+olarak kullanılabilir.</p>
+<div class="highlight"><pre><span></span><code><span class="kd">type</span><span class="w"> </span><span class="nx">Reader</span><span class="w"> </span><span class="kd">interface</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">Read</span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="p">[]</span><span class="kt">byte</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nx">n</span><span class="w"> </span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">type</span><span class="w"> </span><span class="nx">Writer</span><span class="w"> </span><span class="kd">interface</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">Write</span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="p">[]</span><span class="kt">byte</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nx">n</span><span class="w"> </span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Örneğe geri dönelim, şimdi bizim tipimiz de <code>Stringer</code>’ı tatmin etsin;</p>
+<p><a href="https://go.dev/play/p/Qxkj_AxtdbA">https://go.dev/play/p/Qxkj_AxtdbA</a></p>
+<div class="highlight"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nx">main</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="s">&quot;fmt&quot;</span>
+
+<span class="c1">// Status represents custom status.</span>
+<span class="kd">type</span><span class="w"> </span><span class="nx">Status</span><span class="w"> </span><span class="kt">string</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">o</span><span class="w"> </span><span class="nx">Status</span><span class="p">)</span><span class="w"> </span><span class="nx">String</span><span class="p">()</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;Status is: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nb">string</span><span class="p">(</span><span class="nx">o</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1">// Custom status codes.</span>
+<span class="kd">const</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="nx">StatusOK</span><span class="w">    </span><span class="nx">Status</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;OK&quot;</span>
+<span class="w">    </span><span class="nx">StatusERROR</span><span class="w"> </span><span class="nx">Status</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;ERROR&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">StatusOK</span><span class="p">)</span><span class="w"> </span><span class="c1">// Status is: OK</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr />
+<h2 id="empty-interface">Empty Interface</h2>
+<p>Rob Pike ne demişti?</p>
+<blockquote>
+<p>Empty interface (interface{}) says nothing</p>
+</blockquote>
+<p><code>Reader</code> diye bir <code>interface</code> ismi duyduğumuzda aklımıza şu gelmeli:</p>
+<blockquote>
+<p>Hmmm, demek ki <code>Read</code> diye bir metotu var</p>
+</blockquote>
+<p>ya da <code>ReadCloser</code> diye bir <code>interface</code> ismi duyduğumuzda;</p>
+<blockquote>
+<p>Kesin <code>Read</code> ve <code>Close</code> diye metotları var</p>
+</blockquote>
+<p>Go geleneği olarak, <code>FooBarer</code> -&gt; <code>ReadCloser</code>, <code>WriteCloser</code> gibi ifade
+edilir. Birazdan göreceğiz, aynı struct’lar gibi <code>interface</code>’lerde bir biri
+içine gömülebiliyor:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// FooBarBazer :)</span>
+<span class="kd">type</span><span class="w"> </span><span class="nx">ReadSeekCloser</span><span class="w"> </span><span class="kd">interface</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">Reader</span>
+<span class="w">    </span><span class="nx">Seeker</span>
+<span class="w">    </span><span class="nx">Closer</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Dolayısıyla, <code>Reader</code> şu şekilde olsa;</p>
+<div class="highlight"><pre><span></span><code><span class="kd">type</span><span class="w"> </span><span class="nx">Reader</span><span class="w"> </span><span class="kd">interface</span><span class="w"> </span><span class="p">{}</span>
+</code></pre></div>
+<p>Bundan ne anlarız? Hiçbir metotu olmayan, <strong>boş bir interface</strong>! Bize
+söylediği bir şey var mı? bir metot? davranış? <strong>yok</strong>... Peki hemen şu soru
+gelmeli, acaba hangi tipler bu interface’i tatmin (satisfy) edebilir? Cevap
+tüm tipler, sonradan tanımlı tipler, her şey! Neden? Bu interface’in bize
+sunduğu, bizim implemente etmemiz (geliştirmemzi, yazmamız) gereken <strong>hiç bir
+metotu</strong> yok!</p>
+<p>Boş <code>interface</code> somut bir tip değildir (concrete type)</p>
+<p>Go versiyon <code>1.18</code> ile hayatımıza <code>any</code> diye bir tip girdi, aslında;</p>
+<div class="highlight"><pre><span></span><code><span class="kd">type</span><span class="w"> </span><span class="kt">any</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="kd">interface</span><span class="p">{}</span>
+</code></pre></div>
+<p><strong>empty interface</strong> için <strong>syntactic sugar</strong> (yani küçük bir kolaylık,
+güzellik); istersek halen <code>interface{}</code> şeklinde de kullanabiliriz.</p>
+<p>Şimdi <code>any</code> ve <code>interface{}</code> kullanarak <code>greet</code> fonksiyonunu tekrar yazalım:</p>
+<p><a href="https://go.dev/play/p/86jGL4zv6_T">https://go.dev/play/p/86jGL4zv6_T</a></p>
+<div class="highlight"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nx">main</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="s">&quot;fmt&quot;</span>
+
+<span class="c1">// t aslında tipsiz :) ne gelirse onun için sorun yok</span>
+<span class="kd">func</span><span class="w"> </span><span class="nx">greet</span><span class="p">(</span><span class="nx">t</span><span class="w"> </span><span class="kd">interface</span><span class="p">{})</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Sprintf</span><span class="p">(</span><span class="s">&quot;merhaba! %v&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">t</span><span class="p">)</span><span class="w"> </span><span class="c1">// t&#39;in value presentation&#39;ı</span>
+<span class="p">}</span>
+
+<span class="c1">// t aslında tipsiz :) ne gelirse onun için sorun yok</span>
+<span class="kd">func</span><span class="w"> </span><span class="nx">greetAny</span><span class="p">(</span><span class="nx">t</span><span class="w"> </span><span class="kt">any</span><span class="p">)</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Sprintf</span><span class="p">(</span><span class="s">&quot;any - merhaba! %v&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">t</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">greet</span><span class="p">(</span><span class="s">&quot;hello&quot;</span><span class="p">))</span><span class="w"> </span><span class="c1">// string</span>
+<span class="w">    </span><span class="c1">// merhaba! hello</span>
+
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">greet</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span><span class="w"> </span><span class="c1">// integer</span>
+<span class="w">    </span><span class="c1">// merhaba! 1</span>
+
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">greet</span><span class="p">(</span><span class="mf">3.14</span><span class="p">))</span><span class="w"> </span><span class="c1">// float</span>
+<span class="w">    </span><span class="c1">// merhaba! 3.14</span>
+
+<span class="w">    </span><span class="nx">u</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">name</span><span class="w"> </span><span class="kt">string</span>
+<span class="w">    </span><span class="p">}{</span>
+<span class="w">        </span><span class="s">&quot;vigo&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">greet</span><span class="p">(</span><span class="nx">u</span><span class="p">))</span><span class="w"> </span><span class="c1">// anonymous struct</span>
+<span class="w">    </span><span class="c1">// merhaba! {vigo}</span>
+
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">greet</span><span class="p">([]</span><span class="kt">string</span><span class="p">{</span><span class="s">&quot;hello&quot;</span><span class="p">}))</span><span class="w"> </span><span class="c1">// string slice</span>
+<span class="w">    </span><span class="c1">// merhaba! [hello]</span>
+
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">greet</span><span class="p">(</span><span class="kc">nil</span><span class="p">))</span><span class="w"> </span><span class="c1">// nil</span>
+<span class="w">    </span><span class="c1">// merhaba! &lt;nil&gt;</span>
+
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">greetAny</span><span class="p">(</span><span class="s">&quot;hello&quot;</span><span class="p">))</span><span class="w"> </span><span class="c1">// string</span>
+<span class="w">    </span><span class="c1">// any - merhaba! hello</span>
+
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">greetAny</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span><span class="w"> </span><span class="c1">// integer</span>
+<span class="w">    </span><span class="c1">// any - merhaba! 1</span>
+
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">greetAny</span><span class="p">(</span><span class="mf">3.14</span><span class="p">))</span><span class="w"> </span><span class="c1">// float</span>
+<span class="w">    </span><span class="c1">// any - merhaba! 3.14</span>
+
+<span class="w">    </span><span class="nx">u2</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">name</span><span class="w"> </span><span class="kt">string</span>
+<span class="w">    </span><span class="p">}{</span>
+<span class="w">        </span><span class="s">&quot;vigo&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">greetAny</span><span class="p">(</span><span class="nx">u2</span><span class="p">))</span><span class="w"> </span><span class="c1">// anonymous struct</span>
+<span class="w">    </span><span class="c1">// any - merhaba! {vigo}</span>
+
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">greetAny</span><span class="p">([]</span><span class="kt">string</span><span class="p">{</span><span class="s">&quot;hello&quot;</span><span class="p">}))</span><span class="w"> </span><span class="c1">// string slice</span>
+<span class="w">    </span><span class="c1">// any - merhaba! [hello]</span>
+
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">greetAny</span><span class="p">(</span><span class="kc">nil</span><span class="p">))</span><span class="w"> </span><span class="c1">// nil</span>
+<span class="w">    </span><span class="c1">// any - merhaba! &lt;nil&gt;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Şimdi akıllarda şu soru var:</p>
+<blockquote>
+<p>Madem böyle bir şansımız var, neden sürekli tip tanımlıyoruz?</p>
+</blockquote>
+<p>Aslında ufak bir hile yapıyoruz. <code>fmt.Sprintf</code> içeride <code>reflect</code> paketini
+kullanarak bir dizi kontroller yapıyor, acaba gelen argüman <code>string</code>’e
+benziyor mu? ya da <code>integer</code>’a uygun mu? bir süre kontrolden geçiyor ve onun
+sonucunda çıktıyı görüyoruz. Bu aslında çok maliyetli bir işlem:</p>
+<h2 id="tip-kontrol-mekanizmas">Tip Kontrol Mekanizması</h2>
+<p><a href="https://go.dev/play/p/tILifiOH34j">https://go.dev/play/p/tILifiOH34j</a></p>
+<div class="highlight"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nx">main</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;fmt&quot;</span>
+<span class="w">    </span><span class="s">&quot;io&quot;</span>
+<span class="w">    </span><span class="s">&quot;strings&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">type</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="nx">customInt</span><span class="w">  </span><span class="kt">int</span>
+<span class="w">    </span><span class="nx">fakeString</span><span class="w"> </span><span class="kt">string</span>
+<span class="p">)</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="nx">printByType</span><span class="p">(</span><span class="nx">t</span><span class="w"> </span><span class="kd">interface</span><span class="p">{})</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// .(type) sadece switch statement içinde çalışır.</span>
+<span class="w">    </span><span class="k">switch</span><span class="w"> </span><span class="nx">j</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">t</span><span class="p">.(</span><span class="kd">type</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="kc">nil</span><span class="p">:</span>
+<span class="w">        </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">j</span><span class="p">,</span><span class="w"> </span><span class="s">&quot; bu nil&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="kt">int</span><span class="p">:</span>
+<span class="w">        </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">j</span><span class="p">,</span><span class="w"> </span><span class="s">&quot; bu int&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="nx">customInt</span><span class="p">:</span>
+<span class="w">        </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">j</span><span class="p">,</span><span class="w"> </span><span class="s">&quot; bu customInt&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="nx">io</span><span class="p">.</span><span class="nx">Reader</span><span class="p">:</span>
+<span class="w">        </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">j</span><span class="p">,</span><span class="w"> </span><span class="s">&quot; bu io.Reader&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="kt">string</span><span class="p">:</span>
+<span class="w">        </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">j</span><span class="p">,</span><span class="w"> </span><span class="s">&quot; bu string&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="kt">bool</span><span class="p">,</span><span class="w"> </span><span class="kt">rune</span><span class="p">:</span>
+<span class="w">        </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">j</span><span class="p">,</span><span class="w"> </span><span class="s">&quot; bu bool ya da rune&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="k">default</span><span class="p">:</span>
+<span class="w">        </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;%v fikrim yok: %[1]T\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">j</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">printByType</span><span class="p">(</span><span class="kc">nil</span><span class="p">)</span><span class="w">                        </span><span class="c1">// &lt;nil&gt;  bu nil</span>
+<span class="w">    </span><span class="nx">printByType</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w">                          </span><span class="c1">// 1  bu int</span>
+<span class="w">    </span><span class="nx">printByType</span><span class="p">(</span><span class="mf">3.14</span><span class="p">)</span><span class="w">                       </span><span class="c1">// 3.14 fikrim yok: float64</span>
+<span class="w">    </span><span class="nx">printByType</span><span class="p">(</span><span class="s">&quot;hello&quot;</span><span class="p">)</span><span class="w">                    </span><span class="c1">// hello  bu string</span>
+<span class="w">    </span><span class="nx">printByType</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span><span class="w">                       </span><span class="c1">// true  bu bool ya da rune</span>
+<span class="w">    </span><span class="nx">printByType</span><span class="p">(</span><span class="sc">&#39;a&#39;</span><span class="p">)</span><span class="w">                        </span><span class="c1">// 97  bu bool ya da rune</span>
+<span class="w">    </span><span class="nx">printByType</span><span class="p">(</span><span class="nx">customInt</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span><span class="w">               </span><span class="c1">// 5  bu customInt</span>
+<span class="w">    </span><span class="nx">printByType</span><span class="p">(</span><span class="nx">strings</span><span class="p">.</span><span class="nx">NewReader</span><span class="p">(</span><span class="s">&quot;hello&quot;</span><span class="p">))</span><span class="w"> </span><span class="c1">// &amp;{hello 0 -1}  bu io.Reader</span>
+<span class="w">    </span><span class="nx">printByType</span><span class="p">(</span><span class="nx">fakeString</span><span class="p">(</span><span class="s">&quot;hello&quot;</span><span class="p">))</span><span class="w">        </span><span class="c1">// hello fikrim yok: main.fakeString</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Şu örneğe bakalım:</p>
+<p><a href="https://go.dev/play/p/KjajVlJQ-h4">https://go.dev/play/p/KjajVlJQ-h4</a></p>
+<div class="highlight"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nx">main</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="s">&quot;fmt&quot;</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="kt">any</span><span class="w"> </span><span class="c1">// interface{}</span>
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;i: %v, %[1]T\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">i</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;i = nil (nil)&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">i</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;i: %v, %[1]T\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">i</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;i = 1 (int)&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">i</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;hello&quot;</span>
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;i: %v, %[1]T\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">i</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;hello&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;i = hello (string)&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">i</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mf">3.14</span>
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;i: %v, %[1]T\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">i</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mf">3.14</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;i = 3.14 (float64)&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">ok</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">i</span><span class="p">.(</span><span class="kt">string</span><span class="p">);</span><span class="w"> </span><span class="nx">ok</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;i string&#39;e cast olur&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">ok</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">i</span><span class="p">.(</span><span class="kt">int</span><span class="p">);</span><span class="w"> </span><span class="nx">ok</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;i int&#39;e cast olur&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">ok</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">i</span><span class="p">.(</span><span class="kt">float64</span><span class="p">);</span><span class="w"> </span><span class="nx">ok</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;i float64&#39;e cast olur&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Ancak <code>interface{}</code> ya da <code>any</code> olan bir tip’i <code>.(TYPE)</code> yöntemiyle başka
+<code>TYPE</code>’a uygun mu değil mi diye bakabiliriz; buna <strong>type assertion</strong> denir.</p>
+<hr />
+<h2 id="satisfying-interface">Satisfying Interface</h2>
+<p>Yani interface’i tatmin etmek, onun bize söylediği metotlara sahip olan bir
+tip üretmek. Ortada bir interface varsa ve biz onu mutlu etmek istiyorsak mutlaka bize
+söylediği tüm davranışlarını bizim de yapmamız (implemente etmemiz) gerekir.</p>
+<p>Örneğin insanlar konuşabilir, robotlar da. Eğer insanların ve robotların
+<code>Talk()</code> diye bir metotu olursa aralarında konuşabilirler? Bizim için
+konuşacak şeyin insan ya da robot olmasının bir önemi yok, önemli olan tek şey
+<code>Talk()</code> metotu olması.</p>
+<p>Go’daki tek <strong>abstract type</strong>’dır (soyut tür) <code>interface</code>. Bu da şu demek,
+direkt olarak kullanılamazlar ve sadece arayüz görevini üstlenirler.</p>
+<p>Yani elektrik prizi, kendisine takılan şeyin televizyon mu? cep telefonu şarj
+aletimi olduğunu bilmemesi gibi...</p>
+<p><a href="https://go.dev/play/p/U6jqQS_hjbw">https://go.dev/play/p/U6jqQS_hjbw</a></p>
+<div class="highlight"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nx">main</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="s">&quot;fmt&quot;</span>
+
+<span class="c1">// Positiver defines an interface for positive things.</span>
+<span class="kd">type</span><span class="w"> </span><span class="nx">Positiver</span><span class="w"> </span><span class="kd">interface</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">Positive</span><span class="p">()</span><span class="w"> </span><span class="kt">bool</span>
+<span class="p">}</span>
+
+<span class="c1">// Numero is a type alias for int.</span>
+<span class="kd">type</span><span class="w"> </span><span class="nx">Numero</span><span class="w"> </span><span class="kt">int</span>
+
+<span class="c1">// Positive is a method for satisfying Positiver interface.</span>
+<span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">n</span><span class="w"> </span><span class="nx">Numero</span><span class="p">)</span><span class="w"> </span><span class="nx">Positive</span><span class="p">()</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">n</span><span class="w"> </span><span class="p">&gt;</span><span class="w"> </span><span class="mi">0</span>
+<span class="p">}</span>
+
+<span class="c1">// Person is a type alias for string.</span>
+<span class="kd">type</span><span class="w"> </span><span class="nx">Person</span><span class="w"> </span><span class="kt">string</span>
+
+<span class="c1">// Positive is a method for satisfying Positiver interface.</span>
+<span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">n</span><span class="w"> </span><span class="nx">Person</span><span class="p">)</span><span class="w"> </span><span class="nx">Positive</span><span class="p">()</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span>
+<span class="p">}</span>
+
+<span class="c1">// isPositive accepts an interface which satisfies Positiver interface.</span>
+<span class="kd">func</span><span class="w"> </span><span class="nx">isPositive</span><span class="p">(</span><span class="nx">n</span><span class="w"> </span><span class="nx">Positiver</span><span class="p">)</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">n</span><span class="p">.</span><span class="nx">Positive</span><span class="p">()</span>
+<span class="p">}</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">n</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">Numero</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">h</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">Person</span><span class="p">(</span><span class="s">&quot;vigo&quot;</span><span class="p">)</span>
+
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">n</span><span class="p">,</span><span class="w"> </span><span class="nx">isPositive</span><span class="p">(</span><span class="nx">n</span><span class="p">))</span><span class="w"> </span><span class="c1">// 5 true</span>
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">h</span><span class="p">,</span><span class="w"> </span><span class="nx">isPositive</span><span class="p">(</span><span class="nx">h</span><span class="p">))</span><span class="w"> </span><span class="c1">// vigo true</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Uzun lafın kısası, <code>isPositive</code> fonksiyonu, <code>Positiver</code> interface’ini satisfy
+eden herhangi bir tipi input olarak alabilir:</p>
+<div class="codehilite"><pre><span></span><code><span class="o">+----------+</span><span class="w">                 </span><span class="o">+</span>
+<span class="o">|</span><span class="w">         </span><span class="o">/</span><span class="w">                </span><span class="o">/</span><span class="w"> </span><span class="o">|</span>
+<span class="o">|</span><span class="w">       </span><span class="o">/</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">method</span><span class="w">     </span><span class="o">/</span><span class="w">   </span><span class="o">|</span><span class="w">  </span><span class="n">object</span>
+<span class="o">|</span><span class="w">       </span>\<span class="w">                </span>\<span class="w">   </span><span class="o">|</span>
+<span class="o">|</span><span class="w">         </span>\<span class="w">                </span>\<span class="w"> </span><span class="o">|</span>
+<span class="o">+----------+</span><span class="w">                 </span><span class="o">+</span>
+<span class="w">  </span><span class="n">interface</span>
+</code></pre></div>
+
+<p>Örneğimizi bir tık daha geliştirelim:</p>
+<p><a href="https://go.dev/play/p/_YJuxLi707H">https://go.dev/play/p/_YJuxLi707H</a></p>
+<div class="highlight"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nx">main</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;fmt&quot;</span>
+<span class="w">    </span><span class="s">&quot;strconv&quot;</span>
+<span class="p">)</span>
+
+<span class="c1">// Positiver defines an interface for positive things.</span>
+<span class="kd">type</span><span class="w"> </span><span class="nx">Positiver</span><span class="w"> </span><span class="kd">interface</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">Positive</span><span class="p">()</span><span class="w"> </span><span class="kt">bool</span>
+<span class="p">}</span>
+
+<span class="c1">// Numero is a type alias for int.</span>
+<span class="kd">type</span><span class="w"> </span><span class="nx">Numero</span><span class="w"> </span><span class="kt">int</span>
+
+<span class="c1">// Positive is a method for satisfying Positiver interface.</span>
+<span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">n</span><span class="w"> </span><span class="nx">Numero</span><span class="p">)</span><span class="w"> </span><span class="nx">Positive</span><span class="p">()</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">n</span><span class="w"> </span><span class="p">&gt;</span><span class="w"> </span><span class="mi">0</span>
+<span class="p">}</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">n</span><span class="w"> </span><span class="nx">Numero</span><span class="p">)</span><span class="w"> </span><span class="nx">String</span><span class="p">()</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;my value is: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">strconv</span><span class="p">.</span><span class="nx">Itoa</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="nx">n</span><span class="p">))</span>
+<span class="p">}</span>
+
+<span class="c1">// Person is a type alias for string.</span>
+<span class="kd">type</span><span class="w"> </span><span class="nx">Person</span><span class="w"> </span><span class="kt">string</span>
+
+<span class="c1">// Positive is a method for satisfying Positiver interface.</span>
+<span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">n</span><span class="w"> </span><span class="nx">Person</span><span class="p">)</span><span class="w"> </span><span class="nx">Positive</span><span class="p">()</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span>
+<span class="p">}</span>
+
+<span class="c1">// isPositive accepts an interface which satisfiys Positiver interface.</span>
+<span class="kd">func</span><span class="w"> </span><span class="nx">isPositive</span><span class="p">(</span><span class="nx">n</span><span class="w"> </span><span class="nx">Positiver</span><span class="p">)</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">n</span><span class="p">.</span><span class="nx">Positive</span><span class="p">()</span>
+<span class="p">}</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">n</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">Numero</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">h</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">Person</span><span class="p">(</span><span class="s">&quot;vigo&quot;</span><span class="p">)</span>
+
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">n</span><span class="p">,</span><span class="w"> </span><span class="nx">isPositive</span><span class="p">(</span><span class="nx">n</span><span class="p">))</span><span class="w"> </span><span class="c1">// my value is: 5 true</span>
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">h</span><span class="p">,</span><span class="w"> </span><span class="nx">isPositive</span><span class="p">(</span><span class="nx">h</span><span class="p">))</span><span class="w"> </span><span class="c1">// vigo true</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Yine built-in gelen <code>Formatter</code> interface’ini mutlu edelim:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">type</span><span class="w"> </span><span class="nx">Formatter</span><span class="w"> </span><span class="kd">interface</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">Format</span><span class="p">(</span><span class="nx">f</span><span class="w"> </span><span class="nx">State</span><span class="p">,</span><span class="w"> </span><span class="nx">verb</span><span class="w"> </span><span class="kt">rune</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Şimdi kendi tipimiz için özel bir gösterim ekleyelim:</p>
+<p><a href="https://go.dev/play/p/C24F6Z4I8iq">https://go.dev/play/p/C24F6Z4I8iq</a></p>
+<div class="highlight"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nx">main</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;fmt&quot;</span>
+<span class="w">    </span><span class="s">&quot;strconv&quot;</span>
+<span class="p">)</span>
+
+<span class="c1">// Numero is a type alias to int.</span>
+<span class="kd">type</span><span class="w"> </span><span class="nx">Numero</span><span class="w"> </span><span class="kt">int</span>
+
+<span class="c1">// String implements Stringer interface.</span>
+<span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">n</span><span class="w"> </span><span class="nx">Numero</span><span class="p">)</span><span class="w"> </span><span class="nx">String</span><span class="p">()</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">strconv</span><span class="p">.</span><span class="nx">Itoa</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="nx">n</span><span class="p">))</span>
+<span class="p">}</span>
+
+<span class="c1">// Format implements Formatter interface.</span>
+<span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">n</span><span class="w"> </span><span class="nx">Numero</span><span class="p">)</span><span class="w"> </span><span class="nx">Format</span><span class="p">(</span><span class="nx">f</span><span class="w"> </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">State</span><span class="p">,</span><span class="w"> </span><span class="nx">verb</span><span class="w"> </span><span class="kt">rune</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">val</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">n</span><span class="p">.</span><span class="nx">String</span><span class="p">()</span><span class="w"> </span><span class="c1">// get string version</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">verb</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">81</span><span class="w"> </span><span class="p">{</span><span class="w">   </span><span class="c1">// check if Q passed</span>
+<span class="w">        </span><span class="nx">val</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;\&quot;&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">val</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;\&quot;&quot;</span><span class="w"> </span><span class="c1">// add quotes</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Fprint</span><span class="p">(</span><span class="nx">f</span><span class="p">,</span><span class="w"> </span><span class="nx">val</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">a</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">Numero</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;number is: %Q\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">a</span><span class="p">)</span><span class="w"> </span><span class="c1">// number is: &quot;1&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Düşünün ki bir fonksiyon yazmak istiyorsunuz, fonksiyon bir kısım işler yapıp
+çıktıyı bir dosyaya yazacak. Test yaparken dosya yerine buffer’a yazmak
+istiyorsunuz. Bunun için iki farklı fonksiyon mu yazmak gerek?</p>
+<ul>
+<li><code>func OutputToFile</code></li>
+<li><code>func OutputToBuffer</code></li>
+</ul>
+<p>Yapmamız gereken, <code>Writer</code> interface’ini sağlayan herhangi bir tip’i argüman
+olarak almak;</p>
+<div class="highlight"><pre><span></span><code><span class="kd">type</span><span class="w"> </span><span class="nx">Writer</span><span class="w"> </span><span class="kd">interface</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">Write</span><span class="p">([]</span><span class="kt">byte</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Yani;</p>
+<div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">OutputTo</span><span class="p">(</span><span class="nx">w</span><span class="w"> </span><span class="nx">io</span><span class="p">.</span><span class="nx">Writer</span><span class="p">,</span><span class="w"> </span><span class="p">.</span><span class="w"> </span><span class="p">.</span><span class="w"> </span><span class="p">.</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">.</span><span class="w"> </span><span class="p">.</span><span class="w"> </span><span class="p">.</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<p>HTTP server mı lazım? Bunun için de bir <code>interface</code> var:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">type</span><span class="w"> </span><span class="nx">Handler</span><span class="w"> </span><span class="kd">interface</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">ServeHTTP</span><span class="p">(</span><span class="nx">ResponseWriter</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="nx">Request</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Gereken tek şey <code>ServeHTTP</code> metotu olan bir tip, <code>http.ResponseWriter</code>ve
+<code>http.*Request</code> alması yeterli. İşte go’yu güçlü kılan en büyük özellik bu!</p>
+<p>Bu konu ile ilgili güzel bir <a href="https://lets-go.alexedwards.net/sample/02.09-the-http-handler-interface.html">makale</a></p>
+<div class="highlight"><pre><span></span><code><span class="kd">type</span><span class="w"> </span><span class="nx">home</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{}</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">h</span><span class="w"> </span><span class="o">*</span><span class="nx">home</span><span class="p">)</span><span class="w"> </span><span class="nx">ServeHTTP</span><span class="p">(</span><span class="nx">w</span><span class="w"> </span><span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span><span class="w"> </span><span class="nx">r</span><span class="w"> </span><span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">w</span><span class="p">.</span><span class="nx">Write</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="s">&quot;This is my home page&quot;</span><span class="p">))</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Bir interface birden fazla interface’den türeyebilir; ayni <code>ReadWriter</code> daki
+gibi:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">type</span><span class="w"> </span><span class="nx">Reader</span><span class="w"> </span><span class="kd">interface</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">Read</span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="p">[]</span><span class="kt">byte</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nx">n</span><span class="w"> </span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">type</span><span class="w"> </span><span class="nx">Writer</span><span class="w"> </span><span class="kd">interface</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">Write</span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="p">[]</span><span class="kt">byte</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nx">n</span><span class="w"> </span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">type</span><span class="w"> </span><span class="nx">ReadWriter</span><span class="w"> </span><span class="kd">interface</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">Reader</span>
+<span class="w">    </span><span class="nx">Writer</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Örneğin:</p>
+<p><a href="https://go.dev/play/p/0pNQqYRrdDW">https://go.dev/play/p/0pNQqYRrdDW</a></p>
+<div class="highlight"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nx">main</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;fmt&quot;</span>
+<span class="w">    </span><span class="s">&quot;io&quot;</span>
+<span class="w">    </span><span class="s">&quot;log&quot;</span>
+<span class="w">    </span><span class="s">&quot;os&quot;</span>
+<span class="w">    </span><span class="s">&quot;strings&quot;</span>
+<span class="p">)</span>
+
+<span class="c1">// readStream accepts io.Reader.</span>
+<span class="c1">// this is the: &quot;accept interface as function argument&quot; techinque!</span>
+<span class="kd">func</span><span class="w"> </span><span class="nx">readStream</span><span class="p">(</span><span class="nx">r</span><span class="w"> </span><span class="nx">io</span><span class="p">.</span><span class="nx">Reader</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">b</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nb">make</span><span class="p">([]</span><span class="kt">byte</span><span class="p">,</span><span class="w"> </span><span class="mi">1024</span><span class="p">)</span><span class="w"> </span><span class="c1">// 1024 bytes of storage</span>
+
+<span class="w">    </span><span class="nx">n</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">r</span><span class="p">.</span><span class="nx">Read</span><span class="p">(</span><span class="nx">b</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Errorf</span><span class="p">(</span><span class="s">&quot;read stream error: %w&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="c1">// report read bytes</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Sprintf</span><span class="p">(</span><span class="s">&quot;read %d bytes: %s (%v)&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">n</span><span class="p">,</span><span class="w"> </span><span class="nb">string</span><span class="p">(</span><span class="nx">b</span><span class="p">),</span><span class="w"> </span><span class="nx">b</span><span class="p">[:</span><span class="nx">n</span><span class="p">]),</span><span class="w"> </span><span class="kc">nil</span>
+<span class="p">}</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">s</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">readStream</span><span class="p">(</span><span class="nx">strings</span><span class="p">.</span><span class="nx">NewReader</span><span class="p">(</span><span class="s">&quot;abcde&quot;</span><span class="p">))</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">log</span><span class="p">.</span><span class="nx">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;byte stream read -&gt;&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">s</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">()</span>
+
+<span class="w">    </span><span class="c1">// read from file</span>
+<span class="w">    </span><span class="c1">// run this in bash before running the code!</span>
+<span class="w">    </span><span class="c1">// $ echo &quot;hello&quot; &gt; /tmp/foo</span>
+
+<span class="w">    </span><span class="nx">f</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">os</span><span class="p">.</span><span class="nx">Open</span><span class="p">(</span><span class="s">&quot;/tmp/foo&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">log</span><span class="p">.</span><span class="nx">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">s</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">readStream</span><span class="p">(</span><span class="nx">f</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">log</span><span class="p">.</span><span class="nx">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;file read -&gt;&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">s</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Hep aklımızda Rob Pike’ın şu sözü çınlamalı:</p>
+<blockquote>
+<p>The bigger the interface, the weaker the abstraction.</p>
+</blockquote>
+<p>Yani interface ne kadar büyük olursa o kadar çok metotu implemente etmek
+zorunda kalacağız. Mümkün mertebe metot sayısını küçük tutalım. Ne yazık ki
+bunu ne kadar bilim düşünsek de, bir rest-api geliştirdiğinizde interface’ler
+ne yazık ki çok büyüyor...</p>
+<p>Mesela şöyle bir <code>interface</code> var:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">type</span><span class="w"> </span><span class="nx">MegaCharger</span><span class="w"> </span><span class="kd">interface</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">Foo1</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="w"> </span><span class="kt">int</span>
+<span class="w">    </span><span class="nx">Foo2</span><span class="p">(</span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="kt">error</span>
+<span class="w">    </span><span class="nx">Foo3</span><span class="p">(</span><span class="kt">bool</span><span class="p">)</span><span class="w"> </span><span class="kt">bool</span>
+<span class="w">    </span><span class="nx">Foo4</span><span class="p">(</span><span class="kt">float64</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="kt">int64</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">Foo5</span><span class="p">([]</span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="p">[]</span><span class="kt">int</span>
+<span class="w">    </span><span class="nx">Foo6</span><span class="p">()</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Tüm metotları bizim de ilgili tipimizde yazmamız gerekecek! Şöyle de bir
+espiri var:</p>
+<blockquote>
+<p>Strongest abstraction is the empty interface!</p>
+</blockquote>
+<p>Yani en süper soyutlama hiç metotu olmayan boş interface’lerdir!</p>
+<p>Acaba metotlarını yazdığınız, implemente ettiğiniz interface’i gerçekten tam
+olarak implemente edebildiniz mi? Bunun için <strong>Compile Time Proof</strong> taktiğini
+kullanırız:</p>
+<p><a href="https://go.dev/play/p/LKFzNddmJ0z">https://go.dev/play/p/LKFzNddmJ0z</a></p>
+<div class="highlight"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nx">main</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;fmt&quot;</span>
+<span class="w">    </span><span class="s">&quot;io&quot;</span>
+<span class="p">)</span>
+
+<span class="c1">// DemoRW is a fake ReadWriter</span>
+<span class="kd">type</span><span class="w"> </span><span class="nx">DemoRW</span><span class="w"> </span><span class="kd">struct</span><span class="p">{}</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">d</span><span class="w"> </span><span class="nx">DemoRW</span><span class="p">)</span><span class="w"> </span><span class="nx">Read</span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="p">[]</span><span class="kt">byte</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nx">n</span><span class="w"> </span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span>
+<span class="p">}</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">d</span><span class="w"> </span><span class="nx">DemoRW</span><span class="p">)</span><span class="w"> </span><span class="nx">Write</span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="p">[]</span><span class="kt">byte</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nx">n</span><span class="w"> </span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span>
+<span class="p">}</span>
+
+<span class="kd">var</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="c1">// hepsi aynı işi yapar</span>
+<span class="w">    </span><span class="nx">_</span><span class="w"> </span><span class="nx">io</span><span class="p">.</span><span class="nx">ReadWriter</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">DemoRW</span><span class="p">)(</span><span class="kc">nil</span><span class="p">)</span><span class="w"> </span><span class="c1">// compile time proof, doesn&#39;t allocate</span>
+<span class="w">    </span><span class="nx">_</span><span class="w"> </span><span class="nx">io</span><span class="p">.</span><span class="nx">ReadWriter</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">DemoRW</span><span class="p">{}</span><span class="w">      </span><span class="c1">// compile time proof, doesn&#39;t allocate</span>
+<span class="w">    </span><span class="nx">_</span><span class="w"> </span><span class="nx">io</span><span class="p">.</span><span class="nx">ReadWriter</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">new</span><span class="p">(</span><span class="nx">DemoRW</span><span class="p">)</span><span class="w">    </span><span class="c1">// compile time proof, doesn&#39;t allocate</span>
+<span class="p">)</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="nx">checkInterfaceIsReadWriter</span><span class="p">(</span><span class="nx">v</span><span class="w"> </span><span class="kt">any</span><span class="p">)</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">ok</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">v</span><span class="p">.(</span><span class="nx">io</span><span class="p">.</span><span class="nx">ReadWriter</span><span class="p">)</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">ok</span>
+<span class="p">}</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">drw</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">DemoRW</span><span class="p">{}</span>
+
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">checkInterfaceIsReadWriter</span><span class="p">(</span><span class="nx">drw</span><span class="p">))</span><span class="w"> </span><span class="c1">// true</span>
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">drw</span><span class="p">.</span><span class="nx">Read</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="s">&quot;hello&quot;</span><span class="p">)))</span><span class="w">       </span><span class="c1">// &lt;nil&gt;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Unutmayalım!</p>
+<ul>
+<li>Interface’ler kesişme noktalarıdır</li>
+<li>Interface’ler bağımlılıkları kırabilir bozabilirler, iyi belgelendirilmiş olmalıdırlar</li>
+</ul>
+<p>Bazı faydalı linkler:</p>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=PfQFjOwGGks">https://www.youtube.com/watch?v=PfQFjOwGGks</a></li>
+<li><a href="https://www.youtube.com/watch?v=ak97oH0D6fI">https://www.youtube.com/watch?v=ak97oH0D6fI</a></li>
+<li><a href="http://golang.org/s/using-guru">http://golang.org/s/using-guru</a></li>
+</ul>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            Başa dön
+          </button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.indexes", "navigation.top", "toc.integrate"], "search": "../../assets/javascripts/workers/search.dfff1995.min.js", "translations": {"clipboard.copied": "Kopyaland\u0131", "clipboard.copy": "Kopyala", "search.result.more.one": "Bu sayfada 1 tane daha", "search.result.more.other": "Bu sayfada # tane daha", "search.result.none": "E\u015fle\u015fen dok\u00fcman bulunamad\u0131", "search.result.one": "1 dok\u00fcman bulundu", "search.result.other": "# dok\u00fcman bulundu", "search.result.placeholder": "Aramaya ba\u015flamak i\u00e7in yaz\u0131n", "search.result.term.missing": "Eksik", "select.version": "Versiyon se\u00e7"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.dff1b7c8.min.js"></script>
+      
+    
+  </body>
+</html>

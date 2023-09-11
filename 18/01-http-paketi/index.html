@@ -1,0 +1,2071 @@
+
+<!doctype html>
+<html lang="tr" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Mustafa Akgül Özgür Yazılım Yaz Kampı 2023’te verilen Go Kursu">
+      
+      
+        <meta name="author" content="Uğur vigo Özyılmazel">
+      
+      
+        <link rel="canonical" href="https://vbyazilim.github.io/maoyyk2023-golang-101-kursu/18/01-http-paketi/">
+      
+      
+        <link rel="prev" href="../../17/04-paketi-dagitmak/">
+      
+      
+        <link rel="next" href="../02-ddd-basics/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.2.8">
+    
+    
+      
+        <title>http Paketini Kullanarak Rest-API Tasarlamak - MAÖYYK 2023 - Go Kursu</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.046329b4.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#bolum-1801-in-memory-key-value-store" class="md-skip">
+          Ana içeriğe geç
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Başlık">
+    <a href="../.." title="MAÖYYK 2023 - Go Kursu" class="md-header__button md-logo" aria-label="MAÖYYK 2023 - Go Kursu" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            MAÖYYK 2023 - Go Kursu
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              http Paketini Kullanarak Rest-API Tasarlamak
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Ara" placeholder="Ara" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Ara">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Temizle" aria-label="Temizle" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Arama başlatılıyor
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/vbyazilim/maoyyk2023-golang-101-kursu" title="Depoya git" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    vbyazilim/maoyyk2023-golang-101-kursu
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigasyon" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="MAÖYYK 2023 - Go Kursu" class="md-nav__button md-logo" aria-label="MAÖYYK 2023 - Go Kursu" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    MAÖYYK 2023 - Go Kursu
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/vbyazilim/maoyyk2023-golang-101-kursu" title="Depoya git" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    vbyazilim/maoyyk2023-golang-101-kursu
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    İçindekiler
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Bölüm 01: Golang Hakkında Genel Bilgiler
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Bölüm 01: Golang Hakkında Genel Bilgiler
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01/01-tanitim/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tanıtım, Öne Çıkan Kısımları
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01/02-proverbs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Go Proverbs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01/03-kurulum/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Kurulum
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01/04-vscode-kurulumu/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    VSCode Kurulumu
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Bölüm 02: Golang Uygulamasına Genel Bakış
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Bölüm 02: Golang Uygulamasına Genel Bakış
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02/01-paket-kavrami/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Paket Kavramı ve `main` Paketi
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02/02-executable-lib-run/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Executable, Library ve Golang Uygulamasını Çalıştırmak
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Bölüm 03
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Bölüm 03
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03/01-dil-kurallari/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Dil Kuralları
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03/02-sabitler/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sabitler
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03/03-degiskenler/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Değişkenler
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Bölüm 04: Veri Tipleri
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Bölüm 04: Veri Tipleri
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04/01-string/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Strings (metinseller)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04/02-bool/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Booleans (mantıksallar)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04/03-numerics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Numerics (sayısallar)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04/04-collections/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Koleksiyonlar
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04/05-struct/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Structs (yapılar)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04/05-struct-annotations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Struct Annotations
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04/06-pointer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Pointer (işaretçi) Kavramı
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04/07-struct-methods-receivers/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Struct Methods ve Receivers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04/08-map/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Maps
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04/09-tip-donusturmek/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tip Dönüştürmek
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05/01-fonksiyonlar/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bölüm 05: Fonksiyonlar
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Bölüm 06: Durum Kontrolleri
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Bölüm 06: Durum Kontrolleri
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06/01-durum-koontrolleri-if/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    if, else, else if
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06/02-durum-koontrolleri-switch/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    switch/case
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06/03-label-break-goto/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    label/break/goto
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07/01-dongu/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bölüm 07: Döngüler
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08/01-interface/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bölüm 08: Interface
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09/01-error/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bölüm 09: Error
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10/01-nil/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bölüm 10: nil
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../11/01-generics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bölüm 11: Generics
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../12/01-reflection/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bölüm 12: Reflection
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../13/01-json-ile-calismak/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bölüm 13: JSON İle Çalışmak
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_15" >
+        
+          <label class="md-nav__link" for="__nav_15" id="__nav_15_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Bölüm 14: Test
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_15_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_15">
+            <span class="md-nav__icon md-icon"></span>
+            Bölüm 14: Test
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14/01-test/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Test
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14/02-table-driven-test/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Table Driven Test
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14/03-test-coverage/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Test Coverage
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14/04-profiling/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Profiling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_16" >
+        
+          <label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Bölüm 15: Concurrency
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_16">
+            <span class="md-nav__icon md-icon"></span>
+            Bölüm 15: Concurrency
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15/01-concurrency/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Concurrency
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15/02-channels/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Channels
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15/03-mutex/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mutex
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15/04-context/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Context
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../16/01-naming-conventions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bölüm 16: İsimlendirme Kuralları
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_18" >
+        
+          <label class="md-nav__link" for="__nav_18" id="__nav_18_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Bölüm 17: Golang Paketi Geliştirmek
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_18_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_18">
+            <span class="md-nav__icon md-icon"></span>
+            Bölüm 17: Golang Paketi Geliştirmek
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../17/01-kurulumlar/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    golangci-linter
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../17/02-go-modul-anotomisi/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Go Modülü Anatomisi
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../17/03-ornek-paket/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    stringutils Paketi
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../17/04-paketi-dagitmak/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Paketi Dağıtmak
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_19" checked>
+        
+          <label class="md-nav__link" for="__nav_19" id="__nav_19_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Bölüm 18: In-Memory Key-Value Store
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_19_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_19">
+            <span class="md-nav__icon md-icon"></span>
+            Bölüm 18: In-Memory Key-Value Store
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    http Paketini Kullanarak Rest-API Tasarlamak
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    http Paketini Kullanarak Rest-API Tasarlamak
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="İçindekiler">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      İçindekiler
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#http-server" class="md-nav__link">
+    HTTP Server
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-ddd-basics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Domain Driven Design prensibini Kullanmak
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-development/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Geliştirme
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-testing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    http server’ın Unit Testleri
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-docker/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Uygulamanın Docker Container’ından Çalıştırılması
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-github-actions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GitHub Actions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-acik-kaynak/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Açık Kaynak
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_20" >
+        
+          <label class="md-nav__link" for="__nav_20" id="__nav_20_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Bonus
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_20_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_20">
+            <span class="md-nav__icon md-icon"></span>
+            Bonus
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../bonus/01-links/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Linkler
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/vbyazilim/kvstore" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    kvstore
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_21" >
+        
+          <label class="md-nav__link" for="__nav_21" id="__nav_21_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Quiz
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_21_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_21">
+            <span class="md-nav__icon md-icon"></span>
+            Quiz
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quiz/01-go-cash-register/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Quiz 1
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="bolum-1801-in-memory-key-value-store">Bölüm 18/01: In-Memory Key-Value Store</h1>
+<p>Basit bir rest-api geliştireceğiz. Küçük ve basit bir <a href="https://redis.io/">REDIS</a> klonu. Klon
+ama çok primitif bir klon. Key/Value çiftlerini hafızada tutan, listeleme,
+ekleme, silme, okuma ve güncelleme yani <code>CRUDL</code> (Create, Read, Update, Delete,
+List) operasyonları yapabileceğimiz bir servis. Diğer bir amacımız da hiçbir
+ek paket kullanmadan, go ile gelen paketleri kullanarak bu servisi geliştirmek.</p>
+<p>Nelere ihtiyacımız var;</p>
+<ul>
+<li>HTTP Server</li>
+<li>Storage (hafızada tutacağımız map)</li>
+</ul>
+<h2 id="http-server">HTTP Server</h2>
+<p>Go, standart kütüphanesine <strong>production grade</strong> yani canlı ortamda gönül
+rahatlığıyla kullanabileceğimiz http sunucuyla birlikte geliyor. Hatta sadece
+sunucu değil istemcisi de var (http client). Tüm bu özellikler <code>net/http</code>
+paketi içinde.</p>
+<p><code>net/http</code> bize neler sağlar?</p>
+<ul>
+<li>Web uygulamaları yapabiliriz</li>
+<li>Statik dosya sunucusu olarak kullanabiliriz</li>
+<li>Routing</li>
+<li>Cookie yönetimi yapabiliriz</li>
+</ul>
+<p>Keza pek çok popüler web frameworkleri de altta bu paketi kullanır:</p>
+<ul>
+<li><a href="https://github.com/go-chi/chi">https://github.com/go-chi/chi</a></li>
+<li><a href="https://github.com/valyala/fasthttp">https://github.com/valyala/fasthttp</a></li>
+<li><a href="https://github.com/labstack/echo">https://github.com/labstack/echo</a></li>
+<li><a href="https://github.com/gofiber/fiber">https://github.com/gofiber/fiber</a></li>
+<li><a href="https://github.com/gin-gonic/gin">https://github.com/gin-gonic/gin</a></li>
+<li><a href="https://github.com/go-kratos/kratos">https://github.com/go-kratos/kratos</a> (microservice)</li>
+<li><a href="https://github.com/go-kit/kit">https://github.com/go-kit/kit</a> (microservice)</li>
+</ul>
+<p><code>godoc</code>’ta:</p>
+<ul>
+<li><a href="https://pkg.go.dev/net/http@go1.21.0">https://pkg.go.dev/net/http@go1.21.0</a> (http)</li>
+<li><a href="https://pkg.go.dev/net/http@go1.21.0#hdr-Servers">https://pkg.go.dev/net/http@go1.21.0#hdr-Servers</a> (server)</li>
+</ul>
+<p>Bizim ilgilendiğimiz kısım <a href="https://pkg.go.dev/net/http@go1.21.0#Server">Server type</a>:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">type</span><span class="w"> </span><span class="nx">Server</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Addr optionally specifies the TCP address for the server to listen on,</span>
+<span class="w">    </span><span class="c1">// in the form &quot;host:port&quot;. If empty, &quot;:http&quot; (port 80) is used.</span>
+<span class="w">    </span><span class="c1">// The service names are defined in RFC 6335 and assigned by IANA.</span>
+<span class="w">    </span><span class="c1">// See net.Dial for details of the address format.</span>
+<span class="w">    </span><span class="nx">Addr</span><span class="w"> </span><span class="kt">string</span>
+
+<span class="w">    </span><span class="nx">Handler</span><span class="w"> </span><span class="nx">Handler</span><span class="w"> </span><span class="c1">// handler to invoke, http.DefaultServeMux if nil</span>
+
+<span class="w">    </span><span class="c1">// others</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><code>Handler</code> field’ı, <code>Handler</code> tipinde; Peki <a href="https://pkg.go.dev/net/http@go1.21.0#Handler">nedir</a> bu?</p>
+<div class="highlight"><pre><span></span><code><span class="kd">type</span><span class="w"> </span><span class="nx">Handler</span><span class="w"> </span><span class="kd">interface</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">ServeHTTP</span><span class="p">(</span><span class="nx">ResponseWriter</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="nx">Request</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Evet, bu bir <code>interface</code>. Herhangi bir tipin <code>(ResponseWriter, *Request)</code> alan
+bir fonksiyonu olursa o artık bir <strong>HTTP handler</strong> oluyor.</p>
+<p>HTTP Handler ne yapar? istemcinin sunucudan yaptığı istekleri yakalayan ve
+geriye cevap dönen (byte cinsinden) şeydir.</p>
+<p>Soru: <code>ServeHTTP</code> neden <code>*Request</code> (pointer) alırken <code>ResponseWriter</code>’ı
+(value) olarak alıyor? <a href="https://pkg.go.dev/net/http@go1.21.0#ResponseWriter">ResponseWriter</a> dokümanı.</p>
+<p>Özetle; bizim şöyle bir tipimiz olsa;</p>
+<div class="highlight"><pre><span></span><code><span class="kd">type</span><span class="w"> </span><span class="nx">foo</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{}</span>
+<span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">foo</span><span class="p">)</span><span class="nx">ServeHTTP</span><span class="p">(</span><span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">){</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>artık <code>foo</code> bir HTTP Handler olarak kullanılabilir.</p>
+<p><a href="https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/18/basic-http-server">örnek</a></p>
+<p><a href="https://go.dev/play/p/8dMERh1XZvg">https://go.dev/play/p/8dMERh1XZvg</a></p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>go<span class="w"> </span>run<span class="w"> </span>src/18/basic-http-server/main.go
+</code></pre></div>
+<p>sonra tarayıcıyı açıp;</p>
+<ul>
+<li><a href="http://127.0.0.1:9090/foo">http://127.0.0.1:9090/foo</a></li>
+<li><a href="http://127.0.0.1:9090/bar">http://127.0.0.1:9090/bar</a></li>
+</ul>
+<p>tebrikler, artık bir web sunucunuz var!</p>
+<p>Biz, servisimizi geliştirirken biraz daha gelişmiş özellikleri olan
+<code>http.Server</code>’ı kullanacağız. Bizim bir kısım endpoint’leri yakalamamız
+gerekiyor. Bunun için <strong>request multiplexer</strong>’a <a href="https://pkg.go.dev/net/http@go1.21.0#ServeMux">ihtiyacımız</a> var.</p>
+<p>Hemen godoc’tan bir örneğe bakalım:</p>
+<p><a href="https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/18/basic-mux">örnek</a></p>
+<p><a href="https://go.dev/play/p/T38GlxCvEpL">https://go.dev/play/p/T38GlxCvEpL</a></p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>go<span class="w"> </span>run<span class="w"> </span>src/18/basic-mux/main.go
+</code></pre></div>
+<p>sonra tarayıcıyı açıp:</p>
+<ul>
+<li><a href="http://127.0.0.1:9090/">http://127.0.0.1:9090/</a></li>
+<li><a href="http://127.0.0.1:9090/api/">http://127.0.0.1:9090/api/</a></li>
+</ul>
+<p><code>http.Server</code> kullandığımız zaman;</p>
+<div class="highlight"><pre><span></span><code><span class="nx">http</span><span class="p">.</span><span class="nx">Server</span><span class="p">{</span>
+<span class="w">    </span><span class="nx">Addr</span><span class="p">:</span><span class="w">         </span><span class="s">&quot;:8000&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">Handler</span><span class="p">:</span><span class="w">      </span><span class="nx">mux</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">ReadTimeout</span><span class="p">:</span><span class="w">  </span><span class="nx">ServerReadTimeout</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">WriteTimeout</span><span class="p">:</span><span class="w"> </span><span class="nx">ServerWriteTimeout</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">IdleTimeout</span><span class="p">:</span><span class="w">  </span><span class="nx">ServerIdleTimeout</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>gibi ek parametrelerde kullanabiliyoruz.</p>
+<hr />
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            Başa dön
+          </button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.indexes", "navigation.top", "toc.integrate"], "search": "../../assets/javascripts/workers/search.dfff1995.min.js", "translations": {"clipboard.copied": "Kopyaland\u0131", "clipboard.copy": "Kopyala", "search.result.more.one": "Bu sayfada 1 tane daha", "search.result.more.other": "Bu sayfada # tane daha", "search.result.none": "E\u015fle\u015fen dok\u00fcman bulunamad\u0131", "search.result.one": "1 dok\u00fcman bulundu", "search.result.other": "# dok\u00fcman bulundu", "search.result.placeholder": "Aramaya ba\u015flamak i\u00e7in yaz\u0131n", "search.result.term.missing": "Eksik", "select.version": "Versiyon se\u00e7"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.dff1b7c8.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,2321 @@
+
+<!doctype html>
+<html lang="tr" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Mustafa Akgül Özgür Yazılım Yaz Kampı 2023’te verilen Go Kursu">
+      
+      
+        <meta name="author" content="Uğur vigo Özyılmazel">
+      
+      
+        <link rel="canonical" href="https://vbyazilim.github.io/maoyyk2023-golang-101-kursu/12/01-reflection/">
+      
+      
+        <link rel="prev" href="../../11/01-generics/">
+      
+      
+        <link rel="next" href="../../13/01-json-ile-calismak/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.2.8">
+    
+    
+      
+        <title>Bölüm 12: Reflection - MAÖYYK 2023 - Go Kursu</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.046329b4.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#bolum-1201-reflection" class="md-skip">
+          Ana içeriğe geç
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Başlık">
+    <a href="../.." title="MAÖYYK 2023 - Go Kursu" class="md-header__button md-logo" aria-label="MAÖYYK 2023 - Go Kursu" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            MAÖYYK 2023 - Go Kursu
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Bölüm 12: Reflection
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Ara" placeholder="Ara" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Ara">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Temizle" aria-label="Temizle" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Arama başlatılıyor
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/vbyazilim/maoyyk2023-golang-101-kursu" title="Depoya git" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    vbyazilim/maoyyk2023-golang-101-kursu
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigasyon" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="MAÖYYK 2023 - Go Kursu" class="md-nav__button md-logo" aria-label="MAÖYYK 2023 - Go Kursu" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    MAÖYYK 2023 - Go Kursu
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/vbyazilim/maoyyk2023-golang-101-kursu" title="Depoya git" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    vbyazilim/maoyyk2023-golang-101-kursu
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    İçindekiler
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Bölüm 01: Golang Hakkında Genel Bilgiler
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Bölüm 01: Golang Hakkında Genel Bilgiler
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01/01-tanitim/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tanıtım, Öne Çıkan Kısımları
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01/02-proverbs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Go Proverbs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01/03-kurulum/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Kurulum
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01/04-vscode-kurulumu/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    VSCode Kurulumu
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Bölüm 02: Golang Uygulamasına Genel Bakış
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Bölüm 02: Golang Uygulamasına Genel Bakış
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02/01-paket-kavrami/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Paket Kavramı ve `main` Paketi
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02/02-executable-lib-run/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Executable, Library ve Golang Uygulamasını Çalıştırmak
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Bölüm 03
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Bölüm 03
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03/01-dil-kurallari/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Dil Kuralları
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03/02-sabitler/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sabitler
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03/03-degiskenler/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Değişkenler
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Bölüm 04: Veri Tipleri
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Bölüm 04: Veri Tipleri
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04/01-string/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Strings (metinseller)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04/02-bool/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Booleans (mantıksallar)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04/03-numerics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Numerics (sayısallar)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04/04-collections/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Koleksiyonlar
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04/05-struct/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Structs (yapılar)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04/05-struct-annotations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Struct Annotations
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04/06-pointer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Pointer (işaretçi) Kavramı
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04/07-struct-methods-receivers/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Struct Methods ve Receivers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04/08-map/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Maps
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04/09-tip-donusturmek/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tip Dönüştürmek
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05/01-fonksiyonlar/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bölüm 05: Fonksiyonlar
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Bölüm 06: Durum Kontrolleri
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Bölüm 06: Durum Kontrolleri
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06/01-durum-koontrolleri-if/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    if, else, else if
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06/02-durum-koontrolleri-switch/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    switch/case
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06/03-label-break-goto/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    label/break/goto
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07/01-dongu/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bölüm 07: Döngüler
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08/01-interface/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bölüm 08: Interface
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09/01-error/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bölüm 09: Error
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10/01-nil/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bölüm 10: nil
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../11/01-generics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bölüm 11: Generics
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Bölüm 12: Reflection
+  </span>
+  
+
+      </a>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../13/01-json-ile-calismak/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bölüm 13: JSON İle Çalışmak
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_15" >
+        
+          <label class="md-nav__link" for="__nav_15" id="__nav_15_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Bölüm 14: Test
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_15_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_15">
+            <span class="md-nav__icon md-icon"></span>
+            Bölüm 14: Test
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14/01-test/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Test
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14/02-table-driven-test/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Table Driven Test
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14/03-test-coverage/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Test Coverage
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14/04-profiling/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Profiling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_16" >
+        
+          <label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Bölüm 15: Concurrency
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_16">
+            <span class="md-nav__icon md-icon"></span>
+            Bölüm 15: Concurrency
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15/01-concurrency/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Concurrency
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15/02-channels/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Channels
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15/03-mutex/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mutex
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15/04-context/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Context
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../16/01-naming-conventions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bölüm 16: İsimlendirme Kuralları
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_18" >
+        
+          <label class="md-nav__link" for="__nav_18" id="__nav_18_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Bölüm 17: Golang Paketi Geliştirmek
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_18_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_18">
+            <span class="md-nav__icon md-icon"></span>
+            Bölüm 17: Golang Paketi Geliştirmek
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../17/01-kurulumlar/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    golangci-linter
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../17/02-go-modul-anotomisi/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Go Modülü Anatomisi
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../17/03-ornek-paket/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    stringutils Paketi
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../17/04-paketi-dagitmak/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Paketi Dağıtmak
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_19" >
+        
+          <label class="md-nav__link" for="__nav_19" id="__nav_19_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Bölüm 18: In-Memory Key-Value Store
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_19_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_19">
+            <span class="md-nav__icon md-icon"></span>
+            Bölüm 18: In-Memory Key-Value Store
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18/01-http-paketi/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    http Paketini Kullanarak Rest-API Tasarlamak
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18/02-ddd-basics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Domain Driven Design prensibini Kullanmak
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18/03-development/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Geliştirme
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18/04-testing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    http server’ın Unit Testleri
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18/05-docker/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Uygulamanın Docker Container’ından Çalıştırılması
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18/06-github-actions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GitHub Actions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18/07-acik-kaynak/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Açık Kaynak
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_20" >
+        
+          <label class="md-nav__link" for="__nav_20" id="__nav_20_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Bonus
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_20_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_20">
+            <span class="md-nav__icon md-icon"></span>
+            Bonus
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../bonus/01-links/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Linkler
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/vbyazilim/kvstore" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    kvstore
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_21" >
+        
+          <label class="md-nav__link" for="__nav_21" id="__nav_21_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Quiz
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_21_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_21">
+            <span class="md-nav__icon md-icon"></span>
+            Quiz
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quiz/01-go-cash-register/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Quiz 1
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="bolum-1201-reflection">Bölüm 12/01: Reflection</h1>
+<p>Go statik yazıma sahiptir, bu da her değişkenin derleme zamanında bilinen
+sabit bir tipe sahip olduğu anlamına gelir, bu da onun <strong>statik tipi</strong> olarak
+bilinir.</p>
+<p>En basit haliyle, <code>reflection</code>, bir programın yürütme sırasında kendi
+değerlerini ve değişkenlerini incelemesine / incelemesine ve türlerini
+belirlemesine olanak tanır.</p>
+<p>Bir benzer senaryo, <code>json</code> verilerini kodlamamıza izin veren ve bilinmeyen
+yapıları incelememize / manipüle etmemize izin veren yansımadır.</p>
+<p><strong>Reflection</strong>, üç kavram etrafında inşa edilmiştir:</p>
+<ol>
+<li>Tür (Kind): aslında <code>uint</code> constant; <code>reflect.Bool (1)</code></li>
+<li>Tip (Type)</li>
+<li>Değer (Value)</li>
+</ol>
+<p>Hemen örneğe bakalım:</p>
+<p><a href="https://go.dev/play/p/kjCf6NmJSwE">https://go.dev/play/p/kjCf6NmJSwE</a></p>
+<div class="highlight"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nx">main</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;fmt&quot;</span>
+<span class="w">    </span><span class="s">&quot;reflect&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">kinds</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">[]</span><span class="nx">reflect</span><span class="p">.</span><span class="nx">Kind</span><span class="p">{</span>
+<span class="w">        </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">Invalid</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">Bool</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">Int</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">Int8</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">Int16</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">Int32</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">Int64</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">Uint</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">Uint8</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">Uint16</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">Uint32</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">Uint64</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">Uintptr</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">Float32</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">Float64</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">Complex64</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">Complex128</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">Array</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">Chan</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">Func</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">Interface</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">Map</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">Pointer</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">Slice</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">String</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">Struct</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">UnsafePointer</span><span class="p">,</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">k</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">range</span><span class="w"> </span><span class="nx">kinds</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;%-16s : %[1]d (%v / %v)\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">k</span><span class="p">,</span><span class="w"> </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">ValueOf</span><span class="p">(</span><span class="nx">k</span><span class="p">).</span><span class="nx">Type</span><span class="p">(),</span><span class="w"> </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">ValueOf</span><span class="p">(</span><span class="nx">k</span><span class="p">).</span><span class="nx">Type</span><span class="p">().</span><span class="nx">Kind</span><span class="p">())</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// invalid          : 0 (reflect.Kind / uint)</span>
+<span class="c1">// bool             : 1 (reflect.Kind / uint)</span>
+<span class="c1">// int              : 2 (reflect.Kind / uint)</span>
+<span class="c1">// int8             : 3 (reflect.Kind / uint)</span>
+<span class="c1">// int16            : 4 (reflect.Kind / uint)</span>
+<span class="c1">// int32            : 5 (reflect.Kind / uint)</span>
+<span class="c1">// int64            : 6 (reflect.Kind / uint)</span>
+<span class="c1">// uint             : 7 (reflect.Kind / uint)</span>
+<span class="c1">// uint8            : 8 (reflect.Kind / uint)</span>
+<span class="c1">// uint16           : 9 (reflect.Kind / uint)</span>
+<span class="c1">// uint32           : 10 (reflect.Kind / uint)</span>
+<span class="c1">// uint64           : 11 (reflect.Kind / uint)</span>
+<span class="c1">// uintptr          : 12 (reflect.Kind / uint)</span>
+<span class="c1">// float32          : 13 (reflect.Kind / uint)</span>
+<span class="c1">// float64          : 14 (reflect.Kind / uint)</span>
+<span class="c1">// complex64        : 15 (reflect.Kind / uint)</span>
+<span class="c1">// complex128       : 16 (reflect.Kind / uint)</span>
+<span class="c1">// array            : 17 (reflect.Kind / uint)</span>
+<span class="c1">// chan             : 18 (reflect.Kind / uint)</span>
+<span class="c1">// func             : 19 (reflect.Kind / uint)</span>
+<span class="c1">// interface        : 20 (reflect.Kind / uint)</span>
+<span class="c1">// map              : 21 (reflect.Kind / uint)</span>
+<span class="c1">// ptr              : 22 (reflect.Kind / uint)</span>
+<span class="c1">// slice            : 23 (reflect.Kind / uint)</span>
+<span class="c1">// string           : 24 (reflect.Kind / uint)</span>
+<span class="c1">// struct           : 25 (reflect.Kind / uint)</span>
+<span class="c1">// unsafe.Pointer   : 26 (reflect.Kind / uint)</span>
+</code></pre></div>
+<p>Tür (Kind); <code>struct</code>, <code>int</code>, <code>string</code>, <code>slice</code>, <code>map</code> veya diğer go’nun basit
+(primitive) türlerinden herhangi biri olabilir.</p>
+<p>Eğer <code>Foo</code> adında bir <code>struct</code> tanımlarsanız, <code>Kind</code> bir <code>struct</code>’tır ve <code>Type</code>’ı <code>Foo</code>’dur. </p>
+<p><a href="https://go.dev/play/p/R6D7WD8eJdE">https://go.dev/play/p/R6D7WD8eJdE</a></p>
+<div class="highlight"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nx">main</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;fmt&quot;</span>
+<span class="w">    </span><span class="s">&quot;reflect&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">type</span><span class="w"> </span><span class="nx">Foo</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">A</span><span class="w"> </span><span class="kt">int</span>
+<span class="w">    </span><span class="nx">B</span><span class="w"> </span><span class="kt">string</span>
+<span class="p">}</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">data</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">Foo</span><span class="p">{</span><span class="nx">A</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nx">B</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;hello&quot;</span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">r</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">TypeOf</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">r</span><span class="p">.</span><span class="nx">Kind</span><span class="p">(),</span><span class="w"> </span><span class="nx">r</span><span class="p">.</span><span class="nx">Name</span><span class="p">())</span><span class="w"> </span><span class="c1">// struct Foo</span>
+
+<span class="w">    </span><span class="nx">v</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">ValueOf</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">v</span><span class="p">,</span><span class="w"> </span><span class="nx">v</span><span class="p">.</span><span class="nx">Kind</span><span class="p">(),</span><span class="w"> </span><span class="nx">v</span><span class="p">.</span><span class="nx">Type</span><span class="p">())</span>
+<span class="w">    </span><span class="c1">// {1 hello} struct main.Foo</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Kod örneğinde, <code>TypeOf</code> ve <code>ValueOf</code> fonksiyonları, sırasıyla, türü ve değeri
+döndürür. </p>
+<p><strong>Reflection</strong> paketini kullanarak bir <code>struct</code>’ın değerini okumaya (read) ek
+olarak, değerini değiştirmek (write) için de kullanabiliriz. Bir değeri
+<code>reflect.ValueOf</code> fonksiyonunu kullanarak değiştirmek için, bir değişkenin
+pointer’ını geçirmemiz ve <code>Elem</code> fonksiyonunu çağırarak işaretçi adresindeki
+değeri döndürmemiz gerekir:</p>
+<p><a href="https://go.dev/play/p/UzhantalrDx">https://go.dev/play/p/UzhantalrDx</a></p>
+<div class="highlight"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nx">main</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;fmt&quot;</span>
+<span class="w">    </span><span class="s">&quot;reflect&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">type</span><span class="w"> </span><span class="nx">Foo</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">A</span><span class="w"> </span><span class="kt">int</span>
+<span class="w">    </span><span class="nx">B</span><span class="w"> </span><span class="kt">string</span>
+<span class="p">}</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">data</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">Foo</span><span class="p">{</span><span class="nx">A</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nx">B</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;hello&quot;</span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">v</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">ValueOf</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">data</span><span class="p">).</span><span class="nx">Elem</span><span class="p">()</span>
+<span class="w">    </span><span class="nx">v</span><span class="p">.</span><span class="nx">Field</span><span class="p">(</span><span class="mi">0</span><span class="p">).</span><span class="nx">SetInt</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">v</span><span class="p">.</span><span class="nx">Field</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="nx">SetString</span><span class="p">(</span><span class="s">&quot;world&quot;</span><span class="p">)</span>
+
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">v</span><span class="p">,</span><span class="w"> </span><span class="nx">v</span><span class="p">.</span><span class="nx">Kind</span><span class="p">(),</span><span class="w"> </span><span class="nx">v</span><span class="p">.</span><span class="nx">Type</span><span class="p">())</span>
+<span class="w">    </span><span class="c1">// {100 world} struct main.Foo</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Yukarıdaki örnekte görüldüğü gibi, <code>reflect.ValueOf</code> fonksiyonu, bir
+<code>struct</code>’ın değerini değiştirmek için kullanılabilir. Değerin türüne bağlı
+olarak;</p>
+<ul>
+<li><code>SetInt()</code></li>
+<li><code>SetString()</code></li>
+<li><code>SetBool()</code></li>
+<li><code>SetFloat()</code></li>
+<li><code>SetUint()</code></li>
+<li><code>SetArray()</code></li>
+<li><code>SetMap()</code></li>
+<li><code>SetSlice()</code></li>
+<li><code>SetPointer()</code></li>
+<li><code>SetStruct()</code></li>
+<li><code>Set()</code></li>
+</ul>
+<p>gibi işlevler kullanılabilir.</p>
+<p><a href="https://pkg.go.dev/reflect@go1.21.0#Value.Set">https://pkg.go.dev/reflect@go1.21.0#Value.Set</a></p>
+<p><code>ClearValue</code> adlı bir fonksiyon oluşturmak istediğinizi varsayalım. Bu
+fonksiyon, aldığı <code>any</code> türündeki verilerin yine metot parametresi
+olarak aldığı <code>string</code> türündeki alanın değerini temizlemelidir.</p>
+<p><a href="https://go.dev/play/p/e29cVR9F2r9">https://go.dev/play/p/e29cVR9F2r9</a></p>
+<p><a href="https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/11/reflect-clearvalue">Örnek</a></p>
+<div class="highlight"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nx">main</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;errors&quot;</span>
+<span class="w">    </span><span class="s">&quot;fmt&quot;</span>
+<span class="w">    </span><span class="s">&quot;log&quot;</span>
+<span class="w">    </span><span class="s">&quot;reflect&quot;</span>
+<span class="p">)</span>
+
+<span class="c1">// Foo1 represents dummy type.</span>
+<span class="kd">type</span><span class="w"> </span><span class="nx">Foo1</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">A</span><span class="w"> </span><span class="kt">int</span>
+<span class="w">    </span><span class="nx">B</span><span class="w"> </span><span class="kt">string</span>
+<span class="p">}</span>
+
+<span class="c1">// Foo2 represents dummy type.</span>
+<span class="kd">type</span><span class="w"> </span><span class="nx">Foo2</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">C</span><span class="w"> </span><span class="kt">int</span>
+<span class="w">    </span><span class="nx">D</span><span class="w"> </span><span class="kt">string</span>
+<span class="p">}</span>
+
+<span class="c1">// Foo3 represents dummy type.</span>
+<span class="kd">type</span><span class="w"> </span><span class="nx">Foo3</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">X</span><span class="w"> </span><span class="kt">bool</span>
+<span class="p">}</span>
+
+<span class="kd">var</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="nx">errInvalidKind</span><span class="w">  </span><span class="p">=</span><span class="w"> </span><span class="nx">errors</span><span class="p">.</span><span class="nx">New</span><span class="p">(</span><span class="s">&quot;invalid kind&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">errInvalidValue</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">errors</span><span class="p">.</span><span class="nx">New</span><span class="p">(</span><span class="s">&quot;invalid value&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="nx">resetStringValueOfGivenField</span><span class="p">(</span><span class="nx">d</span><span class="w"> </span><span class="kt">any</span><span class="p">,</span><span class="w"> </span><span class="nx">f</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="kt">error</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">v</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">ValueOf</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span><span class="w"> </span><span class="c1">// value of d</span>
+<span class="w">    </span><span class="nx">k</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">v</span><span class="p">.</span><span class="nx">Kind</span><span class="p">()</span><span class="w">           </span><span class="c1">// kind of d</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">k</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">Ptr</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Errorf</span><span class="p">(</span><span class="s">&quot;%w, must be a pointer to struct, not a %q&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">errInvalidKind</span><span class="p">,</span><span class="w"> </span><span class="nx">k</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">structValue</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">v</span><span class="p">.</span><span class="nx">Elem</span><span class="p">()</span>
+<span class="w">    </span><span class="nx">fieldValue</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">structValue</span><span class="p">.</span><span class="nx">FieldByName</span><span class="p">(</span><span class="nx">f</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">!</span><span class="nx">fieldValue</span><span class="p">.</span><span class="nx">IsValid</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Errorf</span><span class="p">(</span><span class="s">&quot;%w&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">errInvalidValue</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">fieldValue</span><span class="p">.</span><span class="nx">Kind</span><span class="p">()</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">String</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Errorf</span><span class="p">(</span><span class="s">&quot;%w, %s value must be a string, not a %q&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">errInvalidKind</span><span class="p">,</span><span class="w"> </span><span class="nx">f</span><span class="p">,</span><span class="w"> </span><span class="nx">fieldValue</span><span class="p">.</span><span class="nx">Kind</span><span class="p">())</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nx">fieldValue</span><span class="p">.</span><span class="nx">SetString</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="kc">nil</span>
+<span class="p">}</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">foo1</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">Foo1</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;hello&quot;</span><span class="p">}</span>
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;foo1: %+v\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">foo1</span><span class="p">)</span><span class="w"> </span><span class="c1">// foo1: {A:1 B:hello}</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">resetStringValueOfGivenField</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">foo1</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;B&quot;</span><span class="p">);</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">log</span><span class="p">.</span><span class="nx">Print</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;foo1 after: %+v\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">foo1</span><span class="p">)</span><span class="w"> </span><span class="c1">// foo1 after: {A:1 B:}</span>
+
+<span class="w">    </span><span class="nx">foo2</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">Foo2</span><span class="p">{</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;world&quot;</span><span class="p">}</span>
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;foo2: %+v\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">foo2</span><span class="p">)</span><span class="w"> </span><span class="c1">// foo2: {C:2 D:world}</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">resetStringValueOfGivenField</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">foo2</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;D&quot;</span><span class="p">);</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">log</span><span class="p">.</span><span class="nx">Print</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;foo2 after: %+v\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">foo2</span><span class="p">)</span><span class="w"> </span><span class="c1">// foo2 after: {C:2 D:}</span>
+
+<span class="w">    </span><span class="nx">foo3</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">Foo3</span><span class="p">{}</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">resetStringValueOfGivenField</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">foo3</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;X&quot;</span><span class="p">);</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">log</span><span class="p">.</span><span class="nx">Print</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="c1">// invalid kind, X value must be a string, not a &quot;bool&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;foo3 after: %+v\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">foo3</span><span class="p">)</span>
+
+<span class="w">    </span><span class="c1">// passing non-pointer</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">resetStringValueOfGivenField</span><span class="p">(</span><span class="nx">foo3</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;X&quot;</span><span class="p">);</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">log</span><span class="p">.</span><span class="nx">Print</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="c1">// invalid kind, must be a pointer to struct, not a &quot;struct&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Keza, yine <code>any</code> alan bir fonksiyon olsun, geçilen tipi (Kind) tespit edelim:</p>
+<p><a href="https://go.dev/play/p/RbRn7tVQHV-">https://go.dev/play/p/RbRn7tVQHV-</a></p>
+<p><a href="https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/11/reflect-typecheck">Örnek</a></p>
+<div class="highlight"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nx">main</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;fmt&quot;</span>
+<span class="w">    </span><span class="s">&quot;reflect&quot;</span>
+<span class="w">    </span><span class="s">&quot;unsafe&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="nx">checkType</span><span class="p">(</span><span class="nx">d</span><span class="w"> </span><span class="kt">any</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">switch</span><span class="w"> </span><span class="nx">v</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">ValueOf</span><span class="p">(</span><span class="nx">d</span><span class="p">);</span><span class="w"> </span><span class="nx">v</span><span class="p">.</span><span class="nx">Kind</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">Struct</span><span class="p">:</span>
+<span class="w">        </span><span class="nx">s</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Sprintf</span><span class="p">(</span><span class="s">&quot;%+v&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">v</span><span class="p">)</span>
+<span class="w">        </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;%-24v (%v)\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">s</span><span class="p">,</span><span class="w"> </span><span class="nx">v</span><span class="p">.</span><span class="nx">Type</span><span class="p">())</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">String</span><span class="p">:</span>
+<span class="w">        </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;%-24v (%v)\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">v</span><span class="p">,</span><span class="w"> </span><span class="nx">v</span><span class="p">.</span><span class="nx">Type</span><span class="p">())</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">Int</span><span class="p">,</span><span class="w"> </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">Int8</span><span class="p">,</span><span class="w"> </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">Int16</span><span class="p">,</span><span class="w"> </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">Int32</span><span class="p">,</span><span class="w"> </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">Int64</span><span class="p">:</span>
+<span class="w">        </span><span class="nx">t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="s">&quot;(&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">v</span><span class="p">.</span><span class="nx">Type</span><span class="p">().</span><span class="nx">String</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;)&quot;</span>
+<span class="w">        </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;%-24v %-10v -&gt; %d\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">v</span><span class="p">,</span><span class="w"> </span><span class="nx">t</span><span class="p">,</span><span class="w"> </span><span class="nx">v</span><span class="p">.</span><span class="nx">Int</span><span class="p">())</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">Uint</span><span class="p">,</span><span class="w"> </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">Uint8</span><span class="p">,</span><span class="w"> </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">Uint16</span><span class="p">,</span><span class="w"> </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">Uint32</span><span class="p">,</span><span class="w"> </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">Uint64</span><span class="p">:</span>
+<span class="w">        </span><span class="nx">t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="s">&quot;(&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">v</span><span class="p">.</span><span class="nx">Type</span><span class="p">().</span><span class="nx">String</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;)&quot;</span>
+<span class="w">        </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;%-24v %-10v -&gt; %d\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">v</span><span class="p">,</span><span class="w"> </span><span class="nx">t</span><span class="p">,</span><span class="w"> </span><span class="nx">v</span><span class="p">.</span><span class="nx">Uint</span><span class="p">())</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">Bool</span><span class="p">:</span>
+<span class="w">        </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;%-24v (%v)\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">v</span><span class="p">,</span><span class="w"> </span><span class="nx">v</span><span class="p">.</span><span class="nx">Type</span><span class="p">())</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">Float32</span><span class="p">,</span><span class="w"> </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">Float64</span><span class="p">:</span>
+<span class="w">        </span><span class="nx">t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="s">&quot;(&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">v</span><span class="p">.</span><span class="nx">Type</span><span class="p">().</span><span class="nx">String</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;)&quot;</span>
+<span class="w">        </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;%-24v %-10v -&gt; %f\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">v</span><span class="p">,</span><span class="w"> </span><span class="nx">t</span><span class="p">,</span><span class="w"> </span><span class="nx">v</span><span class="p">.</span><span class="nx">Float</span><span class="p">())</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">Complex64</span><span class="p">,</span><span class="w"> </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">Complex128</span><span class="p">:</span>
+<span class="w">        </span><span class="nx">t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="s">&quot;(&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">v</span><span class="p">.</span><span class="nx">Type</span><span class="p">().</span><span class="nx">String</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;)&quot;</span>
+<span class="w">        </span><span class="nx">s</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Sprintf</span><span class="p">(</span><span class="s">&quot;%v&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">v</span><span class="p">)</span>
+<span class="w">        </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;%-24v %-10v\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">s</span><span class="p">,</span><span class="w"> </span><span class="nx">t</span><span class="p">)</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">Func</span><span class="p">:</span>
+<span class="w">        </span><span class="nx">t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="s">&quot;(&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">v</span><span class="p">.</span><span class="nx">Type</span><span class="p">().</span><span class="nx">String</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;)&quot;</span>
+<span class="w">        </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;%-24v %-10v\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">v</span><span class="p">,</span><span class="w"> </span><span class="nx">t</span><span class="p">)</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">Chan</span><span class="p">:</span>
+<span class="w">        </span><span class="nx">t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="s">&quot;(&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">v</span><span class="p">.</span><span class="nx">Type</span><span class="p">().</span><span class="nx">String</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;)&quot;</span>
+<span class="w">        </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;%-24v %-10v\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">v</span><span class="p">,</span><span class="w"> </span><span class="nx">t</span><span class="p">)</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">Map</span><span class="p">:</span>
+<span class="w">        </span><span class="nx">t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="s">&quot;(&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">v</span><span class="p">.</span><span class="nx">Type</span><span class="p">().</span><span class="nx">String</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;)&quot;</span>
+<span class="w">        </span><span class="nx">s</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Sprintf</span><span class="p">(</span><span class="s">&quot;%v&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">v</span><span class="p">)</span>
+<span class="w">        </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;%-24v %-10v\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">s</span><span class="p">,</span><span class="w"> </span><span class="nx">t</span><span class="p">)</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">Array</span><span class="p">,</span><span class="w"> </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">Slice</span><span class="p">:</span>
+<span class="w">        </span><span class="nx">t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="s">&quot;(&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">v</span><span class="p">.</span><span class="nx">Type</span><span class="p">().</span><span class="nx">String</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;)&quot;</span>
+<span class="w">        </span><span class="nx">s</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Sprintf</span><span class="p">(</span><span class="s">&quot;%v&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">v</span><span class="p">)</span>
+<span class="w">        </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;%-24v %-10v\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">s</span><span class="p">,</span><span class="w"> </span><span class="nx">t</span><span class="p">)</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">Uintptr</span><span class="p">:</span>
+<span class="w">        </span><span class="nx">t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="s">&quot;(&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">v</span><span class="p">.</span><span class="nx">Type</span><span class="p">().</span><span class="nx">String</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;)&quot;</span>
+<span class="w">        </span><span class="nx">s</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Sprintf</span><span class="p">(</span><span class="s">&quot;%v&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">v</span><span class="p">)</span>
+<span class="w">        </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;%-24v %-10v\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">s</span><span class="p">,</span><span class="w"> </span><span class="nx">t</span><span class="p">)</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">UnsafePointer</span><span class="p">:</span>
+<span class="w">        </span><span class="nx">t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="s">&quot;(&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">v</span><span class="p">.</span><span class="nx">Type</span><span class="p">().</span><span class="nx">String</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;)&quot;</span>
+<span class="w">        </span><span class="nx">s</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Sprintf</span><span class="p">(</span><span class="s">&quot;%v&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">v</span><span class="p">)</span>
+<span class="w">        </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;%-24v %-10v\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">s</span><span class="p">,</span><span class="w"> </span><span class="nx">t</span><span class="p">)</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">Pointer</span><span class="p">:</span>
+<span class="w">        </span><span class="nx">t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="s">&quot;(&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">v</span><span class="p">.</span><span class="nx">Type</span><span class="p">().</span><span class="nx">String</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;)&quot;</span>
+<span class="w">        </span><span class="nx">s</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Sprintf</span><span class="p">(</span><span class="s">&quot;%v&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">v</span><span class="p">)</span>
+<span class="w">        </span><span class="nx">el</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">TypeOf</span><span class="p">(</span><span class="nx">d</span><span class="p">).</span><span class="nx">Elem</span><span class="p">()</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nx">el</span><span class="p">.</span><span class="nx">Kind</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">Interface</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">t</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;(&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">el</span><span class="p">.</span><span class="nx">Kind</span><span class="p">().</span><span class="nx">String</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;)&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;%-24v %-10v\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">s</span><span class="p">,</span><span class="w"> </span><span class="nx">t</span><span class="p">)</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">Interface</span><span class="p">:</span>
+<span class="w">        </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;this is not possible&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">Invalid</span><span class="p">:</span>
+<span class="w">        </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;%-24v\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">v</span><span class="p">)</span>
+<span class="w">    </span><span class="k">default</span><span class="p">:</span>
+<span class="w">        </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">v</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;unknown&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">i</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="mi">1</span>
+
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="kt">error</span>
+
+<span class="w">    </span><span class="nx">data</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">[]</span><span class="kt">any</span><span class="p">{</span>
+<span class="w">        </span><span class="s">&quot;hello&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="mi">2023</span><span class="p">,</span>
+<span class="w">        </span><span class="nb">int8</span><span class="p">(</span><span class="mi">127</span><span class="p">),</span><span class="w">                    </span><span class="c1">// upper limit</span>
+<span class="w">        </span><span class="nb">int16</span><span class="p">(</span><span class="mi">32767</span><span class="p">),</span><span class="w">                 </span><span class="c1">// upper limit</span>
+<span class="w">        </span><span class="nb">int32</span><span class="p">(</span><span class="mi">2147483647</span><span class="p">),</span><span class="w">            </span><span class="c1">// upper limit</span>
+<span class="w">        </span><span class="nb">int64</span><span class="p">(</span><span class="mi">9223372036854775807</span><span class="p">),</span><span class="w">   </span><span class="c1">// upper limit</span>
+<span class="w">        </span><span class="nb">uint</span><span class="p">(</span><span class="mi">9223372036854775807</span><span class="p">),</span><span class="w">    </span><span class="c1">// upper limit</span>
+<span class="w">        </span><span class="nb">uint8</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span><span class="w">                   </span><span class="c1">// upper limit</span>
+<span class="w">        </span><span class="nb">uint16</span><span class="p">(</span><span class="mi">65535</span><span class="p">),</span><span class="w">                </span><span class="c1">// upper limit</span>
+<span class="w">        </span><span class="nb">uint32</span><span class="p">(</span><span class="mi">4294967295</span><span class="p">),</span><span class="w">           </span><span class="c1">// upper limit</span>
+<span class="w">        </span><span class="nb">uint64</span><span class="p">(</span><span class="mi">18446744073709551615</span><span class="p">),</span><span class="w"> </span><span class="c1">// upper limit</span>
+<span class="w">        </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">        </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">        </span><span class="nb">float32</span><span class="p">(</span><span class="mf">1.0</span><span class="p">),</span>
+<span class="w">        </span><span class="nb">float64</span><span class="p">(</span><span class="mf">1.0</span><span class="p">),</span>
+<span class="w">        </span><span class="nb">complex</span><span class="p">(</span><span class="nb">float32</span><span class="p">(</span><span class="mf">3.0</span><span class="p">),</span><span class="w"> </span><span class="nb">float32</span><span class="p">(</span><span class="mf">4.0</span><span class="p">)),</span>
+<span class="w">        </span><span class="nb">complex</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">),</span>
+<span class="w">        </span><span class="kd">func</span><span class="p">()</span><span class="w"> </span><span class="p">{},</span>
+<span class="w">        </span><span class="nb">make</span><span class="p">(</span><span class="kd">chan</span><span class="w"> </span><span class="kt">int</span><span class="p">),</span>
+<span class="w">        </span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">string</span><span class="p">{</span><span class="s">&quot;key&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;value&quot;</span><span class="p">},</span>
+<span class="w">        </span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="kt">string</span><span class="p">{</span><span class="s">&quot;array&quot;</span><span class="p">},</span>
+<span class="w">        </span><span class="p">[]</span><span class="kt">string</span><span class="p">{</span><span class="s">&quot;slice&quot;</span><span class="p">},</span>
+<span class="w">        </span><span class="nb">uintptr</span><span class="p">(</span><span class="nx">unsafe</span><span class="p">.</span><span class="nx">Pointer</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">i</span><span class="p">)),</span><span class="w"> </span><span class="c1">// nolint</span>
+<span class="w">        </span><span class="o">&amp;</span><span class="nx">i</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">unsafe</span><span class="p">.</span><span class="nx">Pointer</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">i</span><span class="p">),</span><span class="w"> </span><span class="c1">// nolint</span>
+<span class="w">        </span><span class="o">&amp;</span><span class="nx">err</span><span class="p">,</span>
+<span class="w">        </span><span class="kd">struct</span><span class="p">{}{},</span>
+<span class="w">        </span><span class="kc">nil</span><span class="p">,</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">v</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">range</span><span class="w"> </span><span class="nx">data</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">checkType</span><span class="p">(</span><span class="nx">v</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// hello                    (string)</span>
+<span class="c1">// 2023                     (int)      -&gt; 2023</span>
+<span class="c1">// 127                      (int8)     -&gt; 127</span>
+<span class="c1">// 32767                    (int16)    -&gt; 32767</span>
+<span class="c1">// 2147483647               (int32)    -&gt; 2147483647</span>
+<span class="c1">// 9223372036854775807      (int64)    -&gt; 9223372036854775807</span>
+<span class="c1">// 9223372036854775807      (uint)     -&gt; 9223372036854775807</span>
+<span class="c1">// 255                      (uint8)    -&gt; 255</span>
+<span class="c1">// 65535                    (uint16)   -&gt; 65535</span>
+<span class="c1">// 4294967295               (uint32)   -&gt; 4294967295</span>
+<span class="c1">// 18446744073709551615     (uint64)   -&gt; 18446744073709551615</span>
+<span class="c1">// true                     (bool)</span>
+<span class="c1">// false                    (bool)</span>
+<span class="c1">// 1                        (float32)  -&gt; 1.000000</span>
+<span class="c1">// 1                        (float64)  -&gt; 1.000000</span>
+<span class="c1">// (3+4i)                   (complex64)</span>
+<span class="c1">// (5+7i)                   (complex128)</span>
+<span class="c1">// 0x102b45b50              (func())</span>
+<span class="c1">// 0x140001000c0            (chan int)</span>
+<span class="c1">// map[key:value]           (map[string]string)</span>
+<span class="c1">// [array]                  ([1]string)</span>
+<span class="c1">// [slice]                  ([]string)</span>
+<span class="c1">// 1374390648856            (uintptr)</span>
+<span class="c1">// 0x14000110018            (*int)</span>
+<span class="c1">// 0x14000110018            (unsafe.Pointer)</span>
+<span class="c1">// 0x14000102020            (interface)</span>
+<span class="c1">// {}                       (struct {})</span>
+<span class="c1">// &lt;invalid reflect.Value&gt;</span>
+</code></pre></div>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            Başa dön
+          </button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.indexes", "navigation.top", "toc.integrate"], "search": "../../assets/javascripts/workers/search.dfff1995.min.js", "translations": {"clipboard.copied": "Kopyaland\u0131", "clipboard.copy": "Kopyala", "search.result.more.one": "Bu sayfada 1 tane daha", "search.result.more.other": "Bu sayfada # tane daha", "search.result.none": "E\u015fle\u015fen dok\u00fcman bulunamad\u0131", "search.result.one": "1 dok\u00fcman bulundu", "search.result.other": "# dok\u00fcman bulundu", "search.result.placeholder": "Aramaya ba\u015flamak i\u00e7in yaz\u0131n", "search.result.term.missing": "Eksik", "select.version": "Versiyon se\u00e7"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.dff1b7c8.min.js"></script>
+      
+    
+  </body>
+</html>

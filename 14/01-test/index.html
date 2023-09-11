@@ -1,0 +1,2561 @@
+
+<!doctype html>
+<html lang="tr" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Mustafa Akgül Özgür Yazılım Yaz Kampı 2023’te verilen Go Kursu">
+      
+      
+        <meta name="author" content="Uğur vigo Özyılmazel">
+      
+      
+        <link rel="canonical" href="https://vbyazilim.github.io/maoyyk2023-golang-101-kursu/14/01-test/">
+      
+      
+        <link rel="prev" href="../../13/01-json-ile-calismak/">
+      
+      
+        <link rel="next" href="../02-table-driven-test/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.2.8">
+    
+    
+      
+        <title>Test - MAÖYYK 2023 - Go Kursu</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.046329b4.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#bolum-1401-test" class="md-skip">
+          Ana içeriğe geç
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Başlık">
+    <a href="../.." title="MAÖYYK 2023 - Go Kursu" class="md-header__button md-logo" aria-label="MAÖYYK 2023 - Go Kursu" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            MAÖYYK 2023 - Go Kursu
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Test
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Ara" placeholder="Ara" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Ara">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Temizle" aria-label="Temizle" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Arama başlatılıyor
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/vbyazilim/maoyyk2023-golang-101-kursu" title="Depoya git" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    vbyazilim/maoyyk2023-golang-101-kursu
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigasyon" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="MAÖYYK 2023 - Go Kursu" class="md-nav__button md-logo" aria-label="MAÖYYK 2023 - Go Kursu" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    MAÖYYK 2023 - Go Kursu
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/vbyazilim/maoyyk2023-golang-101-kursu" title="Depoya git" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    vbyazilim/maoyyk2023-golang-101-kursu
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    İçindekiler
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Bölüm 01: Golang Hakkında Genel Bilgiler
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Bölüm 01: Golang Hakkında Genel Bilgiler
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01/01-tanitim/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tanıtım, Öne Çıkan Kısımları
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01/02-proverbs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Go Proverbs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01/03-kurulum/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Kurulum
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01/04-vscode-kurulumu/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    VSCode Kurulumu
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Bölüm 02: Golang Uygulamasına Genel Bakış
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Bölüm 02: Golang Uygulamasına Genel Bakış
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02/01-paket-kavrami/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Paket Kavramı ve `main` Paketi
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02/02-executable-lib-run/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Executable, Library ve Golang Uygulamasını Çalıştırmak
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Bölüm 03
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Bölüm 03
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03/01-dil-kurallari/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Dil Kuralları
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03/02-sabitler/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sabitler
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03/03-degiskenler/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Değişkenler
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Bölüm 04: Veri Tipleri
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Bölüm 04: Veri Tipleri
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04/01-string/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Strings (metinseller)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04/02-bool/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Booleans (mantıksallar)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04/03-numerics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Numerics (sayısallar)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04/04-collections/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Koleksiyonlar
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04/05-struct/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Structs (yapılar)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04/05-struct-annotations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Struct Annotations
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04/06-pointer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Pointer (işaretçi) Kavramı
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04/07-struct-methods-receivers/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Struct Methods ve Receivers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04/08-map/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Maps
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04/09-tip-donusturmek/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tip Dönüştürmek
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05/01-fonksiyonlar/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bölüm 05: Fonksiyonlar
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Bölüm 06: Durum Kontrolleri
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Bölüm 06: Durum Kontrolleri
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06/01-durum-koontrolleri-if/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    if, else, else if
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06/02-durum-koontrolleri-switch/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    switch/case
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06/03-label-break-goto/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    label/break/goto
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07/01-dongu/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bölüm 07: Döngüler
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08/01-interface/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bölüm 08: Interface
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09/01-error/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bölüm 09: Error
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10/01-nil/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bölüm 10: nil
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../11/01-generics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bölüm 11: Generics
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../12/01-reflection/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bölüm 12: Reflection
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../13/01-json-ile-calismak/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bölüm 13: JSON İle Çalışmak
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_15" checked>
+        
+          <label class="md-nav__link" for="__nav_15" id="__nav_15_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Bölüm 14: Test
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_15_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_15">
+            <span class="md-nav__icon md-icon"></span>
+            Bölüm 14: Test
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Test
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Test
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="İçindekiler">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      İçindekiler
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#test-nedir-neden-yazlr" class="md-nav__link">
+    Test Nedir? Neden Yazılır?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#test-nasl-calstrlr" class="md-nav__link">
+    Test Nasıl Çalıştırılır
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples-ve-godoc" class="md-nav__link">
+    Examples ve godoc
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-race-detection" class="md-nav__link">
+    Data Race Detection
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kaynaklar" class="md-nav__link">
+    Kaynaklar
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-table-driven-test/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Table Driven Test
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-test-coverage/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Test Coverage
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-profiling/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Profiling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_16" >
+        
+          <label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Bölüm 15: Concurrency
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_16">
+            <span class="md-nav__icon md-icon"></span>
+            Bölüm 15: Concurrency
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15/01-concurrency/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Concurrency
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15/02-channels/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Channels
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15/03-mutex/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mutex
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15/04-context/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Context
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../16/01-naming-conventions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bölüm 16: İsimlendirme Kuralları
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_18" >
+        
+          <label class="md-nav__link" for="__nav_18" id="__nav_18_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Bölüm 17: Golang Paketi Geliştirmek
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_18_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_18">
+            <span class="md-nav__icon md-icon"></span>
+            Bölüm 17: Golang Paketi Geliştirmek
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../17/01-kurulumlar/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    golangci-linter
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../17/02-go-modul-anotomisi/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Go Modülü Anatomisi
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../17/03-ornek-paket/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    stringutils Paketi
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../17/04-paketi-dagitmak/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Paketi Dağıtmak
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_19" >
+        
+          <label class="md-nav__link" for="__nav_19" id="__nav_19_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Bölüm 18: In-Memory Key-Value Store
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_19_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_19">
+            <span class="md-nav__icon md-icon"></span>
+            Bölüm 18: In-Memory Key-Value Store
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18/01-http-paketi/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    http Paketini Kullanarak Rest-API Tasarlamak
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18/02-ddd-basics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Domain Driven Design prensibini Kullanmak
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18/03-development/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Geliştirme
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18/04-testing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    http server’ın Unit Testleri
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18/05-docker/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Uygulamanın Docker Container’ından Çalıştırılması
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18/06-github-actions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GitHub Actions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18/07-acik-kaynak/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Açık Kaynak
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_20" >
+        
+          <label class="md-nav__link" for="__nav_20" id="__nav_20_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Bonus
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_20_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_20">
+            <span class="md-nav__icon md-icon"></span>
+            Bonus
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../bonus/01-links/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Linkler
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/vbyazilim/kvstore" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    kvstore
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_21" >
+        
+          <label class="md-nav__link" for="__nav_21" id="__nav_21_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Quiz
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_21_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_21">
+            <span class="md-nav__icon md-icon"></span>
+            Quiz
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quiz/01-go-cash-register/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Quiz 1
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="bolum-1401-test">Bölüm 14/01: Test</h1>
+<h2 id="test-nedir-neden-yazlr">Test Nedir? Neden Yazılır?</h2>
+<p>Yazdığımız kodun, fonksiyonun, metotların çalıştığını garanti etmek için
+uygulanan yöntemdir. Basit mantık şu, fonksiyon girdi (input) alır, bir iş
+yapar ve çıktı (output) üretir. Toplama işlemi yapan bir fonksiyon, iki tane
+sayı alır, işlemi yapar ve geriye sonuç döner:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">girdi</span><span class="o">:</span><span class="w"> </span><span class="mi">1</span><span class="o">,</span><span class="mi">2</span><span class="w">  </span><span class="o">-&gt;</span><span class="w">  </span><span class="mi">1</span><span class="o">+</span><span class="mi">2</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="err">çı</span><span class="n">ktı</span><span class="o">:</span><span class="w"> </span><span class="mi">3</span>
+<span class="n">girdi</span><span class="o">:</span><span class="w"> </span><span class="mi">0</span><span class="o">,</span><span class="mi">0</span><span class="w">  </span><span class="o">-&gt;</span><span class="w">  </span><span class="mi">0</span><span class="o">+</span><span class="mi">0</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="err">çı</span><span class="n">ktı</span><span class="o">:</span><span class="w"> </span><span class="mi">0</span>
+<span class="n">girdi</span><span class="o">:</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="o">,</span><span class="mi">1</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="o">+</span><span class="mi">1</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="err">çı</span><span class="n">ktı</span><span class="o">:</span><span class="w"> </span><span class="mi">0</span>
+</code></pre></div>
+
+<p>İşte tüm bu varyasyonları (use case’leri) denediğimiz kod parçasına test kodu,
+birim test kodu ya da <strong>unit testing</strong> denir.</p>
+<p>Go, kendi içinde built-in test araçlarıyla birlikte gelir. <code>testing</code> paketi bu
+iş için kullanılır. Sonu <code>_test.go</code> ile biten dosyalar testlerin yazıldığı
+dosyalardır. Go, test’leri çalıştırırken otomatik olarak bu dosyaları işler.</p>
+<p>Bizden istenen bir fonksiyon olsa; biz o fonksiyona kimi zaten bir tane, kimi
+zaman <code>n</code> tane isim versek (string), fonksiyon bizi selamlasa;</p>
+<div class="highlight"><pre><span></span><code><span class="nx">SayHi</span><span class="p">()</span><span class="w">                 </span><span class="c1">// hi everybody!</span>
+<span class="nx">SayHi</span><span class="p">(</span><span class="s">&quot;uğur&quot;</span><span class="p">)</span><span class="w">           </span><span class="c1">// hi uğur </span>
+<span class="nx">SayHi</span><span class="p">(</span><span class="s">&quot;uğur&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;erhan&quot;</span><span class="p">)</span><span class="w">  </span><span class="c1">// hi uğur</span>
+<span class="w">                        </span><span class="c1">// hi erhan</span>
+</code></pre></div>
+<p>Haydi şimdi koda bakalım:</p>
+<p><a href="https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/14/test-greet">Örnek</a></p>
+<p><code>greet/greet.go</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nx">greet</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="s">&quot;strings&quot;</span>
+
+<span class="c1">// SayHi greets given names.</span>
+<span class="kd">func</span><span class="w"> </span><span class="nx">SayHi</span><span class="p">(</span><span class="nx">names</span><span class="w"> </span><span class="o">...</span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="nx">names</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;hi everybody!&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nx">out</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nb">make</span><span class="p">([]</span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="nx">names</span><span class="p">))</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="nx">i</span><span class="p">,</span><span class="w"> </span><span class="nx">name</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">range</span><span class="w"> </span><span class="nx">names</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">out</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;hi &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">name</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;!&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">strings</span><span class="p">.</span><span class="nx">Join</span><span class="p">(</span><span class="nx">out</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;\n&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><code>main.go</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nx">main</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;fmt&quot;</span>
+
+<span class="w">    </span><span class="s">&quot;github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-greet/greet&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">greet</span><span class="p">.</span><span class="nx">SayHi</span><span class="p">())</span><span class="w">       </span><span class="c1">// hi everybody!</span>
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">greet</span><span class="p">.</span><span class="nx">SayHi</span><span class="p">(</span><span class="s">&quot;uğur&quot;</span><span class="p">))</span><span class="w"> </span><span class="c1">// hi uğur!</span>
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">greet</span><span class="p">.</span><span class="nx">SayHi</span><span class="p">(</span><span class="s">&quot;uğur&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;erhan&quot;</span><span class="p">))</span>
+<span class="w">    </span><span class="c1">// hi uğur!</span>
+<span class="w">    </span><span class="c1">// hi erhan!</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Şimdi bu fonksiyonun gerçekten bizim verdiğimiz girdileri doğru işleyip
+işlemediğini görelim. <code>greet_test.go</code> isminde bir dosya oluşturuyoruz ve;</p>
+<div class="highlight"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nx">greet_test</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;fmt&quot;</span>
+<span class="w">    </span><span class="s">&quot;testing&quot;</span>
+
+<span class="w">    </span><span class="s">&quot;github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-greet/greet&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="nx">TestSayHi</span><span class="p">(</span><span class="nx">t</span><span class="w"> </span><span class="o">*</span><span class="nx">testing</span><span class="p">.</span><span class="nx">T</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">want</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="s">&quot;hi vigo!&quot;</span>
+<span class="w">    </span><span class="nx">got</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">greet</span><span class="p">.</span><span class="nx">SayHi</span><span class="p">(</span><span class="s">&quot;vigo&quot;</span><span class="p">)</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">got</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nx">want</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">t</span><span class="p">.</span><span class="nx">Errorf</span><span class="p">(</span><span class="s">&quot;want: %v; got: %v&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">want</span><span class="p">,</span><span class="w"> </span><span class="nx">got</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="nx">TestSayHiWithNoArgs</span><span class="p">(</span><span class="nx">t</span><span class="w"> </span><span class="o">*</span><span class="nx">testing</span><span class="p">.</span><span class="nx">T</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">want</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="s">&quot;hi everybody!&quot;</span>
+<span class="w">    </span><span class="nx">got</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">greet</span><span class="p">.</span><span class="nx">SayHi</span><span class="p">()</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">got</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nx">want</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">t</span><span class="p">.</span><span class="nx">Errorf</span><span class="p">(</span><span class="s">&quot;want: %v; got: %v&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">want</span><span class="p">,</span><span class="w"> </span><span class="nx">got</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="nx">TestSayHiWithArgs</span><span class="p">(</span><span class="nx">t</span><span class="w"> </span><span class="o">*</span><span class="nx">testing</span><span class="p">.</span><span class="nx">T</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">want</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="s">&quot;hi vigo!\nhi turbo!\nhi max!&quot;</span>
+<span class="w">    </span><span class="nx">got</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">greet</span><span class="p">.</span><span class="nx">SayHi</span><span class="p">(</span><span class="s">&quot;vigo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;turbo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;max&quot;</span><span class="p">)</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">got</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nx">want</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">t</span><span class="p">.</span><span class="nx">Errorf</span><span class="p">(</span><span class="s">&quot;want: %v; got: %v&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">want</span><span class="p">,</span><span class="w"> </span><span class="nx">got</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// This is example of single argument usage.</span>
+<span class="kd">func</span><span class="w"> </span><span class="nx">ExampleSayHi</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">greet</span><span class="p">.</span><span class="nx">SayHi</span><span class="p">(</span><span class="s">&quot;vigo&quot;</span><span class="p">))</span>
+<span class="w">    </span><span class="c1">// Output: hi vigo!</span>
+<span class="p">}</span>
+
+<span class="c1">// This is example of no argument usage.</span>
+<span class="kd">func</span><span class="w"> </span><span class="nx">ExampleSayHi_withNoArg</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">greet</span><span class="p">.</span><span class="nx">SayHi</span><span class="p">())</span>
+<span class="w">    </span><span class="c1">// Output: hi everybody!</span>
+<span class="p">}</span>
+
+<span class="c1">// This is example of with many arguments usage.</span>
+<span class="kd">func</span><span class="w"> </span><span class="nx">ExampleSayHi_withArgs</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">greet</span><span class="p">.</span><span class="nx">SayHi</span><span class="p">(</span><span class="s">&quot;vigo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;turbo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;max&quot;</span><span class="p">))</span>
+<span class="w">    </span><span class="c1">// Output: hi vigo!</span>
+<span class="w">    </span><span class="c1">// hi turbo!</span>
+<span class="w">    </span><span class="c1">// hi max!</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr />
+<h2 id="test-nasl-calstrlr">Test Nasıl Çalıştırılır</h2>
+<p>Test etmek istediğimiz senaryoları <code>Test</code> kelimesiyle başlatan test
+fonksiyonları şeklinde yazıyoruz. <code>Test&lt;NEYİ_TEST_EDIYORUZ?&gt;</code>. Bizim için 3 konu vardı;</p>
+<ol>
+<li>Hiç argüman verilmezse <code>TestSayHiWithNoArgs</code></li>
+<li>Tek argüman verilirse <code>TestSayHi</code></li>
+<li>N tane argüman verilirse <code>TestSayHiWithArgs</code></li>
+</ol>
+<p>Aynı test fonksiyonuları gibi <code>Example</code> kelimesiyle başlayan ve aynı test gibi
+çalışan örnekler de ekledik. Bu örnekler dokümantasyon için çok faydalıdır.</p>
+<p>Şimdi testleri çalıştıralım:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span><span class="c1"># go test &lt;PAKET-ADI&gt;</span>
+$<span class="w"> </span><span class="c1"># go test &lt;TÜM-PAKETLER&gt;</span>
+
+$<span class="w"> </span>go<span class="w"> </span><span class="nb">test</span><span class="w"> </span>./...<span class="w">        </span><span class="c1"># go projesi altındaki tüm paketlerin testlerini çalıştır</span>
+
+$<span class="w"> </span>go<span class="w"> </span>list<span class="w"> </span>./...<span class="w">        </span><span class="c1"># go projesi altındaki tüm paketleri listele</span>
+$<span class="w"> </span>go<span class="w"> </span><span class="nb">test</span><span class="w"> </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-greet/greet
+ok<span class="w">      </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-greet/greet<span class="w">    </span><span class="o">(</span>cached<span class="o">)</span>
+
+<span class="c1"># verbose mode</span>
+$<span class="w"> </span>go<span class="w"> </span><span class="nb">test</span><span class="w"> </span>-v<span class="w"> </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-greet/greet
+<span class="o">===</span><span class="w"> </span>RUN<span class="w">   </span>TestSayHi
+---<span class="w"> </span>PASS:<span class="w"> </span>TestSayHi<span class="w"> </span><span class="o">(</span><span class="m">0</span>.00s<span class="o">)</span>
+<span class="o">===</span><span class="w"> </span>RUN<span class="w">   </span>TestSayHiWithNoArgs
+---<span class="w"> </span>PASS:<span class="w"> </span>TestSayHiWithNoArgs<span class="w"> </span><span class="o">(</span><span class="m">0</span>.00s<span class="o">)</span>
+<span class="o">===</span><span class="w"> </span>RUN<span class="w">   </span>TestSayHiWithArgs
+---<span class="w"> </span>PASS:<span class="w"> </span>TestSayHiWithArgs<span class="w"> </span><span class="o">(</span><span class="m">0</span>.00s<span class="o">)</span>
+<span class="o">===</span><span class="w"> </span>RUN<span class="w">   </span>ExampleSayHi
+---<span class="w"> </span>PASS:<span class="w"> </span>ExampleSayHi<span class="w"> </span><span class="o">(</span><span class="m">0</span>.00s<span class="o">)</span>
+<span class="o">===</span><span class="w"> </span>RUN<span class="w">   </span>ExampleSayHi_withNoArg
+---<span class="w"> </span>PASS:<span class="w"> </span>ExampleSayHi_withNoArg<span class="w"> </span><span class="o">(</span><span class="m">0</span>.00s<span class="o">)</span>
+<span class="o">===</span><span class="w"> </span>RUN<span class="w">   </span>ExampleSayHi_withArgs
+---<span class="w"> </span>PASS:<span class="w"> </span>ExampleSayHi_withArgs<span class="w"> </span><span class="o">(</span><span class="m">0</span>.00s<span class="o">)</span>
+PASS
+ok<span class="w">      </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-greet/greet<span class="w">    </span><span class="m">0</span>.406s
+</code></pre></div>
+<p><code>(cached)</code> ifadesi, bu testin daha önce çalıştığı ve kodda bir değişiklik
+olmadığını, bu bakımdan da testin aslında tekrar çalışmadığını ifade eder. Eğer
+cache’i silmek istersek;</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>go<span class="w"> </span>clean<span class="w"> </span>-testcache
+</code></pre></div>
+<hr />
+<h2 id="examples-ve-godoc">Examples ve godoc</h2>
+<p>yeterlidir. Hemen <code>Example</code>’lar ne işe yarıyor onu görelim. Öncelikle
+<code>godoc</code>’u kuralım:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>go<span class="w"> </span>install<span class="w"> </span>golang.org/x/tools/cmd/godoc@latest
+$<span class="w"> </span>godoc<span class="w"> </span>-http<span class="o">=</span>:6060<span class="w">  </span><span class="c1"># doc sunucusu 6060 portundan çalışacak</span>
+</code></pre></div>
+<p>sonra;</p>
+<p><a href="http://127.0.0.1:6060/pkg/github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-greet/greet/">http://127.0.0.1:6060/pkg/github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-greet/greet/</a></p>
+<p>Example’ları yazarken;</p>
+<div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">Example</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="o">...</span><span class="w"> </span><span class="p">}</span>
+<span class="kd">func</span><span class="w"> </span><span class="nx">ExampleF</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="o">...</span><span class="w"> </span><span class="p">}</span>
+<span class="kd">func</span><span class="w"> </span><span class="nx">ExampleT</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="o">...</span><span class="w"> </span><span class="p">}</span>
+<span class="kd">func</span><span class="w"> </span><span class="nx">ExampleT_M</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="o">...</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<p>Yani;</p>
+<ul>
+<li><code>Example()</code></li>
+<li><code>ExampleSayHi()</code> -&gt; <code>F()</code> =&gt; <code>SayHi()</code>’a denk geliyor</li>
+<li><code>ExampleT()</code> -&gt; Eğer custom bir type yazıp test etmek istesek, <code>ExampleUser()</code> gibi</li>
+<li><code>ExampleT_M()</code> -&gt; Custom type’ın metotu yani <code>ExampleUser_List()</code> gibi..</li>
+</ul>
+<p>durumlarda kullanıyoruz. Keza;</p>
+<div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">Example_suffix</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="o">...</span><span class="w"> </span><span class="p">}</span>
+<span class="kd">func</span><span class="w"> </span><span class="nx">ExampleF_suffix</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="o">...</span><span class="w"> </span><span class="p">}</span>
+<span class="kd">func</span><span class="w"> </span><span class="nx">ExampleT_suffix</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="o">...</span><span class="w"> </span><span class="p">}</span>
+<span class="kd">func</span><span class="w"> </span><span class="nx">ExampleT_M_suffix</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="o">...</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<p>şeklinde de kullanabiliyoruz. Aynı şekilde biz de;</p>
+<ul>
+<li><code>ExampleSayHi_withNoArg()</code></li>
+<li><code>ExampleSayHi_withArgs()</code></li>
+</ul>
+<p>kullandık.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Output: .....</span>
+</code></pre></div>
+<p>ile çıktısını yazıyoruz. Bu sayede aynı test gibi çalışmış oluyorlar. Eğer bir
+örneğin <code>Output</code> <strong>comment</strong>’i yoksa kod derleniyor <strong>ama çalıştırılmıyor</strong>.</p>
+<p><code>Example</code> sayesinde yazdığımız kodu kullanacak kişiye copy/paste yaparak örnek
+kod parçasını hemen alıp kendi koduna entegre edecek bir kolaylık sağlıyoruz.</p>
+<p>Test fonksiyonlarını teker teker de çalıştırabiliriz:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>go<span class="w"> </span><span class="nb">test</span><span class="w"> </span>-v<span class="w"> </span>-run<span class="w"> </span>^TestSayHi$<span class="w"> </span>./...
+<span class="c1"># go projesi altındaki tüm paketleri tara, &quot;TestSayHi&quot; olanı çalıştır (regex match)</span>
+
+$<span class="w"> </span>go<span class="w"> </span><span class="nb">test</span><span class="w"> </span>-v<span class="w"> </span>-run<span class="w"> </span>^TestSayHi<span class="w"> </span>./...
+<span class="c1"># go projesi altındaki tüm paketleri tara, &quot;TestSayHi&quot; ile başlayanları çalıştır (regex match)</span>
+
+?<span class="w">       </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/02/01-init<span class="w"> </span><span class="o">[</span>no<span class="w"> </span><span class="nb">test</span><span class="w"> </span>files<span class="o">]</span>
+?<span class="w">       </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/04/05-struct-custom-tag<span class="w">    </span><span class="o">[</span>no<span class="w"> </span><span class="nb">test</span><span class="w"> </span>files<span class="o">]</span>
+?<span class="w">       </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/04/05-struct-field-access<span class="w">  </span><span class="o">[</span>no<span class="w"> </span><span class="nb">test</span><span class="w"> </span>files<span class="o">]</span>
+?<span class="w">       </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/04/05-struct-field-access/person<span class="w">   </span><span class="o">[</span>no<span class="w"> </span><span class="nb">test</span><span class="w"> </span>files<span class="o">]</span>
+?<span class="w">       </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/04/05-struct-field-access-getter<span class="w">   </span><span class="o">[</span>no<span class="w"> </span><span class="nb">test</span><span class="w"> </span>files<span class="o">]</span>
+?<span class="w">       </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/04/05-struct-field-access-getter/person<span class="w">    </span><span class="o">[</span>no<span class="w"> </span><span class="nb">test</span><span class="w"> </span>files<span class="o">]</span>
+?<span class="w">       </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/04/05-struct-field-alignment<span class="w">   </span><span class="o">[</span>no<span class="w"> </span><span class="nb">test</span><span class="w"> </span>files<span class="o">]</span>
+?<span class="w">       </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/04/05-struct-validate<span class="w">  </span><span class="o">[</span>no<span class="w"> </span><span class="nb">test</span><span class="w"> </span>files<span class="o">]</span>
+?<span class="w">       </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/11/generics-constraints<span class="w">    </span><span class="o">[</span>no<span class="w"> </span><span class="nb">test</span><span class="w"> </span>files<span class="o">]</span>
+?<span class="w">       </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/11/generics-custom-types<span class="w">   </span><span class="o">[</span>no<span class="w"> </span><span class="nb">test</span><span class="w"> </span>files<span class="o">]</span>
+?<span class="w">       </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/11/generics-function-calls<span class="w"> </span><span class="o">[</span>no<span class="w"> </span><span class="nb">test</span><span class="w"> </span>files<span class="o">]</span>
+?<span class="w">       </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/11/generics-function-calls-and-types<span class="w">   </span><span class="o">[</span>no<span class="w"> </span><span class="nb">test</span><span class="w"> </span>files<span class="o">]</span>
+?<span class="w">       </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/11/generics-function-calls-and-types2<span class="w">  </span><span class="o">[</span>no<span class="w"> </span><span class="nb">test</span><span class="w"> </span>files<span class="o">]</span>
+?<span class="w">       </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/11/generics-functions<span class="w">  </span><span class="o">[</span>no<span class="w"> </span><span class="nb">test</span><span class="w"> </span>files<span class="o">]</span>
+?<span class="w">       </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/11/generics-functions-interface<span class="w">    </span><span class="o">[</span>no<span class="w"> </span><span class="nb">test</span><span class="w"> </span>files<span class="o">]</span>
+?<span class="w">       </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/11/generics-in-maps<span class="w">    </span><span class="o">[</span>no<span class="w"> </span><span class="nb">test</span><span class="w"> </span>files<span class="o">]</span>
+?<span class="w">       </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/11/generics-in-structs<span class="w"> </span><span class="o">[</span>no<span class="w"> </span><span class="nb">test</span><span class="w"> </span>files<span class="o">]</span>
+?<span class="w">       </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/12/reflect-clearvalue<span class="w">  </span><span class="o">[</span>no<span class="w"> </span><span class="nb">test</span><span class="w"> </span>files<span class="o">]</span>
+?<span class="w">       </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/12/reflect-typecheck<span class="w">   </span><span class="o">[</span>no<span class="w"> </span><span class="nb">test</span><span class="w"> </span>files<span class="o">]</span>
+?<span class="w">       </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/13/json-generic-interface<span class="w">  </span><span class="o">[</span>no<span class="w"> </span><span class="nb">test</span><span class="w"> </span>files<span class="o">]</span>
+?<span class="w">       </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/13/json-custom-decode<span class="w">  </span><span class="o">[</span>no<span class="w"> </span><span class="nb">test</span><span class="w"> </span>files<span class="o">]</span>
+?<span class="w">       </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/13/json-marshal-custom-time<span class="w">    </span><span class="o">[</span>no<span class="w"> </span><span class="nb">test</span><span class="w"> </span>files<span class="o">]</span>
+?<span class="w">       </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/13/json-streaming<span class="w">  </span><span class="o">[</span>no<span class="w"> </span><span class="nb">test</span><span class="w"> </span>files<span class="o">]</span>
+?<span class="w">       </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-greet<span class="w">  </span><span class="o">[</span>no<span class="w"> </span><span class="nb">test</span><span class="w"> </span>files<span class="o">]</span>
+<span class="o">===</span><span class="w"> </span>RUN<span class="w">   </span>TestSayHi
+---<span class="w"> </span>PASS:<span class="w"> </span>TestSayHi<span class="w"> </span><span class="o">(</span><span class="m">0</span>.00s<span class="o">)</span>
+<span class="o">===</span><span class="w"> </span>RUN<span class="w">   </span>TestSayHiWithNoArgs
+---<span class="w"> </span>PASS:<span class="w"> </span>TestSayHiWithNoArgs<span class="w"> </span><span class="o">(</span><span class="m">0</span>.00s<span class="o">)</span>
+<span class="o">===</span><span class="w"> </span>RUN<span class="w">   </span>TestSayHiWithArgs
+---<span class="w"> </span>PASS:<span class="w"> </span>TestSayHiWithArgs<span class="w"> </span><span class="o">(</span><span class="m">0</span>.00s<span class="o">)</span>
+PASS
+ok<span class="w">      </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-greet/greet<span class="w">    </span><span class="o">(</span>cached<span class="o">)</span>
+
+$<span class="w"> </span>go<span class="w"> </span><span class="nb">test</span><span class="w"> </span>-v<span class="w"> </span>-run<span class="w"> </span>^TestSayHi<span class="w"> </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-greet/greet
+<span class="c1"># github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-greet/greet</span>
+<span class="c1"># paketi içinde &quot;TestSayHi&quot; ile başlayanları çalıştır (regex match)</span>
+
+<span class="o">===</span><span class="w"> </span>RUN<span class="w">   </span>TestSayHi
+---<span class="w"> </span>PASS:<span class="w"> </span>TestSayHi<span class="w"> </span><span class="o">(</span><span class="m">0</span>.00s<span class="o">)</span>
+<span class="o">===</span><span class="w"> </span>RUN<span class="w">   </span>TestSayHiWithNoArgs
+---<span class="w"> </span>PASS:<span class="w"> </span>TestSayHiWithNoArgs<span class="w"> </span><span class="o">(</span><span class="m">0</span>.00s<span class="o">)</span>
+<span class="o">===</span><span class="w"> </span>RUN<span class="w">   </span>TestSayHiWithArgs
+---<span class="w"> </span>PASS:<span class="w"> </span>TestSayHiWithArgs<span class="w"> </span><span class="o">(</span><span class="m">0</span>.00s<span class="o">)</span>
+PASS
+ok<span class="w">      </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-greet/greet<span class="w">    </span><span class="o">(</span>cached<span class="o">)</span>
+</code></pre></div>
+<p>Test fonksiyonları <code>testing</code> paketinden duruma göre argüman alır. Örneğimizde
+<code>t *testing.T</code> alıyoruz. <code>T</code>’nin yardımcı fonksiyonlarını kullanarak testimizi
+geliştireceğiz.</p>
+<p>Kabaca bu yaptığımız iş <strong>assertion</strong> yani bir şey iddia ediyoruz! Bize şu
+fonksiyonu şu argümanlarla çağırdığımız zaman sonucun da bu olması lazım!</p>
+<p>Yine adetlere uyarak <code>want</code> ve <code>got</code> identifer’larını kullanıyoruz. Bu zorunlu
+değil ama hep söylediğimiz şey <strong>conventions over configurations</strong> :)</p>
+<p>Beklentimizi ve fonksiyon çıktısını tanımladıktan sonra yapacak tek iş bu iki
+değişkenin değerlerinin birbirine eşit olup olmadığı? yönünde.</p>
+<p>Testi yazarken belli durumlarda;</p>
+<ul>
+<li><code>t.Fatal</code>, <code>t.Fatalf</code> çalışma durur, buna <strong>fail fast</strong> denir, test ilerlemez!</li>
+<li><code>t.Error</code>, <code>t.Errorf</code> hata olsa bile diğer testler çalışmaya devam eder...</li>
+<li><code>b.Fatal</code>, <code>b.Fatalf</code> çalışma durur, buna <strong>fail fast</strong> denir, test ilerlemez!</li>
+<li><code>b.Error</code>, <code>b.Errorf</code> hata olsa bile diğer testler çalışmaya devam eder...</li>
+<li><code>t.Fail</code>, <code>b.Fail</code> testi fail olarak işaretler ama diğerlerini run etmeye devam eder...</li>
+<li><code>t.FailNow</code>, <code>b.FailNow</code>: çalışma durur,  <code>runtime.Goexit()</code> çağrılır, defer edenler devam eder, test durmaz</li>
+</ul>
+<p>Test çıktısını <code>json</code> formatında da alabiliriz:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>go<span class="w"> </span><span class="nb">test</span><span class="w"> </span>-v<span class="w"> </span>-json<span class="w"> </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-greet/greet
+<span class="o">{</span><span class="s2">&quot;Time&quot;</span>:<span class="s2">&quot;2023-08-15T18:10:23.539298+03:00&quot;</span>,<span class="s2">&quot;Action&quot;</span>:<span class="s2">&quot;start&quot;</span>,<span class="s2">&quot;Package&quot;</span>:<span class="s2">&quot;github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-greet/greet&quot;</span><span class="o">}</span>
+<span class="o">{</span><span class="s2">&quot;Time&quot;</span>:<span class="s2">&quot;2023-08-15T18:10:23.539368+03:00&quot;</span>,<span class="s2">&quot;Action&quot;</span>:<span class="s2">&quot;run&quot;</span>,<span class="s2">&quot;Package&quot;</span>:<span class="s2">&quot;github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-greet/greet&quot;</span>,<span class="s2">&quot;Test&quot;</span>:<span class="s2">&quot;TestSayHi&quot;</span><span class="o">}</span>
+<span class="o">{</span><span class="s2">&quot;Time&quot;</span>:<span class="s2">&quot;2023-08-15T18:10:23.539371+03:00&quot;</span>,<span class="s2">&quot;Action&quot;</span>:<span class="s2">&quot;output&quot;</span>,<span class="s2">&quot;Package&quot;</span>:<span class="s2">&quot;github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-greet/greet&quot;</span>,<span class="s2">&quot;Test&quot;</span>:<span class="s2">&quot;TestSayHi&quot;</span>,<span class="s2">&quot;Output&quot;</span>:<span class="s2">&quot;=== RUN   TestSayHi\n&quot;</span><span class="o">}</span>
+<span class="o">{</span><span class="s2">&quot;Time&quot;</span>:<span class="s2">&quot;2023-08-15T18:10:23.539379+03:00&quot;</span>,<span class="s2">&quot;Action&quot;</span>:<span class="s2">&quot;output&quot;</span>,<span class="s2">&quot;Package&quot;</span>:<span class="s2">&quot;github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-greet/greet&quot;</span>,<span class="s2">&quot;Test&quot;</span>:<span class="s2">&quot;TestSayHi&quot;</span>,<span class="s2">&quot;Output&quot;</span>:<span class="s2">&quot;--- PASS: TestSayHi (0.00s)\n&quot;</span><span class="o">}</span>
+<span class="o">{</span><span class="s2">&quot;Time&quot;</span>:<span class="s2">&quot;2023-08-15T18:10:23.539381+03:00&quot;</span>,<span class="s2">&quot;Action&quot;</span>:<span class="s2">&quot;pass&quot;</span>,<span class="s2">&quot;Package&quot;</span>:<span class="s2">&quot;github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-greet/greet&quot;</span>,<span class="s2">&quot;Test&quot;</span>:<span class="s2">&quot;TestSayHi&quot;</span>,<span class="s2">&quot;Elapsed&quot;</span>:0<span class="o">}</span>
+<span class="o">{</span><span class="s2">&quot;Time&quot;</span>:<span class="s2">&quot;2023-08-15T18:10:23.539384+03:00&quot;</span>,<span class="s2">&quot;Action&quot;</span>:<span class="s2">&quot;run&quot;</span>,<span class="s2">&quot;Package&quot;</span>:<span class="s2">&quot;github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-greet/greet&quot;</span>,<span class="s2">&quot;Test&quot;</span>:<span class="s2">&quot;TestSayHiWithNoArgs&quot;</span><span class="o">}</span>
+<span class="o">{</span><span class="s2">&quot;Time&quot;</span>:<span class="s2">&quot;2023-08-15T18:10:23.539385+03:00&quot;</span>,<span class="s2">&quot;Action&quot;</span>:<span class="s2">&quot;output&quot;</span>,<span class="s2">&quot;Package&quot;</span>:<span class="s2">&quot;github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-greet/greet&quot;</span>,<span class="s2">&quot;Test&quot;</span>:<span class="s2">&quot;TestSayHiWithNoArgs&quot;</span>,<span class="s2">&quot;Output&quot;</span>:<span class="s2">&quot;=== RUN   TestSayHiWithNoArgs\n&quot;</span><span class="o">}</span>
+<span class="o">{</span><span class="s2">&quot;Time&quot;</span>:<span class="s2">&quot;2023-08-15T18:10:23.539395+03:00&quot;</span>,<span class="s2">&quot;Action&quot;</span>:<span class="s2">&quot;output&quot;</span>,<span class="s2">&quot;Package&quot;</span>:<span class="s2">&quot;github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-greet/greet&quot;</span>,<span class="s2">&quot;Test&quot;</span>:<span class="s2">&quot;TestSayHiWithNoArgs&quot;</span>,<span class="s2">&quot;Output&quot;</span>:<span class="s2">&quot;--- PASS: TestSayHiWithNoArgs (0.00s)\n&quot;</span><span class="o">}</span>
+<span class="o">{</span><span class="s2">&quot;Time&quot;</span>:<span class="s2">&quot;2023-08-15T18:10:23.539398+03:00&quot;</span>,<span class="s2">&quot;Action&quot;</span>:<span class="s2">&quot;pass&quot;</span>,<span class="s2">&quot;Package&quot;</span>:<span class="s2">&quot;github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-greet/greet&quot;</span>,<span class="s2">&quot;Test&quot;</span>:<span class="s2">&quot;TestSayHiWithNoArgs&quot;</span>,<span class="s2">&quot;Elapsed&quot;</span>:0<span class="o">}</span>
+<span class="o">{</span><span class="s2">&quot;Time&quot;</span>:<span class="s2">&quot;2023-08-15T18:10:23.539399+03:00&quot;</span>,<span class="s2">&quot;Action&quot;</span>:<span class="s2">&quot;run&quot;</span>,<span class="s2">&quot;Package&quot;</span>:<span class="s2">&quot;github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-greet/greet&quot;</span>,<span class="s2">&quot;Test&quot;</span>:<span class="s2">&quot;TestSayHiWithArgs&quot;</span><span class="o">}</span>
+<span class="o">{</span><span class="s2">&quot;Time&quot;</span>:<span class="s2">&quot;2023-08-15T18:10:23.539401+03:00&quot;</span>,<span class="s2">&quot;Action&quot;</span>:<span class="s2">&quot;output&quot;</span>,<span class="s2">&quot;Package&quot;</span>:<span class="s2">&quot;github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-greet/greet&quot;</span>,<span class="s2">&quot;Test&quot;</span>:<span class="s2">&quot;TestSayHiWithArgs&quot;</span>,<span class="s2">&quot;Output&quot;</span>:<span class="s2">&quot;=== RUN   TestSayHiWithArgs\n&quot;</span><span class="o">}</span>
+<span class="o">{</span><span class="s2">&quot;Time&quot;</span>:<span class="s2">&quot;2023-08-15T18:10:23.539403+03:00&quot;</span>,<span class="s2">&quot;Action&quot;</span>:<span class="s2">&quot;output&quot;</span>,<span class="s2">&quot;Package&quot;</span>:<span class="s2">&quot;github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-greet/greet&quot;</span>,<span class="s2">&quot;Test&quot;</span>:<span class="s2">&quot;TestSayHiWithArgs&quot;</span>,<span class="s2">&quot;Output&quot;</span>:<span class="s2">&quot;--- PASS: TestSayHiWithArgs (0.00s)\n&quot;</span><span class="o">}</span>
+<span class="o">{</span><span class="s2">&quot;Time&quot;</span>:<span class="s2">&quot;2023-08-15T18:10:23.539417+03:00&quot;</span>,<span class="s2">&quot;Action&quot;</span>:<span class="s2">&quot;pass&quot;</span>,<span class="s2">&quot;Package&quot;</span>:<span class="s2">&quot;github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-greet/greet&quot;</span>,<span class="s2">&quot;Test&quot;</span>:<span class="s2">&quot;TestSayHiWithArgs&quot;</span>,<span class="s2">&quot;Elapsed&quot;</span>:0<span class="o">}</span>
+<span class="o">{</span><span class="s2">&quot;Time&quot;</span>:<span class="s2">&quot;2023-08-15T18:10:23.539419+03:00&quot;</span>,<span class="s2">&quot;Action&quot;</span>:<span class="s2">&quot;run&quot;</span>,<span class="s2">&quot;Package&quot;</span>:<span class="s2">&quot;github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-greet/greet&quot;</span>,<span class="s2">&quot;Test&quot;</span>:<span class="s2">&quot;ExampleSayHi&quot;</span><span class="o">}</span>
+<span class="o">{</span><span class="s2">&quot;Time&quot;</span>:<span class="s2">&quot;2023-08-15T18:10:23.539421+03:00&quot;</span>,<span class="s2">&quot;Action&quot;</span>:<span class="s2">&quot;output&quot;</span>,<span class="s2">&quot;Package&quot;</span>:<span class="s2">&quot;github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-greet/greet&quot;</span>,<span class="s2">&quot;Test&quot;</span>:<span class="s2">&quot;ExampleSayHi&quot;</span>,<span class="s2">&quot;Output&quot;</span>:<span class="s2">&quot;=== RUN   ExampleSayHi\n&quot;</span><span class="o">}</span>
+<span class="o">{</span><span class="s2">&quot;Time&quot;</span>:<span class="s2">&quot;2023-08-15T18:10:23.539422+03:00&quot;</span>,<span class="s2">&quot;Action&quot;</span>:<span class="s2">&quot;output&quot;</span>,<span class="s2">&quot;Package&quot;</span>:<span class="s2">&quot;github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-greet/greet&quot;</span>,<span class="s2">&quot;Test&quot;</span>:<span class="s2">&quot;ExampleSayHi&quot;</span>,<span class="s2">&quot;Output&quot;</span>:<span class="s2">&quot;--- PASS: ExampleSayHi (0.00s)\n&quot;</span><span class="o">}</span>
+<span class="o">{</span><span class="s2">&quot;Time&quot;</span>:<span class="s2">&quot;2023-08-15T18:10:23.539428+03:00&quot;</span>,<span class="s2">&quot;Action&quot;</span>:<span class="s2">&quot;pass&quot;</span>,<span class="s2">&quot;Package&quot;</span>:<span class="s2">&quot;github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-greet/greet&quot;</span>,<span class="s2">&quot;Test&quot;</span>:<span class="s2">&quot;ExampleSayHi&quot;</span>,<span class="s2">&quot;Elapsed&quot;</span>:0<span class="o">}</span>
+<span class="o">{</span><span class="s2">&quot;Time&quot;</span>:<span class="s2">&quot;2023-08-15T18:10:23.539429+03:00&quot;</span>,<span class="s2">&quot;Action&quot;</span>:<span class="s2">&quot;run&quot;</span>,<span class="s2">&quot;Package&quot;</span>:<span class="s2">&quot;github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-greet/greet&quot;</span>,<span class="s2">&quot;Test&quot;</span>:<span class="s2">&quot;ExampleSayHi_withNoArg&quot;</span><span class="o">}</span>
+<span class="o">{</span><span class="s2">&quot;Time&quot;</span>:<span class="s2">&quot;2023-08-15T18:10:23.53943+03:00&quot;</span>,<span class="s2">&quot;Action&quot;</span>:<span class="s2">&quot;output&quot;</span>,<span class="s2">&quot;Package&quot;</span>:<span class="s2">&quot;github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-greet/greet&quot;</span>,<span class="s2">&quot;Test&quot;</span>:<span class="s2">&quot;ExampleSayHi_withNoArg&quot;</span>,<span class="s2">&quot;Output&quot;</span>:<span class="s2">&quot;=== RUN   ExampleSayHi_withNoArg\n&quot;</span><span class="o">}</span>
+<span class="o">{</span><span class="s2">&quot;Time&quot;</span>:<span class="s2">&quot;2023-08-15T18:10:23.539537+03:00&quot;</span>,<span class="s2">&quot;Action&quot;</span>:<span class="s2">&quot;output&quot;</span>,<span class="s2">&quot;Package&quot;</span>:<span class="s2">&quot;github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-greet/greet&quot;</span>,<span class="s2">&quot;Test&quot;</span>:<span class="s2">&quot;ExampleSayHi_withNoArg&quot;</span>,<span class="s2">&quot;Output&quot;</span>:<span class="s2">&quot;--- PASS: ExampleSayHi_withNoArg (0.00s)\n&quot;</span><span class="o">}</span>
+<span class="o">{</span><span class="s2">&quot;Time&quot;</span>:<span class="s2">&quot;2023-08-15T18:10:23.539538+03:00&quot;</span>,<span class="s2">&quot;Action&quot;</span>:<span class="s2">&quot;pass&quot;</span>,<span class="s2">&quot;Package&quot;</span>:<span class="s2">&quot;github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-greet/greet&quot;</span>,<span class="s2">&quot;Test&quot;</span>:<span class="s2">&quot;ExampleSayHi_withNoArg&quot;</span>,<span class="s2">&quot;Elapsed&quot;</span>:0<span class="o">}</span>
+<span class="o">{</span><span class="s2">&quot;Time&quot;</span>:<span class="s2">&quot;2023-08-15T18:10:23.53954+03:00&quot;</span>,<span class="s2">&quot;Action&quot;</span>:<span class="s2">&quot;run&quot;</span>,<span class="s2">&quot;Package&quot;</span>:<span class="s2">&quot;github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-greet/greet&quot;</span>,<span class="s2">&quot;Test&quot;</span>:<span class="s2">&quot;ExampleSayHi_withArgs&quot;</span><span class="o">}</span>
+<span class="o">{</span><span class="s2">&quot;Time&quot;</span>:<span class="s2">&quot;2023-08-15T18:10:23.539541+03:00&quot;</span>,<span class="s2">&quot;Action&quot;</span>:<span class="s2">&quot;output&quot;</span>,<span class="s2">&quot;Package&quot;</span>:<span class="s2">&quot;github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-greet/greet&quot;</span>,<span class="s2">&quot;Test&quot;</span>:<span class="s2">&quot;ExampleSayHi_withArgs&quot;</span>,<span class="s2">&quot;Output&quot;</span>:<span class="s2">&quot;=== RUN   ExampleSayHi_withArgs\n&quot;</span><span class="o">}</span>
+<span class="o">{</span><span class="s2">&quot;Time&quot;</span>:<span class="s2">&quot;2023-08-15T18:10:23.539543+03:00&quot;</span>,<span class="s2">&quot;Action&quot;</span>:<span class="s2">&quot;output&quot;</span>,<span class="s2">&quot;Package&quot;</span>:<span class="s2">&quot;github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-greet/greet&quot;</span>,<span class="s2">&quot;Test&quot;</span>:<span class="s2">&quot;ExampleSayHi_withArgs&quot;</span>,<span class="s2">&quot;Output&quot;</span>:<span class="s2">&quot;--- PASS: ExampleSayHi_withArgs (0.00s)\n&quot;</span><span class="o">}</span>
+<span class="o">{</span><span class="s2">&quot;Time&quot;</span>:<span class="s2">&quot;2023-08-15T18:10:23.539545+03:00&quot;</span>,<span class="s2">&quot;Action&quot;</span>:<span class="s2">&quot;pass&quot;</span>,<span class="s2">&quot;Package&quot;</span>:<span class="s2">&quot;github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-greet/greet&quot;</span>,<span class="s2">&quot;Test&quot;</span>:<span class="s2">&quot;ExampleSayHi_withArgs&quot;</span>,<span class="s2">&quot;Elapsed&quot;</span>:0<span class="o">}</span>
+<span class="o">{</span><span class="s2">&quot;Time&quot;</span>:<span class="s2">&quot;2023-08-15T18:10:23.539547+03:00&quot;</span>,<span class="s2">&quot;Action&quot;</span>:<span class="s2">&quot;output&quot;</span>,<span class="s2">&quot;Package&quot;</span>:<span class="s2">&quot;github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-greet/greet&quot;</span>,<span class="s2">&quot;Output&quot;</span>:<span class="s2">&quot;PASS\n&quot;</span><span class="o">}</span>
+<span class="o">{</span><span class="s2">&quot;Time&quot;</span>:<span class="s2">&quot;2023-08-15T18:10:23.539548+03:00&quot;</span>,<span class="s2">&quot;Action&quot;</span>:<span class="s2">&quot;output&quot;</span>,<span class="s2">&quot;Package&quot;</span>:<span class="s2">&quot;github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-greet/greet&quot;</span>,<span class="s2">&quot;Output&quot;</span>:<span class="s2">&quot;ok  \tgithub.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-greet/greet\t(cached)\n&quot;</span><span class="o">}</span>
+<span class="o">{</span><span class="s2">&quot;Time&quot;</span>:<span class="s2">&quot;2023-08-15T18:10:23.539555+03:00&quot;</span>,<span class="s2">&quot;Action&quot;</span>:<span class="s2">&quot;pass&quot;</span>,<span class="s2">&quot;Package&quot;</span>:<span class="s2">&quot;github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-greet/greet&quot;</span>,<span class="s2">&quot;Elapsed&quot;</span>:0<span class="o">}</span>
+</code></pre></div>
+<p>Keza diğer bir komut satırı argümanı da <code>-list</code>. <code>-list &lt;regex&gt;</code> ile test
+fonksiyonlarını çalıştırır ve listeler;</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>go<span class="w"> </span><span class="nb">test</span><span class="w"> </span>-v<span class="w"> </span>-list<span class="w"> </span>Say<span class="w"> </span>./...
+?<span class="w">       </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/02/01-init<span class="w"> </span><span class="o">[</span>no<span class="w"> </span><span class="nb">test</span><span class="w"> </span>files<span class="o">]</span>
+?<span class="w">       </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/04/05-struct-custom-tag<span class="w">    </span><span class="o">[</span>no<span class="w"> </span><span class="nb">test</span><span class="w"> </span>files<span class="o">]</span>
+?<span class="w">       </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/04/05-struct-field-access<span class="w">  </span><span class="o">[</span>no<span class="w"> </span><span class="nb">test</span><span class="w"> </span>files<span class="o">]</span>
+?<span class="w">       </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/04/05-struct-field-access/person<span class="w">   </span><span class="o">[</span>no<span class="w"> </span><span class="nb">test</span><span class="w"> </span>files<span class="o">]</span>
+?<span class="w">       </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/04/05-struct-field-access-getter<span class="w">   </span><span class="o">[</span>no<span class="w"> </span><span class="nb">test</span><span class="w"> </span>files<span class="o">]</span>
+?<span class="w">       </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/04/05-struct-field-access-getter/person<span class="w">    </span><span class="o">[</span>no<span class="w"> </span><span class="nb">test</span><span class="w"> </span>files<span class="o">]</span>
+?<span class="w">       </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/04/05-struct-field-alignment<span class="w">   </span><span class="o">[</span>no<span class="w"> </span><span class="nb">test</span><span class="w"> </span>files<span class="o">]</span>
+?<span class="w">       </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/04/05-struct-validate<span class="w">  </span><span class="o">[</span>no<span class="w"> </span><span class="nb">test</span><span class="w"> </span>files<span class="o">]</span>
+?<span class="w">       </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/11/generics-constraints<span class="w">    </span><span class="o">[</span>no<span class="w"> </span><span class="nb">test</span><span class="w"> </span>files<span class="o">]</span>
+?<span class="w">       </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/11/generics-custom-types<span class="w">   </span><span class="o">[</span>no<span class="w"> </span><span class="nb">test</span><span class="w"> </span>files<span class="o">]</span>
+?<span class="w">       </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/11/generics-function-calls<span class="w"> </span><span class="o">[</span>no<span class="w"> </span><span class="nb">test</span><span class="w"> </span>files<span class="o">]</span>
+?<span class="w">       </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/11/generics-function-calls-and-types<span class="w">   </span><span class="o">[</span>no<span class="w"> </span><span class="nb">test</span><span class="w"> </span>files<span class="o">]</span>
+?<span class="w">       </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/11/generics-function-calls-and-types2<span class="w">  </span><span class="o">[</span>no<span class="w"> </span><span class="nb">test</span><span class="w"> </span>files<span class="o">]</span>
+?<span class="w">       </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/11/generics-functions<span class="w">  </span><span class="o">[</span>no<span class="w"> </span><span class="nb">test</span><span class="w"> </span>files<span class="o">]</span>
+?<span class="w">       </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/11/generics-functions-interface<span class="w">    </span><span class="o">[</span>no<span class="w"> </span><span class="nb">test</span><span class="w"> </span>files<span class="o">]</span>
+?<span class="w">       </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/11/generics-in-maps<span class="w">    </span><span class="o">[</span>no<span class="w"> </span><span class="nb">test</span><span class="w"> </span>files<span class="o">]</span>
+?<span class="w">       </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/11/generics-in-structs<span class="w"> </span><span class="o">[</span>no<span class="w"> </span><span class="nb">test</span><span class="w"> </span>files<span class="o">]</span>
+?<span class="w">       </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/12/reflect-clearvalue<span class="w">  </span><span class="o">[</span>no<span class="w"> </span><span class="nb">test</span><span class="w"> </span>files<span class="o">]</span>
+?<span class="w">       </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/12/reflect-typecheck<span class="w">   </span><span class="o">[</span>no<span class="w"> </span><span class="nb">test</span><span class="w"> </span>files<span class="o">]</span>
+?<span class="w">       </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/13/json-custom-decode<span class="w">  </span><span class="o">[</span>no<span class="w"> </span><span class="nb">test</span><span class="w"> </span>files<span class="o">]</span>
+?<span class="w">       </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/13/json-generic-interface<span class="w">  </span><span class="o">[</span>no<span class="w"> </span><span class="nb">test</span><span class="w"> </span>files<span class="o">]</span>
+?<span class="w">       </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/13/json-marshal-custom-time<span class="w">    </span><span class="o">[</span>no<span class="w"> </span><span class="nb">test</span><span class="w"> </span>files<span class="o">]</span>
+?<span class="w">       </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/13/json-streaming<span class="w">  </span><span class="o">[</span>no<span class="w"> </span><span class="nb">test</span><span class="w"> </span>files<span class="o">]</span>
+?<span class="w">       </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-greet<span class="w">  </span><span class="o">[</span>no<span class="w"> </span><span class="nb">test</span><span class="w"> </span>files<span class="o">]</span>
+ok<span class="w">      </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-datarace/kvstore<span class="w">   </span><span class="m">0</span>.680s
+TestSayHi
+TestSayHiWithNoArgs
+TestSayHiWithArgs
+ExampleSayHi
+ExampleSayHi_withNoArg
+ExampleSayHi_withArgs
+ok<span class="w">      </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-greet/greet<span class="w">    </span><span class="m">0</span>.550s
+</code></pre></div>
+<p><code>go test</code>’in aldığı tüm parametrelerin detaylarını:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>go<span class="w"> </span><span class="nb">help</span><span class="w"> </span>testflag
+</code></pre></div>
+<p>ile görebilirsiniz.</p>
+<hr />
+<h2 id="data-race-detection">Data Race Detection</h2>
+<p><strong>Race Condition</strong>, concurrent (eş zamanlı) programla ile ilgili sık yaşanan
+bir durum. Basitçe şöyle açıklayalım; bir web uygulaması var, veritabanına
+bağlı. Veritabanı tablosunda <code>count</code> adında bir alan ver, sayısal değer
+tutuyor. Kullanıcı <code>example.com</code> sayfasını çağırdığı zaman uygulama tablodaki
+<code>count</code> alanının değerini <code>+1</code> arttırıyor.</p>
+<ul>
+<li>İlk kullanıcı geldi, değer 0 -&gt; 1 oldu</li>
+<li>İkinci kullanıcı geldi, değer 1 -&gt; 2 oldu</li>
+</ul>
+<p>peki 3. ve 4. kullanıcı aynı anda gelince ne olacak?</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">3.</span><span class="w"> </span><span class="n">Kullanıcı</span><span class="w">    </span><span class="err">|</span><span class="w"> </span><span class="mf">4.</span><span class="w"> </span><span class="n">Kullanıcı</span>
+<span class="w">      </span><span class="err">|</span><span class="w">               </span><span class="err">|</span>
+<span class="w">      </span><span class="err">↓</span><span class="w">               </span><span class="err">↓</span>
+<span class="w">    </span><span class="mf">2</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="mf">3</span><span class="w">          </span><span class="mf">2</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="mf">3</span>
+</code></pre></div>
+
+<p>Aynı anda geldiler ve ikisi için de önceki değer <code>2</code> idi, 3. kullanıcı değeri
+<code>3</code> yaptı ama 4. için değer halen <code>2</code> idi. Bu durumda istekler birbirleriyle 
+yarış yapmış oluyorlar ve bu durum yarış durumu yani <strong>race condition</strong> oluyor.</p>
+<p>Doğru olan durum ise şöyle olmalıydı;</p>
+<ul>
+<li>
+<ol>
+<li>geldi, bir tür kitleme (lock) olmalıydı.</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>geldi, lock olduğu için beklemeliydi.</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>işini bitirdi kiliti açtı (unlock)</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>lock edip doğru değeri okuyup, artırıp unlock etmeliydi</li>
+</ol>
+</li>
+</ul>
+<p>Benzer senaryo bizim için <strong>go routine</strong> kullandığımız zaman yaşanacak. İşte
+bu tür kaçakları test esnasında yakalamak için <code>-race</code> parametresini
+kullanıyoruz. Şimdi aynısı go ile yapalım:</p>
+<p><a href="https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/14/test-datarace">Örnek</a></p>
+<div class="highlight"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nx">kvstore</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="s">&quot;errors&quot;</span>
+
+<span class="kd">var</span><span class="w"> </span><span class="nx">errKeyNotFound</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">errors</span><span class="p">.</span><span class="nx">New</span><span class="p">(</span><span class="s">&quot;key not found&quot;</span><span class="p">)</span>
+
+<span class="c1">// Store is key-value store!</span>
+<span class="kd">type</span><span class="w"> </span><span class="nx">Store</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">db</span><span class="w"> </span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">string</span>
+<span class="p">}</span>
+
+<span class="c1">// Set new key to store.</span>
+<span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">s</span><span class="w"> </span><span class="o">*</span><span class="nx">Store</span><span class="p">)</span><span class="w"> </span><span class="nx">Set</span><span class="p">(</span><span class="nx">k</span><span class="p">,</span><span class="w"> </span><span class="nx">v</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="kt">error</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">s</span><span class="p">.</span><span class="nx">db</span><span class="p">[</span><span class="nx">k</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">v</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="kc">nil</span>
+<span class="p">}</span>
+
+<span class="c1">// Get accepts key, returns value and error.</span>
+<span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">s</span><span class="w"> </span><span class="o">*</span><span class="nx">Store</span><span class="p">)</span><span class="w"> </span><span class="nx">Get</span><span class="p">(</span><span class="nx">k</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">v</span><span class="p">,</span><span class="w"> </span><span class="nx">ok</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">s</span><span class="p">.</span><span class="nx">db</span><span class="p">[</span><span class="nx">k</span><span class="p">]</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">!</span><span class="nx">ok</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">errKeyNotFound</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">v</span><span class="p">,</span><span class="w"> </span><span class="kc">nil</span>
+<span class="p">}</span>
+
+<span class="c1">// New returns new Store instance.</span>
+<span class="kd">func</span><span class="w"> </span><span class="nx">New</span><span class="p">(</span><span class="nx">db</span><span class="w"> </span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="nx">Store</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">Store</span><span class="p">{</span><span class="nx">db</span><span class="p">:</span><span class="w"> </span><span class="nx">db</span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Test ise;</p>
+<div class="highlight"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nx">kvstore_test</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;testing&quot;</span>
+
+<span class="w">    </span><span class="s">&quot;github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-datarace/kvstore&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="nx">TestDataRace</span><span class="p">(</span><span class="nx">t</span><span class="w"> </span><span class="o">*</span><span class="nx">testing</span><span class="p">.</span><span class="nx">T</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">st</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nb">make</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">string</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">done</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nb">make</span><span class="p">(</span><span class="kd">chan</span><span class="w"> </span><span class="kd">struct</span><span class="p">{})</span>
+
+<span class="w">    </span><span class="nx">s</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">kvstore</span><span class="p">.</span><span class="nx">New</span><span class="p">(</span><span class="nx">st</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">_</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">s</span><span class="p">.</span><span class="nx">Set</span><span class="p">(</span><span class="s">&quot;foo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;bar&quot;</span><span class="p">)</span>
+
+<span class="w">    </span><span class="k">go</span><span class="w"> </span><span class="kd">func</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">_</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">s</span><span class="p">.</span><span class="nx">Set</span><span class="p">(</span><span class="s">&quot;foo&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;data race...&quot;</span><span class="p">)</span>
+<span class="w">        </span><span class="nx">done</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="kd">struct</span><span class="p">{}{}</span>
+<span class="w">    </span><span class="p">}()</span>
+
+<span class="w">    </span><span class="nx">want</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="s">&quot;bar&quot;</span>
+<span class="w">    </span><span class="nx">got</span><span class="p">,</span><span class="w"> </span><span class="nx">_</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">s</span><span class="p">.</span><span class="nx">Get</span><span class="p">(</span><span class="s">&quot;foo&quot;</span><span class="p">)</span><span class="w"> </span><span class="c1">// always returns &quot;bar&quot;</span>
+<span class="w">    </span><span class="o">&lt;-</span><span class="nx">done</span><span class="w">                 </span><span class="c1">// after line 19, blocking ends... map changes but doesn&#39;t affect got variable!</span>
+
+<span class="w">    </span><span class="c1">// fmt.Println(s.Get(&quot;foo&quot;)) data race... &lt;nil&gt;</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">got</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nx">want</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">t</span><span class="p">.</span><span class="nx">Errorf</span><span class="p">(</span><span class="s">&quot;want: %v; got: %v&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">want</span><span class="p">,</span><span class="w"> </span><span class="nx">got</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Önce testi düz çalıştıralım:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>go<span class="w"> </span><span class="nb">test</span><span class="w"> </span>-v<span class="w"> </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-datarace/kvstore
+<span class="o">===</span><span class="w"> </span>RUN<span class="w">   </span>TestDataRace
+---<span class="w"> </span>PASS:<span class="w"> </span>TestDataRace<span class="w"> </span><span class="o">(</span><span class="m">0</span>.00s<span class="o">)</span>
+PASS
+ok<span class="w">      </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-datarace/kvstore<span class="w">   </span><span class="m">0</span>.608s
+</code></pre></div>
+<p>Test <code>pass</code> etti, yani testi geçtik, halbuki:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>go<span class="w"> </span><span class="nb">test</span><span class="w"> </span>-v<span class="w"> </span>-race<span class="w"> </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-datarace/kvstore
+<span class="o">===</span><span class="w"> </span>RUN<span class="w">   </span><span class="nv">TestDataRace</span>
+<span class="o">==================</span>
+WARNING:<span class="w"> </span>DATA<span class="w"> </span>RACE
+Write<span class="w"> </span>at<span class="w"> </span>0x00c00011e450<span class="w"> </span>by<span class="w"> </span>goroutine<span class="w"> </span><span class="m">7</span>:
+<span class="w">  </span>runtime.mapaccess2_faststr<span class="o">()</span>
+<span class="w">      </span>/opt/homebrew/Cellar/go/1.21.0/libexec/src/runtime/map_faststr.go:108<span class="w"> </span>+0x42c
+<span class="w">  </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-datarace/kvstore.<span class="o">(</span>*Store<span class="o">)</span>.Set<span class="o">()</span>
+<span class="w">      </span>/Users/vigo/Development/VBYazilim/maoyyk2023-golang-101-kursu/src/14/test-datarace/kvstore/kvstore.go:14<span class="w"> </span>+0x5c
+<span class="w">  </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-datarace/kvstore_test.TestDataRace.func1<span class="o">()</span>
+<span class="w">      </span>/Users/vigo/Development/VBYazilim/maoyyk2023-golang-101-kursu/src/14/test-datarace/kvstore/kvstore_test.go:17<span class="w"> </span>+0x38
+
+Previous<span class="w"> </span><span class="nb">read</span><span class="w"> </span>at<span class="w"> </span>0x00c00011e450<span class="w"> </span>by<span class="w"> </span>goroutine<span class="w"> </span><span class="m">6</span>:
+<span class="w">  </span>runtime.mapaccess1_faststr<span class="o">()</span>
+<span class="w">      </span>/opt/homebrew/Cellar/go/1.21.0/libexec/src/runtime/map_faststr.go:13<span class="w"> </span>+0x40c
+<span class="w">  </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-datarace/kvstore.<span class="o">(</span>*Store<span class="o">)</span>.Get<span class="o">()</span>
+<span class="w">      </span>/Users/vigo/Development/VBYazilim/maoyyk2023-golang-101-kursu/src/14/test-datarace/kvstore/kvstore.go:20<span class="w"> </span>+0x1b8
+<span class="w">  </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-datarace/kvstore_test.TestDataRace<span class="o">()</span>
+<span class="w">      </span>/Users/vigo/Development/VBYazilim/maoyyk2023-golang-101-kursu/src/14/test-datarace/kvstore/kvstore_test.go:22<span class="w"> </span>+0x1dc
+<span class="w">  </span>testing.tRunner<span class="o">()</span>
+<span class="w">      </span>/opt/homebrew/Cellar/go/1.21.0/libexec/src/testing/testing.go:1595<span class="w"> </span>+0x194
+<span class="w">  </span>testing.<span class="o">(</span>*T<span class="o">)</span>.Run.func1<span class="o">()</span>
+<span class="w">      </span>/opt/homebrew/Cellar/go/1.21.0/libexec/src/testing/testing.go:1648<span class="w"> </span>+0x40
+
+Goroutine<span class="w"> </span><span class="m">7</span><span class="w"> </span><span class="o">(</span>running<span class="o">)</span><span class="w"> </span>created<span class="w"> </span>at:
+<span class="w">  </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-datarace/kvstore_test.TestDataRace<span class="o">()</span>
+<span class="w">      </span>/Users/vigo/Development/VBYazilim/maoyyk2023-golang-101-kursu/src/14/test-datarace/kvstore/kvstore_test.go:16<span class="w"> </span>+0x190
+<span class="w">  </span>testing.tRunner<span class="o">()</span>
+<span class="w">      </span>/opt/homebrew/Cellar/go/1.21.0/libexec/src/testing/testing.go:1595<span class="w"> </span>+0x194
+<span class="w">  </span>testing.<span class="o">(</span>*T<span class="o">)</span>.Run.func1<span class="o">()</span>
+<span class="w">      </span>/opt/homebrew/Cellar/go/1.21.0/libexec/src/testing/testing.go:1648<span class="w"> </span>+0x40
+
+Goroutine<span class="w"> </span><span class="m">6</span><span class="w"> </span><span class="o">(</span>running<span class="o">)</span><span class="w"> </span>created<span class="w"> </span>at:
+<span class="w">  </span>testing.<span class="o">(</span>*T<span class="o">)</span>.Run<span class="o">()</span>
+<span class="w">      </span>/opt/homebrew/Cellar/go/1.21.0/libexec/src/testing/testing.go:1648<span class="w"> </span>+0x5d8
+<span class="w">  </span>testing.runTests.func1<span class="o">()</span>
+<span class="w">      </span>/opt/homebrew/Cellar/go/1.21.0/libexec/src/testing/testing.go:2054<span class="w"> </span>+0x80
+<span class="w">  </span>testing.tRunner<span class="o">()</span>
+<span class="w">      </span>/opt/homebrew/Cellar/go/1.21.0/libexec/src/testing/testing.go:1595<span class="w"> </span>+0x194
+<span class="w">  </span>testing.runTests<span class="o">()</span>
+<span class="w">      </span>/opt/homebrew/Cellar/go/1.21.0/libexec/src/testing/testing.go:2052<span class="w"> </span>+0x6d8
+<span class="w">  </span>testing.<span class="o">(</span>*M<span class="o">)</span>.Run<span class="o">()</span>
+<span class="w">      </span>/opt/homebrew/Cellar/go/1.21.0/libexec/src/testing/testing.go:1925<span class="w"> </span>+0x904
+<span class="w">  </span>main.main<span class="o">()</span>
+<span class="w">      </span>_testmain.go:49<span class="w"> </span>+0x294
+<span class="o">==================</span>
+<span class="o">==================</span>
+WARNING:<span class="w"> </span>DATA<span class="w"> </span>RACE
+Write<span class="w"> </span>at<span class="w"> </span>0x00c000166088<span class="w"> </span>by<span class="w"> </span>goroutine<span class="w"> </span><span class="m">7</span>:
+<span class="w">  </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-datarace/kvstore.<span class="o">(</span>*Store<span class="o">)</span>.Set<span class="o">()</span>
+<span class="w">      </span>/Users/vigo/Development/VBYazilim/maoyyk2023-golang-101-kursu/src/14/test-datarace/kvstore/kvstore.go:14<span class="w"> </span>+0x68
+<span class="w">  </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-datarace/kvstore_test.TestDataRace.func1<span class="o">()</span>
+<span class="w">      </span>/Users/vigo/Development/VBYazilim/maoyyk2023-golang-101-kursu/src/14/test-datarace/kvstore/kvstore_test.go:17<span class="w"> </span>+0x38
+
+Previous<span class="w"> </span><span class="nb">read</span><span class="w"> </span>at<span class="w"> </span>0x00c000166088<span class="w"> </span>by<span class="w"> </span>goroutine<span class="w"> </span><span class="m">6</span>:
+<span class="w">  </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-datarace/kvstore.<span class="o">(</span>*Store<span class="o">)</span>.Get<span class="o">()</span>
+<span class="w">      </span>/Users/vigo/Development/VBYazilim/maoyyk2023-golang-101-kursu/src/14/test-datarace/kvstore/kvstore.go:20<span class="w"> </span>+0x1c4
+<span class="w">  </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-datarace/kvstore_test.TestDataRace<span class="o">()</span>
+<span class="w">      </span>/Users/vigo/Development/VBYazilim/maoyyk2023-golang-101-kursu/src/14/test-datarace/kvstore/kvstore_test.go:22<span class="w"> </span>+0x1dc
+<span class="w">  </span>testing.tRunner<span class="o">()</span>
+<span class="w">      </span>/opt/homebrew/Cellar/go/1.21.0/libexec/src/testing/testing.go:1595<span class="w"> </span>+0x194
+<span class="w">  </span>testing.<span class="o">(</span>*T<span class="o">)</span>.Run.func1<span class="o">()</span>
+<span class="w">      </span>/opt/homebrew/Cellar/go/1.21.0/libexec/src/testing/testing.go:1648<span class="w"> </span>+0x40
+
+Goroutine<span class="w"> </span><span class="m">7</span><span class="w"> </span><span class="o">(</span>running<span class="o">)</span><span class="w"> </span>created<span class="w"> </span>at:
+<span class="w">  </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-datarace/kvstore_test.TestDataRace<span class="o">()</span>
+<span class="w">      </span>/Users/vigo/Development/VBYazilim/maoyyk2023-golang-101-kursu/src/14/test-datarace/kvstore/kvstore_test.go:16<span class="w"> </span>+0x190
+<span class="w">  </span>testing.tRunner<span class="o">()</span>
+<span class="w">      </span>/opt/homebrew/Cellar/go/1.21.0/libexec/src/testing/testing.go:1595<span class="w"> </span>+0x194
+<span class="w">  </span>testing.<span class="o">(</span>*T<span class="o">)</span>.Run.func1<span class="o">()</span>
+<span class="w">      </span>/opt/homebrew/Cellar/go/1.21.0/libexec/src/testing/testing.go:1648<span class="w"> </span>+0x40
+
+Goroutine<span class="w"> </span><span class="m">6</span><span class="w"> </span><span class="o">(</span>running<span class="o">)</span><span class="w"> </span>created<span class="w"> </span>at:
+<span class="w">  </span>testing.<span class="o">(</span>*T<span class="o">)</span>.Run<span class="o">()</span>
+<span class="w">      </span>/opt/homebrew/Cellar/go/1.21.0/libexec/src/testing/testing.go:1648<span class="w"> </span>+0x5d8
+<span class="w">  </span>testing.runTests.func1<span class="o">()</span>
+<span class="w">      </span>/opt/homebrew/Cellar/go/1.21.0/libexec/src/testing/testing.go:2054<span class="w"> </span>+0x80
+<span class="w">  </span>testing.tRunner<span class="o">()</span>
+<span class="w">      </span>/opt/homebrew/Cellar/go/1.21.0/libexec/src/testing/testing.go:1595<span class="w"> </span>+0x194
+<span class="w">  </span>testing.runTests<span class="o">()</span>
+<span class="w">      </span>/opt/homebrew/Cellar/go/1.21.0/libexec/src/testing/testing.go:2052<span class="w"> </span>+0x6d8
+<span class="w">  </span>testing.<span class="o">(</span>*M<span class="o">)</span>.Run<span class="o">()</span>
+<span class="w">      </span>/opt/homebrew/Cellar/go/1.21.0/libexec/src/testing/testing.go:1925<span class="w"> </span>+0x904
+<span class="w">  </span>main.main<span class="o">()</span>
+<span class="w">      </span>_testmain.go:49<span class="w"> </span>+0x294
+<span class="o">==================</span>
+<span class="w">    </span>testing.go:1465:<span class="w"> </span>race<span class="w"> </span>detected<span class="w"> </span>during<span class="w"> </span>execution<span class="w"> </span>of<span class="w"> </span><span class="nb">test</span>
+---<span class="w"> </span>FAIL:<span class="w"> </span>TestDataRace<span class="w"> </span><span class="o">(</span><span class="m">0</span>.00s<span class="o">)</span>
+<span class="o">===</span><span class="w"> </span>NAME<span class="w">  </span>
+<span class="w">    </span>testing.go:1465:<span class="w"> </span>race<span class="w"> </span>detected<span class="w"> </span>during<span class="w"> </span>execution<span class="w"> </span>of<span class="w"> </span><span class="nb">test</span>
+FAIL
+FAIL<span class="w">    </span>github.com/vbyazilim/maoyyk2023-golang-101-kursu/src/14/test-datarace/kvstore<span class="w">   </span><span class="m">0</span>.526s
+FAIL
+</code></pre></div>
+<hr />
+<h2 id="kaynaklar">Kaynaklar</h2>
+<ul>
+<li><a href="https://go.dev/blog/examples">https://go.dev/blog/examples</a></li>
+<li><a href="https://elliotchance.medium.com/godoc-tips-tricks-cda6571549b">https://elliotchance.medium.com/godoc-tips-tricks-cda6571549b</a></li>
+<li><a href="https://go.dev/blog/race-detector">https://go.dev/blog/race-detector</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Race_condition">https://en.wikipedia.org/wiki/Race_condition</a></li>
+</ul>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            Başa dön
+          </button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.indexes", "navigation.top", "toc.integrate"], "search": "../../assets/javascripts/workers/search.dfff1995.min.js", "translations": {"clipboard.copied": "Kopyaland\u0131", "clipboard.copy": "Kopyala", "search.result.more.one": "Bu sayfada 1 tane daha", "search.result.more.other": "Bu sayfada # tane daha", "search.result.none": "E\u015fle\u015fen dok\u00fcman bulunamad\u0131", "search.result.one": "1 dok\u00fcman bulundu", "search.result.other": "# dok\u00fcman bulundu", "search.result.placeholder": "Aramaya ba\u015flamak i\u00e7in yaz\u0131n", "search.result.term.missing": "Eksik", "select.version": "Versiyon se\u00e7"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.dff1b7c8.min.js"></script>
+      
+    
+  </body>
+</html>

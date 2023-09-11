@@ -1,0 +1,2816 @@
+
+<!doctype html>
+<html lang="tr" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Mustafa Akgül Özgür Yazılım Yaz Kampı 2023’te verilen Go Kursu">
+      
+      
+        <meta name="author" content="Uğur vigo Özyılmazel">
+      
+      
+        <link rel="canonical" href="https://vbyazilim.github.io/maoyyk2023-golang-101-kursu/13/01-json-ile-calismak/">
+      
+      
+        <link rel="prev" href="../../12/01-reflection/">
+      
+      
+        <link rel="next" href="../../14/01-test/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.2.8">
+    
+    
+      
+        <title>Bölüm 13: JSON İle Çalışmak - MAÖYYK 2023 - Go Kursu</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.046329b4.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#bolum-1301-json-ile-calsmak" class="md-skip">
+          Ana içeriğe geç
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Başlık">
+    <a href="../.." title="MAÖYYK 2023 - Go Kursu" class="md-header__button md-logo" aria-label="MAÖYYK 2023 - Go Kursu" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            MAÖYYK 2023 - Go Kursu
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Bölüm 13: JSON İle Çalışmak
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Ara" placeholder="Ara" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Ara">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Temizle" aria-label="Temizle" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Arama başlatılıyor
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/vbyazilim/maoyyk2023-golang-101-kursu" title="Depoya git" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    vbyazilim/maoyyk2023-golang-101-kursu
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigasyon" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="MAÖYYK 2023 - Go Kursu" class="md-nav__button md-logo" aria-label="MAÖYYK 2023 - Go Kursu" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    MAÖYYK 2023 - Go Kursu
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/vbyazilim/maoyyk2023-golang-101-kursu" title="Depoya git" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    vbyazilim/maoyyk2023-golang-101-kursu
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    İçindekiler
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Bölüm 01: Golang Hakkında Genel Bilgiler
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Bölüm 01: Golang Hakkında Genel Bilgiler
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01/01-tanitim/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tanıtım, Öne Çıkan Kısımları
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01/02-proverbs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Go Proverbs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01/03-kurulum/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Kurulum
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01/04-vscode-kurulumu/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    VSCode Kurulumu
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Bölüm 02: Golang Uygulamasına Genel Bakış
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Bölüm 02: Golang Uygulamasına Genel Bakış
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02/01-paket-kavrami/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Paket Kavramı ve `main` Paketi
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02/02-executable-lib-run/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Executable, Library ve Golang Uygulamasını Çalıştırmak
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Bölüm 03
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Bölüm 03
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03/01-dil-kurallari/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Dil Kuralları
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03/02-sabitler/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sabitler
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03/03-degiskenler/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Değişkenler
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Bölüm 04: Veri Tipleri
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Bölüm 04: Veri Tipleri
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04/01-string/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Strings (metinseller)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04/02-bool/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Booleans (mantıksallar)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04/03-numerics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Numerics (sayısallar)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04/04-collections/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Koleksiyonlar
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04/05-struct/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Structs (yapılar)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04/05-struct-annotations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Struct Annotations
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04/06-pointer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Pointer (işaretçi) Kavramı
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04/07-struct-methods-receivers/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Struct Methods ve Receivers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04/08-map/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Maps
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04/09-tip-donusturmek/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tip Dönüştürmek
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05/01-fonksiyonlar/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bölüm 05: Fonksiyonlar
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Bölüm 06: Durum Kontrolleri
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Bölüm 06: Durum Kontrolleri
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06/01-durum-koontrolleri-if/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    if, else, else if
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06/02-durum-koontrolleri-switch/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    switch/case
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06/03-label-break-goto/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    label/break/goto
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07/01-dongu/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bölüm 07: Döngüler
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08/01-interface/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bölüm 08: Interface
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../09/01-error/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bölüm 09: Error
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10/01-nil/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bölüm 10: nil
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../11/01-generics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bölüm 11: Generics
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../12/01-reflection/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bölüm 12: Reflection
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Bölüm 13: JSON İle Çalışmak
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Bölüm 13: JSON İle Çalışmak
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="İçindekiler">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      İçindekiler
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#encodingjson-marshal" class="md-nav__link">
+    encoding/json Marshal
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#encodingjson-unmarshal" class="md-nav__link">
+    encoding/json Unmarshal
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#jsonfield-tagi" class="md-nav__link">
+    json:"FIELD" Tag’i
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#custom-encoding" class="md-nav__link">
+    Custom Encoding
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#custom-decoding" class="md-nav__link">
+    Custom Decoding
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#generic-interface" class="md-nav__link">
+    Generic Interface
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#streaming" class="md-nav__link">
+    Streaming
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_15" >
+        
+          <label class="md-nav__link" for="__nav_15" id="__nav_15_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Bölüm 14: Test
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_15_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_15">
+            <span class="md-nav__icon md-icon"></span>
+            Bölüm 14: Test
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14/01-test/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Test
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14/02-table-driven-test/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Table Driven Test
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14/03-test-coverage/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Test Coverage
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14/04-profiling/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Profiling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_16" >
+        
+          <label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Bölüm 15: Concurrency
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_16">
+            <span class="md-nav__icon md-icon"></span>
+            Bölüm 15: Concurrency
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15/01-concurrency/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Concurrency
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15/02-channels/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Channels
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15/03-mutex/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mutex
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15/04-context/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Context
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../16/01-naming-conventions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bölüm 16: İsimlendirme Kuralları
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_18" >
+        
+          <label class="md-nav__link" for="__nav_18" id="__nav_18_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Bölüm 17: Golang Paketi Geliştirmek
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_18_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_18">
+            <span class="md-nav__icon md-icon"></span>
+            Bölüm 17: Golang Paketi Geliştirmek
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../17/01-kurulumlar/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    golangci-linter
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../17/02-go-modul-anotomisi/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Go Modülü Anatomisi
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../17/03-ornek-paket/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    stringutils Paketi
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../17/04-paketi-dagitmak/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Paketi Dağıtmak
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_19" >
+        
+          <label class="md-nav__link" for="__nav_19" id="__nav_19_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Bölüm 18: In-Memory Key-Value Store
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_19_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_19">
+            <span class="md-nav__icon md-icon"></span>
+            Bölüm 18: In-Memory Key-Value Store
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18/01-http-paketi/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    http Paketini Kullanarak Rest-API Tasarlamak
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18/02-ddd-basics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Domain Driven Design prensibini Kullanmak
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18/03-development/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Geliştirme
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18/04-testing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    http server’ın Unit Testleri
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18/05-docker/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Uygulamanın Docker Container’ından Çalıştırılması
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18/06-github-actions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GitHub Actions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18/07-acik-kaynak/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Açık Kaynak
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_20" >
+        
+          <label class="md-nav__link" for="__nav_20" id="__nav_20_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Bonus
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_20_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_20">
+            <span class="md-nav__icon md-icon"></span>
+            Bonus
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../bonus/01-links/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Linkler
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/vbyazilim/kvstore" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    kvstore
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_21" >
+        
+          <label class="md-nav__link" for="__nav_21" id="__nav_21_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Quiz
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_21_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_21">
+            <span class="md-nav__icon md-icon"></span>
+            Quiz
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quiz/01-go-cash-register/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Quiz 1
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="bolum-1301-json-ile-calsmak">Bölüm 13/01: JSON İle Çalışmak</h1>
+<p>Go ile çok yüksek ihtimal ağ servisleri geliştireceksiniz. Dış dünyadan veri
+almak ya da dış dünyadan istek atan bir istemciye cevap vermek için bir kaç
+farklı yöntem mevcut. Bunlardan en sık kullanacaklarınız arasında <code>json</code> yani
+hafif siklet veri değişim formatını kullancaksınız. Bu bakımdan;</p>
+<ol>
+<li>Ya, <code>go</code> daki bir tipi, dış dünyanın anlayacağı <code>json</code> hale (<code>Marshal</code>)</li>
+<li>Ya da dış dünyadan <code>json</code> formatında gelen veriyi <code>go</code>’nun anlayacağı hale (<code>Unmarshal</code>)</li>
+</ol>
+<p>getirmek çok sık yaptığımız bir iş olacak. Bu dönüşüm esnasında </p>
+<hr />
+<h2 id="encodingjson-marshal"><code>encoding/json</code> Marshal</h2>
+<p>Elimizdeki <code>go</code> tipini <code>[]byte</code> haline dönüştürme işlemidir:</p>
+<p><a href="https://go.dev/play/p/nOzvhUsD40p">https://go.dev/play/p/nOzvhUsD40p</a></p>
+<div class="highlight"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nx">main</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;encoding/json&quot;</span>
+<span class="w">    </span><span class="s">&quot;fmt&quot;</span>
+<span class="w">    </span><span class="s">&quot;log&quot;</span>
+<span class="p">)</span>
+
+<span class="c1">// UserLevel is a type alias for defining user level.</span>
+<span class="kd">type</span><span class="w"> </span><span class="nx">UserLevel</span><span class="w"> </span><span class="kt">string</span>
+
+<span class="c1">// UserLevels holds collection of UserLevel types.</span>
+<span class="kd">type</span><span class="w"> </span><span class="nx">UserLevels</span><span class="w"> </span><span class="p">[]</span><span class="nx">UserLevel</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">UserLevelAdmin</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">UserLevel</span><span class="p">(</span><span class="s">&quot;admin&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">UserLevelModerator</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">UserLevel</span><span class="p">(</span><span class="s">&quot;moderator&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">UserLevelAnonymous</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">UserLevel</span><span class="p">(</span><span class="s">&quot;anonymous&quot;</span><span class="p">)</span>
+
+<span class="w">    </span><span class="nx">userLevels</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">UserLevels</span><span class="p">{</span>
+<span class="w">        </span><span class="nx">UserLevelAdmin</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">UserLevelModerator</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">UserLevelAnonymous</span><span class="p">,</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">j</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">json</span><span class="p">.</span><span class="nx">Marshal</span><span class="p">(</span><span class="nx">userLevels</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">log</span><span class="p">.</span><span class="nx">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">j</span><span class="p">)</span>
+<span class="w">    </span><span class="c1">// [91 34 97 100 109 105 110 34 44 34 109 111 100 101 114 97 116 111 114 34 44 34 97 110 111 110 121 109 111 117 115 34 93]</span>
+
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nb">string</span><span class="p">(</span><span class="nx">j</span><span class="p">))</span>
+<span class="w">    </span><span class="c1">// [&quot;admin&quot;,&quot;moderator&quot;,&quot;anonymous&quot;]</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><code>j</code>’nin string görüntüsü: <code>["admin","moderator","anonymous"]</code> şeklindedir. Bu
+aslında JavaScript’teki <code>array</code> tipidir.</p>
+<hr />
+<h2 id="encodingjson-unmarshal"><code>encoding/json</code> Unmarshal</h2>
+<p>Şimdi, tam ters işlemi yapalım; dış dünyadan bize <code>["admin","moderator","anonymous"]</code>
+gelsin:</p>
+<p><a href="https://go.dev/play/p/7l7sIFzUh1S">https://go.dev/play/p/7l7sIFzUh1S</a></p>
+<div class="highlight"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nx">main</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;encoding/json&quot;</span>
+<span class="w">    </span><span class="s">&quot;fmt&quot;</span>
+<span class="w">    </span><span class="s">&quot;log&quot;</span>
+<span class="p">)</span>
+
+<span class="c1">// UserLevel is a type alias for defining user level.</span>
+<span class="kd">type</span><span class="w"> </span><span class="nx">UserLevel</span><span class="w"> </span><span class="kt">string</span>
+
+<span class="c1">// UserLevels holds collection of UserLevel types.</span>
+<span class="kd">type</span><span class="w"> </span><span class="nx">UserLevels</span><span class="w"> </span><span class="p">[]</span><span class="nx">UserLevel</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// byte slice from raw string.</span>
+<span class="w">    </span><span class="nx">input</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">[]</span><span class="nb">byte</span><span class="p">(</span><span class="s">`[&quot;admin&quot;,&quot;moderator&quot;,&quot;anonymous&quot;]`</span><span class="p">)</span>
+
+<span class="w">    </span><span class="c1">// target data type for serialization.</span>
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">userLevels</span><span class="w"> </span><span class="nx">UserLevels</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">json</span><span class="p">.</span><span class="nx">Unmarshal</span><span class="p">(</span><span class="nx">input</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">userLevels</span><span class="p">);</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">log</span><span class="p">.</span><span class="nx">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;%#v\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">userLevels</span><span class="p">)</span>
+<span class="w">    </span><span class="c1">// main.UserLevels{&quot;admin&quot;, &quot;moderator&quot;, &quot;anonymous&quot;}</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr />
+<h2 id="jsonfield-tagi"><code>json:"FIELD"</code> Tag’i</h2>
+<p>Genelde bu çevirme işlerini <code>struct</code> tipi üzerinde yaparız. Dışarıdan gelen ya
+da dışarıya gidecek veride daha yapısal (structural) veri kullanmak isteriz:</p>
+<p><a href="https://go.dev/play/p/BB5D_VrLpLa">https://go.dev/play/p/BB5D_VrLpLa</a></p>
+<div class="highlight"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nx">main</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;encoding/json&quot;</span>
+<span class="w">    </span><span class="s">&quot;fmt&quot;</span>
+<span class="w">    </span><span class="s">&quot;log&quot;</span>
+<span class="p">)</span>
+
+<span class="c1">// User represents user model.</span>
+<span class="kd">type</span><span class="w"> </span><span class="nx">User</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">Name</span><span class="w">  </span><span class="kt">string</span>
+<span class="w">    </span><span class="nx">Email</span><span class="w"> </span><span class="kt">string</span>
+<span class="w">    </span><span class="nx">Age</span><span class="w">   </span><span class="kt">int</span>
+<span class="p">}</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">u</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">User</span><span class="p">{</span>
+<span class="w">        </span><span class="nx">Name</span><span class="p">:</span><span class="w">  </span><span class="s">&quot;Uğur Özyılmazel&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">Email</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;vigo@example.com&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">Age</span><span class="p">:</span><span class="w">   </span><span class="mi">51</span><span class="p">,</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">j</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">json</span><span class="p">.</span><span class="nx">Marshal</span><span class="p">(</span><span class="nx">u</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">log</span><span class="p">.</span><span class="nx">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">j</span><span class="p">)</span>
+<span class="w">    </span><span class="c1">// [123 34 78 97 109 101 34 58 34 85 196 159 117 114 32 195 150 122 121 196 177 108 109 97 122 101 108 34 44 34 69 109 97 105 108 34 58 34 118 105 103 111 64 101 120 97 109 112 108 101 46 99 111 109 34 44 34 65 103 101 34 58 53 49 125]</span>
+
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nb">string</span><span class="p">(</span><span class="nx">j</span><span class="p">))</span>
+<span class="w">    </span><span class="c1">// {&quot;Name&quot;:&quot;Uğur Özyılmazel&quot;,&quot;Email&quot;:&quot;vigo@example.com&quot;,&quot;Age&quot;:51}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Dikkat ettiyseniz, <code>[]byte</code>’a baktığımızda; <code>{"Name":"Uğur
+Özyılmazel","Email":"vigo@example.com","Age":51}</code> alan adlarının <code>struct</code>
+field name’leri ile aynı olduğunu görürüz. <code>json</code> convention’a baktığımızda
+alan adlarının bir kuralı var. Ana kural <code>key</code>’lerin (Name, Email ...) mutlaka
+<strong>Unicode</strong> karakterlerden oluşmasıdır. Kimileri <code>camelCase</code> kimileri
+<code>snake_case</code> de kullanabilir.</p>
+<p>Kuralına uygun yazılmış bir rest-api servisi, alan adı kuralı olarak
+<code>snake_case</code> kullanmalıdır.</p>
+<p>Peki, biz <code>Name</code> yerine <code>name</code> nasıl döneceğiz? Bu durumda <code>json:"FIELD"</code> tag
+devreye girer:</p>
+<p><a href="https://go.dev/play/p/EY_4u3pniOf">https://go.dev/play/p/EY_4u3pniOf</a></p>
+<div class="highlight"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nx">main</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;encoding/json&quot;</span>
+<span class="w">    </span><span class="s">&quot;fmt&quot;</span>
+<span class="w">    </span><span class="s">&quot;log&quot;</span>
+<span class="p">)</span>
+
+<span class="c1">// User represents user model.</span>
+<span class="kd">type</span><span class="w"> </span><span class="nx">User</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">Name</span><span class="w">  </span><span class="kt">string</span><span class="w"> </span><span class="s">`json:&quot;name&quot;`</span>
+<span class="w">    </span><span class="nx">Email</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="s">`json:&quot;email&quot;`</span>
+<span class="w">    </span><span class="nx">Age</span><span class="w">   </span><span class="kt">int</span><span class="w">    </span><span class="s">`json:&quot;age&quot;`</span>
+<span class="p">}</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">u</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">User</span><span class="p">{</span>
+<span class="w">        </span><span class="nx">Name</span><span class="p">:</span><span class="w">  </span><span class="s">&quot;Uğur Özyılmazel&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">Email</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;vigo@example.com&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">Age</span><span class="p">:</span><span class="w">   </span><span class="mi">51</span><span class="p">,</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">j</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">json</span><span class="p">.</span><span class="nx">Marshal</span><span class="p">(</span><span class="nx">u</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">log</span><span class="p">.</span><span class="nx">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">j</span><span class="p">)</span>
+<span class="w">    </span><span class="c1">// [123 34 110 97 109 101 34 58 34 85 196 159 117 114 32 195 150 122 121 196 177 108 109 97 122 101 108 34 44 34 101 109 97 105 108 34 58 34 118 105 103 111 64 101 120 97 109 112 108 101 46 99 111 109 34 44 34 97 103 101 34 58 53 49 125]</span>
+
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nb">string</span><span class="p">(</span><span class="nx">j</span><span class="p">))</span>
+<span class="w">    </span><span class="c1">// {&quot;name&quot;:&quot;Uğur Özyılmazel&quot;,&quot;email&quot;:&quot;vigo@example.com&quot;,&quot;age&quot;:51}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><code>json</code> tag’i (aslında bu bir struct annotation) sadece bu işe yaramaz;</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// JSON çıktıda key &quot;myName&quot; olarak görünür.</span>
+<span class="nx">Field</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="s">`json:&quot;myName&quot;`</span>
+
+<span class="c1">// JSON çıktıda key &quot;myName&quot; olarak görünür fakat değer &quot;empty&quot; (zero-value) ise</span>
+<span class="c1">// omit edilir (yani dışarıda bırakılır) ve bu field çıktıda yer almaz!</span>
+<span class="nx">Field</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="s">`json:&quot;myName,omitempty&quot;`</span>
+
+<span class="c1">// JSON çıktıda key &quot;Field&quot; olarak görünür fakat değer &quot;empty&quot; (zero-value) ise</span>
+<span class="c1">// omit edilir (yani dışarıda bırakılır) ve bu field çıktıda yer almaz!</span>
+<span class="nx">Field</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="s">`json:&quot;,omitempty&quot;`</span>
+
+<span class="c1">// Field komple görmezden gelinir (ignore) ve çıktıda yer almaz!</span>
+<span class="nx">Field</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="s">`json:&quot;-&quot;`</span>
+
+<span class="c1">// JSON çıktıda key &quot;-&quot; olarak görünür.</span>
+<span class="nx">Field</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="s">`json:&quot;-,&quot;`</span>
+</code></pre></div>
+<p>Ek olarak, dış dünyadan gelen veri <code>string</code> görünümünde ama değer olarak
+<code>integer</code>;</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;age&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;51&quot;</span><span class="p">}</span>
+</code></pre></div>
+<p><code>age</code>’in tip olarak değeri <code>51</code> yani <code>string</code> ama biz bunu içeride <code>int</code>
+olarak kullanmak istiyoruz (bazı kötü tasarlanmış api’larda bu tür durumlar oluyor):</p>
+<div class="highlight"><pre><span></span><code><span class="err">Age</span><span class="w"> </span><span class="err">i</span><span class="kc">nt</span><span class="w"> </span><span class="err">`jso</span><span class="kc">n</span><span class="p">:</span><span class="s2">&quot;age,string&quot;</span><span class="err">`</span>
+</code></pre></div>
+<p>şeklinde de kullanabiliyoruz:</p>
+<p><a href="https://go.dev/play/p/Qp0lnPOPBRQ">https://go.dev/play/p/Qp0lnPOPBRQ</a></p>
+<div class="highlight"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nx">main</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;encoding/json&quot;</span>
+<span class="w">    </span><span class="s">&quot;fmt&quot;</span>
+<span class="w">    </span><span class="s">&quot;log&quot;</span>
+<span class="p">)</span>
+
+<span class="c1">// User represents user model.</span>
+<span class="kd">type</span><span class="w"> </span><span class="nx">User</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">Name</span><span class="w">     </span><span class="kt">string</span><span class="w"> </span><span class="s">`json:&quot;name&quot;`</span>
+<span class="w">    </span><span class="nx">Email</span><span class="w">    </span><span class="kt">string</span><span class="w"> </span><span class="s">`json:&quot;email,omitempty&quot;`</span>
+<span class="w">    </span><span class="nx">Age</span><span class="w">      </span><span class="kt">int</span><span class="w">    </span><span class="s">`json:&quot;age,string,omitempty&quot;`</span>
+<span class="w">    </span><span class="nx">Password</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="s">`json:&quot;-&quot;`</span>
+<span class="p">}</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">u</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">User</span><span class="p">{</span>
+<span class="w">        </span><span class="nx">Name</span><span class="p">:</span><span class="w">  </span><span class="s">&quot;Uğur Özyılmazel&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">Email</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;vigo@example.com&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">Age</span><span class="p">:</span><span class="w">   </span><span class="mi">51</span><span class="p">,</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">j</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">json</span><span class="p">.</span><span class="nx">Marshal</span><span class="p">(</span><span class="nx">u</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">log</span><span class="p">.</span><span class="nx">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">j</span><span class="p">)</span>
+<span class="w">    </span><span class="c1">// [123 34 110 97 109 101 34 58 34 85 196 159 117 114 32 195 150 122 121 196 177 108 109 97 122 101 108 34 44 34 101 109 97 105 108 34 58 34 118 105 103 111 64 101 120 97 109 112 108 101 46 99 111 109 34 44 34 97 103 101 34 58 34 53 49 34 125]</span>
+
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nb">string</span><span class="p">(</span><span class="nx">j</span><span class="p">))</span>
+<span class="w">    </span><span class="c1">// {&quot;name&quot;:&quot;Uğur Özyılmazel&quot;,&quot;email&quot;:&quot;vigo@example.com&quot;,&quot;age&quot;:&quot;51&quot;}</span>
+
+<span class="w">    </span><span class="nx">u2</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">User</span><span class="p">{</span>
+<span class="w">        </span><span class="nx">Name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Uğur Özyılmazel&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">j</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">json</span><span class="p">.</span><span class="nx">Marshal</span><span class="p">(</span><span class="nx">u2</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">log</span><span class="p">.</span><span class="nx">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">j</span><span class="p">)</span>
+<span class="w">    </span><span class="c1">// [123 34 110 97 109 101 34 58 34 85 196 159 117 114 32 195 150 122 121 196 177 108 109 97 122 101 108 34 125]</span>
+
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nb">string</span><span class="p">(</span><span class="nx">j</span><span class="p">))</span>
+<span class="w">    </span><span class="c1">// {&quot;name&quot;:&quot;Uğur Özyılmazel&quot;}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Şimdi <a href="https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/13/json-marshal-custom-time">örneğe</a> bakalım, <code>struct</code>
+alanları içinde gezen, tag’leri bulan ve özelleştirilmiş <code>time</code> kullanan bir
+yapı bulunuyor. <code>go</code>, <code>Marshal</code> işlemi yaparken, eğer custom type varsa ve bu
+type’ın <code>MarshalJSON()</code> metotu varsa onu kullanıyor. <code>describeStruct</code> ise
+<code>reflect</code> paketini kullanarak struct içinde geziyor.</p>
+<p><a href="https://go.dev/play/p/fsbNbTOMVav">https://go.dev/play/p/fsbNbTOMVav</a></p>
+<div class="highlight"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nx">main</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;encoding/json&quot;</span>
+<span class="w">    </span><span class="s">&quot;fmt&quot;</span>
+<span class="w">    </span><span class="s">&quot;log&quot;</span>
+<span class="w">    </span><span class="s">&quot;reflect&quot;</span>
+<span class="w">    </span><span class="s">&quot;time&quot;</span>
+<span class="p">)</span>
+
+<span class="c1">// User holds user model data. User struct has json tags!</span>
+<span class="kd">type</span><span class="w"> </span><span class="nx">User</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">FirstName</span><span class="w"> </span><span class="kt">string</span><span class="w">    </span><span class="s">`json:&quot;first_name&quot;`</span>
+<span class="w">    </span><span class="nx">LastName</span><span class="w">  </span><span class="kt">string</span><span class="w">    </span><span class="s">`json:&quot;last_name&quot;`</span>
+<span class="w">    </span><span class="nx">Age</span><span class="w">       </span><span class="kt">int</span><span class="w">       </span><span class="s">`json:&quot;age&quot;`</span>
+<span class="w">    </span><span class="nx">BirthDate</span><span class="w"> </span><span class="nx">time</span><span class="p">.</span><span class="nx">Time</span><span class="w"> </span><span class="s">`json:&quot;birth_date&quot;`</span>
+<span class="w">    </span><span class="nx">Admin</span><span class="w">     </span><span class="kt">bool</span><span class="w">      </span><span class="s">`json:&quot;admin&quot;`</span>
+<span class="w">    </span><span class="nx">LastVisit</span><span class="w"> </span><span class="nx">time</span><span class="p">.</span><span class="nx">Time</span><span class="w"> </span><span class="s">`json:&quot;-&quot;`</span><span class="w"> </span><span class="c1">// omitted, ignore</span>
+<span class="p">}</span>
+
+<span class="kd">const</span><span class="w"> </span><span class="nx">customTimeLayout</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;2006-01-02T15:04:05-07:00&quot;</span>
+
+<span class="c1">// CustomTime is a type alias for time.Time, uses custom marshal format.</span>
+<span class="kd">type</span><span class="w"> </span><span class="nx">CustomTime</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">time</span><span class="p">.</span><span class="nx">Time</span>
+<span class="p">}</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">ct</span><span class="w"> </span><span class="nx">CustomTime</span><span class="p">)</span><span class="w"> </span><span class="nx">MarshalJSON</span><span class="p">()</span><span class="w"> </span><span class="p">([]</span><span class="kt">byte</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">[]</span><span class="nb">byte</span><span class="p">(</span><span class="s">`&quot;`</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">ct</span><span class="p">.</span><span class="nx">Time</span><span class="p">.</span><span class="nx">Format</span><span class="p">(</span><span class="nx">customTimeLayout</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">`&quot;`</span><span class="p">),</span><span class="w"> </span><span class="kc">nil</span>
+<span class="p">}</span>
+
+<span class="c1">// UserWithCustomTime holds user model data with custom time type!</span>
+<span class="kd">type</span><span class="w"> </span><span class="nx">UserWithCustomTime</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">FirstName</span><span class="w"> </span><span class="kt">string</span><span class="w">     </span><span class="s">`json:&quot;first_name&quot;`</span>
+<span class="w">    </span><span class="nx">LastName</span><span class="w">  </span><span class="kt">string</span><span class="w">     </span><span class="s">`json:&quot;last_name&quot;`</span>
+<span class="w">    </span><span class="nx">Age</span><span class="w">       </span><span class="kt">int</span><span class="w">        </span><span class="s">`json:&quot;age&quot;`</span>
+<span class="w">    </span><span class="nx">BirthDate</span><span class="w"> </span><span class="nx">time</span><span class="p">.</span><span class="nx">Time</span><span class="w">  </span><span class="s">`json:&quot;birth_date&quot;`</span>
+<span class="w">    </span><span class="nx">Admin</span><span class="w">     </span><span class="kt">bool</span><span class="w">       </span><span class="s">`json:&quot;admin&quot;`</span>
+<span class="w">    </span><span class="nx">LastVisit</span><span class="w"> </span><span class="nx">CustomTime</span><span class="w"> </span><span class="s">`json:&quot;,omitempty&quot;`</span>
+<span class="p">}</span>
+
+<span class="c1">// OtherUser holds user model data, only one field has tag!</span>
+<span class="kd">type</span><span class="w"> </span><span class="nx">OtherUser</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">FirstName</span><span class="w"> </span><span class="kt">string</span>
+<span class="w">    </span><span class="nx">LastName</span><span class="w">  </span><span class="kt">string</span>
+<span class="w">    </span><span class="nx">Age</span><span class="w">       </span><span class="kt">int</span>
+<span class="w">    </span><span class="nx">BirthDate</span><span class="w"> </span><span class="nx">time</span><span class="p">.</span><span class="nx">Time</span>
+<span class="w">    </span><span class="nx">Admin</span><span class="w">     </span><span class="kt">bool</span>
+<span class="w">    </span><span class="nx">LastVisit</span><span class="w"> </span><span class="o">*</span><span class="nx">time</span><span class="p">.</span><span class="nx">Time</span><span class="w"> </span><span class="s">`json:&quot;,omitempty&quot;`</span><span class="w"> </span><span class="c1">// this field uses pointer, can be nil, can be omitted if unset!</span>
+<span class="p">}</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="nx">describeStruct</span><span class="p">(</span><span class="nx">v</span><span class="w"> </span><span class="kt">any</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">t</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">reflect</span><span class="p">.</span><span class="nx">TypeOf</span><span class="p">(</span><span class="nx">v</span><span class="p">)</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="p">&lt;</span><span class="w"> </span><span class="nx">t</span><span class="p">.</span><span class="nx">NumField</span><span class="p">();</span><span class="w"> </span><span class="nx">i</span><span class="o">++</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">field</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">t</span><span class="p">.</span><span class="nx">Field</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span>
+<span class="w">        </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span>
+<span class="w">            </span><span class="s">&quot;Name: %-12s Type: %-18s Tag: %-20s json: %s\n&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nx">field</span><span class="p">.</span><span class="nx">Name</span><span class="p">,</span>
+<span class="w">            </span><span class="nx">field</span><span class="p">.</span><span class="nx">Type</span><span class="p">,</span>
+<span class="w">            </span><span class="nx">field</span><span class="p">.</span><span class="nx">Tag</span><span class="p">,</span>
+<span class="w">            </span><span class="nx">field</span><span class="p">.</span><span class="nx">Tag</span><span class="p">.</span><span class="nx">Get</span><span class="p">(</span><span class="s">&quot;json&quot;</span><span class="p">),</span>
+<span class="w">        </span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">()</span>
+<span class="p">}</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="nx">marshalStruct</span><span class="p">(</span><span class="nx">v</span><span class="w"> </span><span class="kt">any</span><span class="p">)</span><span class="w"> </span><span class="kt">error</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">j</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">json</span><span class="p">.</span><span class="nx">MarshalIndent</span><span class="p">(</span><span class="nx">v</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;    &quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">err</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;%s\n\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">j</span><span class="p">)</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="kc">nil</span>
+<span class="p">}</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">trTZ</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">time</span><span class="p">.</span><span class="nx">FixedZone</span><span class="p">(</span><span class="s">&quot;UTC+3&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">+</span><span class="mi">3</span><span class="o">*</span><span class="mi">60</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">now</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">time</span><span class="p">.</span><span class="nx">Now</span><span class="p">()</span>
+
+<span class="w">    </span><span class="nx">u1</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">User</span><span class="p">{</span>
+<span class="w">        </span><span class="nx">FirstName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Uğur&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">LastName</span><span class="p">:</span><span class="w">  </span><span class="s">&quot;Özy&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">Age</span><span class="p">:</span><span class="w">       </span><span class="mi">49</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">BirthDate</span><span class="p">:</span><span class="w"> </span><span class="nx">time</span><span class="p">.</span><span class="nx">Date</span><span class="p">(</span><span class="mi">1972</span><span class="p">,</span><span class="w"> </span><span class="nx">time</span><span class="p">.</span><span class="nx">August</span><span class="p">,</span><span class="w"> </span><span class="mi">13</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nx">trTZ</span><span class="p">),</span>
+<span class="w">        </span><span class="nx">Admin</span><span class="p">:</span><span class="w">     </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">LastVisit</span><span class="p">:</span><span class="w"> </span><span class="nx">now</span><span class="p">,</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nx">describeStruct</span><span class="p">(</span><span class="nx">u1</span><span class="p">)</span>
+<span class="w">    </span><span class="c1">// Name: FirstName    Type: string             Tag: json:&quot;first_name&quot;    json: first_name</span>
+<span class="w">    </span><span class="c1">// Name: LastName     Type: string             Tag: json:&quot;last_name&quot;     json: last_name</span>
+<span class="w">    </span><span class="c1">// Name: Age          Type: int                Tag: json:&quot;age&quot;           json: age</span>
+<span class="w">    </span><span class="c1">// Name: BirthDate    Type: time.Time          Tag: json:&quot;birth_date&quot;    json: birth_date</span>
+<span class="w">    </span><span class="c1">// Name: Admin        Type: bool               Tag: json:&quot;admin&quot;         json: admin</span>
+<span class="w">    </span><span class="c1">// Name: LastVisit    Type: time.Time          Tag: json:&quot;-&quot;             json: -</span>
+
+<span class="w">    </span><span class="nx">u2</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">OtherUser</span><span class="p">{</span>
+<span class="w">        </span><span class="nx">FirstName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Ezel&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">LastName</span><span class="p">:</span><span class="w">  </span><span class="s">&quot;Özy&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">Age</span><span class="p">:</span><span class="w">       </span><span class="mi">10</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">BirthDate</span><span class="p">:</span><span class="w"> </span><span class="nx">time</span><span class="p">.</span><span class="nx">Date</span><span class="p">(</span><span class="mi">2011</span><span class="p">,</span><span class="w"> </span><span class="nx">time</span><span class="p">.</span><span class="nx">August</span><span class="p">,</span><span class="w"> </span><span class="mi">13</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nx">trTZ</span><span class="p">),</span>
+<span class="w">        </span><span class="c1">// we don&#39;t have LastVisit field!</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nx">describeStruct</span><span class="p">(</span><span class="nx">u2</span><span class="p">)</span>
+<span class="w">    </span><span class="c1">// Name: FirstName    Type: string             Tag:                      json:</span>
+<span class="w">    </span><span class="c1">// Name: LastName     Type: string             Tag:                      json:</span>
+<span class="w">    </span><span class="c1">// Name: Age          Type: int                Tag:                      json:</span>
+<span class="w">    </span><span class="c1">// Name: BirthDate    Type: time.Time          Tag:                      json:</span>
+<span class="w">    </span><span class="c1">// Name: Admin        Type: bool               Tag:                      json:</span>
+<span class="w">    </span><span class="c1">// Name: LastVisit    Type: *time.Time         Tag: json:&quot;,omitempty&quot;    json: ,omitempty</span>
+
+<span class="w">    </span><span class="nx">u3</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">OtherUser</span><span class="p">{</span>
+<span class="w">        </span><span class="nx">FirstName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Ezel&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">LastName</span><span class="p">:</span><span class="w">  </span><span class="s">&quot;Özy&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">Age</span><span class="p">:</span><span class="w">       </span><span class="mi">12</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">BirthDate</span><span class="p">:</span><span class="w"> </span><span class="nx">time</span><span class="p">.</span><span class="nx">Date</span><span class="p">(</span><span class="mi">2011</span><span class="p">,</span><span class="w"> </span><span class="nx">time</span><span class="p">.</span><span class="nx">August</span><span class="p">,</span><span class="w"> </span><span class="mi">13</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nx">trTZ</span><span class="p">),</span>
+<span class="w">        </span><span class="nx">LastVisit</span><span class="p">:</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">now</span><span class="p">,</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nx">describeStruct</span><span class="p">(</span><span class="nx">u3</span><span class="p">)</span>
+<span class="w">    </span><span class="c1">// Name: FirstName    Type: string             Tag:                      json:</span>
+<span class="w">    </span><span class="c1">// Name: LastName     Type: string             Tag:                      json:</span>
+<span class="w">    </span><span class="c1">// Name: Age          Type: int                Tag:                      json:</span>
+<span class="w">    </span><span class="c1">// Name: BirthDate    Type: time.Time          Tag:                      json:</span>
+<span class="w">    </span><span class="c1">// Name: Admin        Type: bool               Tag:                      json:</span>
+<span class="w">    </span><span class="c1">// Name: LastVisit    Type: *time.Time         Tag: json:&quot;,omitempty&quot;    json: ,omitempty</span>
+
+<span class="w">    </span><span class="nx">u4</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">UserWithCustomTime</span><span class="p">{</span>
+<span class="w">        </span><span class="nx">FirstName</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Ezel&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">LastName</span><span class="p">:</span><span class="w">  </span><span class="s">&quot;Özyılmazel&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">Age</span><span class="p">:</span><span class="w">       </span><span class="mi">12</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">BirthDate</span><span class="p">:</span><span class="w"> </span><span class="nx">time</span><span class="p">.</span><span class="nx">Date</span><span class="p">(</span><span class="mi">2011</span><span class="p">,</span><span class="w"> </span><span class="nx">time</span><span class="p">.</span><span class="nx">August</span><span class="p">,</span><span class="w"> </span><span class="mi">13</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nx">trTZ</span><span class="p">),</span>
+<span class="w">        </span><span class="nx">LastVisit</span><span class="p">:</span><span class="w"> </span><span class="nx">CustomTime</span><span class="p">{</span><span class="nx">now</span><span class="p">},</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nx">describeStruct</span><span class="p">(</span><span class="nx">u4</span><span class="p">)</span>
+<span class="w">    </span><span class="c1">// Name: FirstName    Type: string             Tag: json:&quot;first_name&quot;    json: first_name</span>
+<span class="w">    </span><span class="c1">// Name: LastName     Type: string             Tag: json:&quot;last_name&quot;     json: last_name</span>
+<span class="w">    </span><span class="c1">// Name: Age          Type: int                Tag: json:&quot;age&quot;           json: age</span>
+<span class="w">    </span><span class="c1">// Name: BirthDate    Type: time.Time          Tag: json:&quot;birth_date&quot;    json: birth_date</span>
+<span class="w">    </span><span class="c1">// Name: Admin        Type: bool               Tag: json:&quot;admin&quot;         json: admin</span>
+<span class="w">    </span><span class="c1">// Name: LastVisit    Type: main.CustomTime    Tag: json:&quot;,omitempty&quot;    json: ,omitempty</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">marshalStruct</span><span class="p">(</span><span class="nx">u1</span><span class="p">);</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">log</span><span class="p">.</span><span class="nx">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="c1">// {</span>
+<span class="w">    </span><span class="c1">//     &quot;first_name&quot;: &quot;Uğur&quot;,</span>
+<span class="w">    </span><span class="c1">//     &quot;last_name&quot;: &quot;Özy&quot;,</span>
+<span class="w">    </span><span class="c1">//     &quot;age&quot;: 49,</span>
+<span class="w">    </span><span class="c1">//     &quot;birth_date&quot;: &quot;1972-08-13T10:00:00+03:00&quot;,</span>
+<span class="w">    </span><span class="c1">//     &quot;admin&quot;: true</span>
+<span class="w">    </span><span class="c1">// }</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">marshalStruct</span><span class="p">(</span><span class="nx">u2</span><span class="p">);</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">log</span><span class="p">.</span><span class="nx">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="c1">// {</span>
+<span class="w">    </span><span class="c1">//     &quot;FirstName&quot;: &quot;Ezel&quot;,</span>
+<span class="w">    </span><span class="c1">//     &quot;LastName&quot;: &quot;Özy&quot;,</span>
+<span class="w">    </span><span class="c1">//     &quot;Age&quot;: 10,</span>
+<span class="w">    </span><span class="c1">//     &quot;BirthDate&quot;: &quot;2011-08-13T07:00:00+03:00&quot;,</span>
+<span class="w">    </span><span class="c1">//     &quot;Admin&quot;: false</span>
+<span class="w">    </span><span class="c1">// }</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">marshalStruct</span><span class="p">(</span><span class="nx">u3</span><span class="p">);</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">log</span><span class="p">.</span><span class="nx">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="c1">// {</span>
+<span class="w">    </span><span class="c1">//     &quot;FirstName&quot;: &quot;Ezel&quot;,</span>
+<span class="w">    </span><span class="c1">//     &quot;LastName&quot;: &quot;Özy&quot;,</span>
+<span class="w">    </span><span class="c1">//     &quot;Age&quot;: 12,</span>
+<span class="w">    </span><span class="c1">//     &quot;BirthDate&quot;: &quot;2011-08-13T07:00:00+03:00&quot;,</span>
+<span class="w">    </span><span class="c1">//     &quot;Admin&quot;: false,</span>
+<span class="w">    </span><span class="c1">//     &quot;LastVisit&quot;: &quot;2023-08-13T14:07:09.537756+03:00&quot;</span>
+<span class="w">    </span><span class="c1">// }</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">marshalStruct</span><span class="p">(</span><span class="nx">u4</span><span class="p">);</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">log</span><span class="p">.</span><span class="nx">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="c1">// {</span>
+<span class="w">    </span><span class="c1">//     &quot;first_name&quot;: &quot;Ezel&quot;,</span>
+<span class="w">    </span><span class="c1">//     &quot;last_name&quot;: &quot;Özyılmazel&quot;,</span>
+<span class="w">    </span><span class="c1">//     &quot;age&quot;: 12,</span>
+<span class="w">    </span><span class="c1">//     &quot;birth_date&quot;: &quot;2011-08-13T07:00:00+03:00&quot;,</span>
+<span class="w">    </span><span class="c1">//     &quot;admin&quot;: false,</span>
+<span class="w">    </span><span class="c1">//     &quot;LastVisit&quot;: &quot;2023-08-13T14:07:09+03:00&quot;</span>
+<span class="w">    </span><span class="c1">// }</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr />
+<h2 id="custom-encoding">Custom Encoding</h2>
+<p>Aslında <code>pretty print</code> yaptığımız kısımda <code>marshalStruct(v any)</code> fonksiyonu
+içinde kullanmıştık, ek olarak html karakterlerini de escape etmeyi görelim;</p>
+<p><a href="https://go.dev/play/p/PaLSl8ya-ql">https://go.dev/play/p/PaLSl8ya-ql</a></p>
+<div class="highlight"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nx">main</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;bytes&quot;</span>
+<span class="w">    </span><span class="s">&quot;encoding/json&quot;</span>
+<span class="w">    </span><span class="s">&quot;fmt&quot;</span>
+<span class="w">    </span><span class="s">&quot;log&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">data</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">any</span><span class="p">{</span>
+<span class="w">        </span><span class="s">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s">`this is &lt;strong&gt;bold&lt;/strong&gt; text`</span><span class="p">,</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">buffer</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nb">new</span><span class="p">(</span><span class="nx">bytes</span><span class="p">.</span><span class="nx">Buffer</span><span class="p">)</span><span class="w">        </span><span class="c1">// create buffer, returns pointer.</span>
+<span class="w">    </span><span class="nx">encoder</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">json</span><span class="p">.</span><span class="nx">NewEncoder</span><span class="p">(</span><span class="nx">buffer</span><span class="p">)</span><span class="w"> </span><span class="c1">// point to buffer</span>
+<span class="w">    </span><span class="nx">encoder</span><span class="p">.</span><span class="nx">SetEscapeHTML</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span><span class="w">        </span><span class="c1">// enable html escape</span>
+<span class="w">    </span><span class="nx">encoder</span><span class="p">.</span><span class="nx">SetIndent</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;    &quot;</span><span class="p">)</span><span class="w">      </span><span class="c1">// indent 4 spaces each key</span>
+
+<span class="w">    </span><span class="c1">// serialize data to buffer</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">encoder</span><span class="p">.</span><span class="nx">Encode</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">log</span><span class="p">.</span><span class="nx">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">buffer</span><span class="p">)</span>
+<span class="w">    </span><span class="c1">// fmt.Println(buffer.String())</span>
+<span class="w">    </span><span class="c1">// fmt.Printf(&quot;%s\n&quot;, buffer)</span>
+<span class="w">    </span><span class="c1">// {</span>
+<span class="w">    </span><span class="c1">//     &quot;message&quot;: &quot;this is \u003cstrong\u003ebold\u003c/strong\u003e text&quot;</span>
+<span class="w">    </span><span class="c1">// }</span>
+
+<span class="w">    </span><span class="nx">buffer</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">new</span><span class="p">(</span><span class="nx">bytes</span><span class="p">.</span><span class="nx">Buffer</span><span class="p">)</span><span class="w">        </span><span class="c1">// create buffer, returns pointer.</span>
+<span class="w">    </span><span class="nx">encoder</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">json</span><span class="p">.</span><span class="nx">NewEncoder</span><span class="p">(</span><span class="nx">buffer</span><span class="p">)</span><span class="w"> </span><span class="c1">// point to buffer</span>
+<span class="w">    </span><span class="nx">encoder</span><span class="p">.</span><span class="nx">SetEscapeHTML</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span><span class="w">      </span><span class="c1">// disable html escape</span>
+<span class="w">    </span><span class="nx">encoder</span><span class="p">.</span><span class="nx">SetIndent</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;    &quot;</span><span class="p">)</span><span class="w">     </span><span class="c1">// indent 4 spaces each key</span>
+
+<span class="w">    </span><span class="c1">// serialize data to buffer</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">encoder</span><span class="p">.</span><span class="nx">Encode</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">log</span><span class="p">.</span><span class="nx">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">buffer</span><span class="p">)</span>
+<span class="w">    </span><span class="c1">// {</span>
+<span class="w">    </span><span class="c1">//     &quot;message&quot;: &quot;this is &lt;strong&gt;bold&lt;/strong&gt; text&quot;</span>
+<span class="w">    </span><span class="c1">// }</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr />
+<h2 id="custom-decoding">Custom Decoding</h2>
+<p>Dış dünyadan gelen veriyi <code>go</code> tipine <code>Unmarshal</code> ile çeviriyorduk. Bazen bu
+işi biraz daha kontrollü yapmak gerekebilir. Bu durumda <code>json.NewDecoder</code>
+kullanırız. Beklenmeyen bir alan geldiğinde hata yakalama ile bunu yakalayıp
+istersek işlemi ilerletmeyebiliriz.</p>
+<p>Şimdi <a href="https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/13/json-custom-decode">örneğe</a> bakalım;</p>
+<p><a href="https://go.dev/play/p/hCGfrUGRn5-">https://go.dev/play/p/hCGfrUGRn5-</a></p>
+<div class="highlight"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nx">main</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;bytes&quot;</span>
+<span class="w">    </span><span class="s">&quot;encoding/json&quot;</span>
+<span class="w">    </span><span class="s">&quot;fmt&quot;</span>
+<span class="w">    </span><span class="s">&quot;log&quot;</span>
+<span class="w">    </span><span class="s">&quot;time&quot;</span>
+<span class="p">)</span>
+
+<span class="c1">// User holds user model data. User struct has json tags!</span>
+<span class="kd">type</span><span class="w"> </span><span class="nx">User</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">FirstName</span><span class="w"> </span><span class="kt">string</span><span class="w">     </span><span class="s">`json:&quot;first_name&quot;`</span>
+<span class="w">    </span><span class="nx">LastName</span><span class="w">  </span><span class="kt">string</span><span class="w">     </span><span class="s">`json:&quot;last_name&quot;`</span>
+<span class="w">    </span><span class="nx">Age</span><span class="w">       </span><span class="kt">int</span><span class="w">        </span><span class="s">`json:&quot;age&quot;`</span>
+<span class="w">    </span><span class="nx">BirthDate</span><span class="w"> </span><span class="nx">time</span><span class="p">.</span><span class="nx">Time</span><span class="w">  </span><span class="s">`json:&quot;birth_date&quot;`</span>
+<span class="w">    </span><span class="nx">Admin</span><span class="w">     </span><span class="kt">bool</span><span class="w">       </span><span class="s">`json:&quot;admin&quot;`</span>
+<span class="w">    </span><span class="nx">LastVisit</span><span class="w"> </span><span class="o">*</span><span class="nx">time</span><span class="p">.</span><span class="nx">Time</span><span class="w"> </span><span class="s">`json:&quot;last_visit&quot;`</span>
+<span class="p">}</span>
+
+<span class="c1">// Users holds user slice of Users.</span>
+<span class="kd">type</span><span class="w"> </span><span class="nx">Users</span><span class="w"> </span><span class="p">[]</span><span class="nx">User</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">input</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="s">`[</span>
+<span class="s">        {</span>
+<span class="s">            &quot;first_name&quot;: &quot;Uğur&quot;,</span>
+<span class="s">            &quot;last_name&quot;: &quot;Özyılmazel&quot;,</span>
+<span class="s">            &quot;age&quot;: 51,</span>
+<span class="s">            &quot;birth_date&quot;: &quot;1972-08-13T09:00:00.0+03:00&quot;</span>
+<span class="s">        },</span>
+<span class="s">        {</span>
+<span class="s">            &quot;first_name&quot;: &quot;Ömer&quot;,</span>
+<span class="s">            &quot;last_name&quot;: &quot;Özyılmazel&quot;,</span>
+<span class="s">            &quot;age&quot;: 41,</span>
+<span class="s">            &quot;birth_date&quot;: &quot;1982-08-13T14:00:00.0+03:00&quot;,</span>
+<span class="s">            &quot;admin&quot;: true</span>
+<span class="s">        },</span>
+<span class="s">        {</span>
+<span class="s">            &quot;this&quot;: &quot;This&quot;,</span>
+<span class="s">            &quot;is&quot;: &quot;is&quot;,</span>
+<span class="s">            &quot;fake&quot;: &quot;fake&quot;</span>
+<span class="s">        }</span>
+<span class="s">    ]`</span>
+
+<span class="w">    </span><span class="nx">b</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="p">[]</span><span class="nb">byte</span><span class="p">(</span><span class="nx">input</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">d</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">json</span><span class="p">.</span><span class="nx">NewDecoder</span><span class="p">(</span><span class="nx">bytes</span><span class="p">.</span><span class="nx">NewReader</span><span class="p">(</span><span class="nx">b</span><span class="p">))</span>
+<span class="w">    </span><span class="c1">// accepts io.Reader, convert byte slice -&gt; io.Reader satisfier</span>
+
+<span class="w">    </span><span class="nx">d</span><span class="p">.</span><span class="nx">DisallowUnknownFields</span><span class="p">()</span>
+<span class="w">    </span><span class="c1">// raise error for unknown fields</span>
+
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">users</span><span class="w"> </span><span class="nx">Users</span>
+
+<span class="w">    </span><span class="c1">// if err := json.Unmarshal(b, &amp;users); err != nil {</span>
+<span class="w">    </span><span class="c1">//  log.Fatal(err)</span>
+<span class="w">    </span><span class="c1">// }</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">d</span><span class="p">.</span><span class="nx">Decode</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">users</span><span class="p">);</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="c1">// json: unknown field &quot;this&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;%+v\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">users</span><span class="p">)</span>
+<span class="w">    </span><span class="c1">// [{FirstName:Uğur LastName:Özyılmazel Age:51 BirthDate:1972-08-13 09:00:00 +0300 +0300 Admin:false LastVisit:&lt;nil&gt;} {FirstName:Ömer LastName:Özyılmazel Age:41 BirthDate:1982-08-13 14:00:00 +0300 +03 Admin:true LastVisit:&lt;nil&gt;} {FirstName: LastName: Age:0 BirthDate:0001-01-01 00:00:00 +0000 UTC Admin:false LastVisit:&lt;nil&gt;}]</span>
+
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="nx">_</span><span class="p">,</span><span class="w"> </span><span class="nx">user</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">range</span><span class="w"> </span><span class="nx">users</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;%+v\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">user</span><span class="p">)</span>
+<span class="w">        </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">user</span><span class="p">.</span><span class="nx">LastVisit</span><span class="p">,</span><span class="w"> </span><span class="nx">user</span><span class="p">.</span><span class="nx">LastVisit</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">nil</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="c1">// {FirstName:Uğur LastName:Özyılmazel Age:51 BirthDate:1972-08-13 09:00:00 +0300 +0300 Admin:false LastVisit:&lt;nil&gt;}</span>
+<span class="w">    </span><span class="c1">// &lt;nil&gt; true</span>
+<span class="w">    </span><span class="c1">// {FirstName:Ömer LastName:Özyılmazel Age:41 BirthDate:1982-08-13 14:00:00 +0300 +03 Admin:true LastVisit:&lt;nil&gt;}</span>
+<span class="w">    </span><span class="c1">// &lt;nil&gt; true</span>
+<span class="w">    </span><span class="c1">// {FirstName: LastName: Age:0 BirthDate:0001-01-01 00:00:00 +0000 UTC Admin:false LastVisit:&lt;nil&gt;}</span>
+<span class="w">    </span><span class="c1">// &lt;nil&gt; true</span>
+
+
+<span class="w">    </span><span class="nx">j</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">json</span><span class="p">.</span><span class="nx">MarshalIndent</span><span class="p">(</span><span class="nx">users</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;    &quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">log</span><span class="p">.</span><span class="nx">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;%s\n\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">j</span><span class="p">)</span>
+<span class="w">    </span><span class="c1">// [</span>
+<span class="w">    </span><span class="c1">//     {</span>
+<span class="w">    </span><span class="c1">//         &quot;first_name&quot;: &quot;Uğur&quot;,</span>
+<span class="w">    </span><span class="c1">//         &quot;last_name&quot;: &quot;Özyılmazel&quot;,</span>
+<span class="w">    </span><span class="c1">//         &quot;age&quot;: 51,</span>
+<span class="w">    </span><span class="c1">//         &quot;birth_date&quot;: &quot;1972-08-13T09:00:00+03:00&quot;,</span>
+<span class="w">    </span><span class="c1">//         &quot;admin&quot;: false,</span>
+<span class="w">    </span><span class="c1">//         &quot;last_visit&quot;: null</span>
+<span class="w">    </span><span class="c1">//     },</span>
+<span class="w">    </span><span class="c1">//     {</span>
+<span class="w">    </span><span class="c1">//         &quot;first_name&quot;: &quot;Ömer&quot;,</span>
+<span class="w">    </span><span class="c1">//         &quot;last_name&quot;: &quot;Özyılmazel&quot;,</span>
+<span class="w">    </span><span class="c1">//         &quot;age&quot;: 41,</span>
+<span class="w">    </span><span class="c1">//         &quot;birth_date&quot;: &quot;1982-08-13T14:00:00+03:00&quot;,</span>
+<span class="w">    </span><span class="c1">//         &quot;admin&quot;: true,</span>
+<span class="w">    </span><span class="c1">//         &quot;last_visit&quot;: null</span>
+<span class="w">    </span><span class="c1">//     },</span>
+<span class="w">    </span><span class="c1">//     {</span>
+<span class="w">    </span><span class="c1">//         &quot;first_name&quot;: &quot;&quot;,</span>
+<span class="w">    </span><span class="c1">//         &quot;last_name&quot;: &quot;&quot;,</span>
+<span class="w">    </span><span class="c1">//         &quot;age&quot;: 0,</span>
+<span class="w">    </span><span class="c1">//         &quot;birth_date&quot;: &quot;0001-01-01T00:00:00Z&quot;,</span>
+<span class="w">    </span><span class="c1">//         &quot;admin&quot;: false,</span>
+<span class="w">    </span><span class="c1">//         &quot;last_visit&quot;: null</span>
+<span class="w">    </span><span class="c1">//     }</span>
+<span class="w">    </span><span class="c1">// ]</span>
+
+<span class="p">}</span>
+</code></pre></div>
+<p>Son alan; <code>"this": "This",</code> ile başlayan kısım işlenmedi ama <code>user</code>’ın son
+değeri <code>User</code> struct’ının zero-value (empty)’larıyla doldu. Yani bu decode
+işleminde <strong>3 tane elemanı</strong> olan bir slice çıktı.</p>
+<hr />
+<h2 id="generic-interface">Generic Interface</h2>
+<p>Elimizde raw string olduğunda bunu <code>map[string]any</code>’e cast ederek, içindeki
+diğer verilere de ulaşabiliriz.</p>
+<p>Eğer bazı alanların opsiyonel olmasını istiyorsak, özellikle <code>struct</code>’a
+<code>Unmarshal</code> ederken, struct içine bir tane joker alan koyup bunu
+<code>map[string]any</code> yapıyoruz ve eksik alanları bu map’ten siliyoruz:</p>
+<p><a href="https://go.dev/play/p/u1mm5nr-jJx">https://go.dev/play/p/u1mm5nr-jJx</a></p>
+<p><a href="https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/13/json-generic-interface">Örnek</a></p>
+<div class="highlight"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nx">main</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;encoding/json&quot;</span>
+<span class="w">    </span><span class="s">&quot;fmt&quot;</span>
+<span class="w">    </span><span class="s">&quot;log&quot;</span>
+<span class="p">)</span>
+
+<span class="c1">// User holds user data</span>
+<span class="kd">type</span><span class="w"> </span><span class="nx">User</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">Name</span><span class="w">      </span><span class="kt">string</span><span class="w"> </span><span class="s">`json:&quot;name&quot;`</span>
+<span class="w">    </span><span class="nx">Email</span><span class="w">     </span><span class="kt">string</span>
+<span class="w">    </span><span class="nx">Age</span><span class="w">       </span><span class="kt">int</span>
+<span class="w">    </span><span class="nx">Optionals</span><span class="w"> </span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">any</span><span class="w"> </span><span class="s">`json:&quot;-&quot;`</span>
+<span class="p">}</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">incoming</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="s">`{</span>
+<span class="s">        &quot;name&quot;: &quot;Uğur&quot;,</span>
+<span class="s">        &quot;email&quot;: &quot;vigo@example.com&quot;,</span>
+<span class="s">        &quot;age&quot;: 51,</span>
+<span class="s">        &quot;foo&quot;: 1,</span>
+<span class="s">        &quot;bar&quot;: &quot;2&quot;</span>
+<span class="s">    }`</span>
+
+<span class="w">    </span><span class="nx">u</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">User</span><span class="p">{}</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">json</span><span class="p">.</span><span class="nx">Unmarshal</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="nx">incoming</span><span class="p">),</span><span class="w"> </span><span class="o">&amp;</span><span class="nx">u</span><span class="p">.</span><span class="nx">Optionals</span><span class="p">);</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">log</span><span class="p">.</span><span class="nx">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;u.Optionals&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">u</span><span class="p">.</span><span class="nx">Optionals</span><span class="p">)</span>
+<span class="w">    </span><span class="c1">// u.Optionals map[age:51 bar:2 email:vigo@example.com foo:1 name:Uğur]</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">v</span><span class="p">,</span><span class="w"> </span><span class="nx">ok</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">u</span><span class="p">.</span><span class="nx">Optionals</span><span class="p">[</span><span class="s">&quot;name&quot;</span><span class="p">].(</span><span class="kt">string</span><span class="p">);</span><span class="w"> </span><span class="nx">ok</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">u</span><span class="p">.</span><span class="nx">Name</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">string</span><span class="p">(</span><span class="nx">v</span><span class="p">)</span>
+<span class="w">        </span><span class="nb">delete</span><span class="p">(</span><span class="nx">u</span><span class="p">.</span><span class="nx">Optionals</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;name&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">v</span><span class="p">,</span><span class="w"> </span><span class="nx">ok</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">u</span><span class="p">.</span><span class="nx">Optionals</span><span class="p">[</span><span class="s">&quot;email&quot;</span><span class="p">].(</span><span class="kt">string</span><span class="p">);</span><span class="w"> </span><span class="nx">ok</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">u</span><span class="p">.</span><span class="nx">Email</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">string</span><span class="p">(</span><span class="nx">v</span><span class="p">)</span>
+<span class="w">        </span><span class="nb">delete</span><span class="p">(</span><span class="nx">u</span><span class="p">.</span><span class="nx">Optionals</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;email&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">v</span><span class="p">,</span><span class="w"> </span><span class="nx">ok</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">u</span><span class="p">.</span><span class="nx">Optionals</span><span class="p">[</span><span class="s">&quot;age&quot;</span><span class="p">].(</span><span class="kt">float64</span><span class="p">);</span><span class="w"> </span><span class="nx">ok</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">u</span><span class="p">.</span><span class="nx">Age</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">int</span><span class="p">(</span><span class="nx">v</span><span class="p">)</span>
+<span class="w">        </span><span class="nb">delete</span><span class="p">(</span><span class="nx">u</span><span class="p">.</span><span class="nx">Optionals</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;age&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;u: %+v\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">u</span><span class="p">)</span>
+<span class="w">    </span><span class="c1">// u: {Name:Uğur Email:vigo@example.com Age:51 Optionals:map[bar:2 foo:1]}</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">u</span><span class="p">.</span><span class="nx">Email</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;u.Email&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">u</span><span class="p">.</span><span class="nx">Email</span><span class="p">)</span>
+<span class="w">        </span><span class="c1">// u.Email vigo@example.com</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nx">u</span><span class="p">.</span><span class="nx">Age</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;u.Age&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">u</span><span class="p">.</span><span class="nx">Age</span><span class="p">)</span>
+<span class="w">        </span><span class="c1">// u.Age 51</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="nx">u</span><span class="p">.</span><span class="nx">Optionals</span><span class="p">)</span><span class="w"> </span><span class="p">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;you have %d invalid field(s)\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="nx">u</span><span class="p">.</span><span class="nx">Optionals</span><span class="p">))</span>
+<span class="w">        </span><span class="c1">// you have 2 invalid field(s)</span>
+
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="nx">v</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="k">range</span><span class="w"> </span><span class="nx">u</span><span class="p">.</span><span class="nx">Optionals</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;%q\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">v</span><span class="p">)</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="c1">// &quot;foo&quot;</span>
+<span class="w">        </span><span class="c1">// &quot;bar&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><code>Unmarshal</code> işlemine başlamadan önce, gelen verinin json’a uygun olup
+olmadığını doğrulamak için <code>json.Valid</code> kullanıyoruz;</p>
+<p><a href="https://go.dev/play/p/Z0a7mVQpXoU">https://go.dev/play/p/Z0a7mVQpXoU</a></p>
+<div class="highlight"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nx">main</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;encoding/json&quot;</span>
+<span class="w">    </span><span class="s">&quot;fmt&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">goodJSON</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="s">`{&quot;example&quot;: 1}`</span>
+<span class="w">    </span><span class="nx">badJSON</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="s">`{&quot;example&quot;:2:]}}`</span>
+
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;goodJSON is valid?&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">json</span><span class="p">.</span><span class="nx">Valid</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="nx">goodJSON</span><span class="p">)))</span>
+<span class="w">    </span><span class="c1">// goodJSON is valid? true</span>
+
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;badJSON is valid?&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">json</span><span class="p">.</span><span class="nx">Valid</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="nx">badJSON</span><span class="p">)))</span>
+<span class="w">    </span><span class="c1">// badJSON is valid? false</span>
+<span class="p">}</span>
+<span class="c1">// goodJSON is valid? true</span>
+<span class="c1">// badJSON is valid? false</span>
+</code></pre></div>
+<hr />
+<h2 id="streaming">Streaming</h2>
+<p>Uygulananız başka bir servise rest-api üzerinden <code>json</code> ile veri çekiyor fakat
+gelen veri json array şeklinde değil;</p>
+<p><a href="https://go.dev/play/p/H95BTncScTb">https://go.dev/play/p/H95BTncScTb</a></p>
+<p><a href="https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/13/json-streaming">Örnek</a></p>
+<div class="highlight"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nx">main</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;bytes&quot;</span>
+<span class="w">    </span><span class="s">&quot;encoding/json&quot;</span>
+<span class="w">    </span><span class="s">&quot;fmt&quot;</span>
+<span class="w">    </span><span class="s">&quot;log&quot;</span>
+<span class="w">    </span><span class="s">&quot;strings&quot;</span>
+<span class="p">)</span>
+
+<span class="c1">// Person represents person model.</span>
+<span class="kd">type</span><span class="w"> </span><span class="nx">Person</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">Name</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="s">`json:&quot;name&quot;`</span>
+<span class="w">    </span><span class="nx">Age</span><span class="w">  </span><span class="kt">int</span><span class="w">    </span><span class="s">`json:&quot;age&quot;`</span>
+<span class="p">}</span>
+
+<span class="c1">// People represents collection on Person slice.</span>
+<span class="kd">type</span><span class="w"> </span><span class="nx">People</span><span class="w"> </span><span class="p">[]</span><span class="nx">Person</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// bulk data, looks like json array?</span>
+<span class="w">    </span><span class="nx">incoming</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="s">`</span>
+<span class="s">    {&quot;name&quot;: &quot;Fred&quot;, &quot;age&quot;: 40}</span>
+<span class="s">    {&quot;name&quot;: &quot;Mary&quot;, &quot;age&quot;: 21}</span>
+<span class="s">    {&quot;name&quot;: &quot;Pat&quot;, &quot;age&quot;: 30}</span>
+<span class="s">    `</span>
+
+<span class="w">    </span><span class="nx">decoder</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">json</span><span class="p">.</span><span class="nx">NewDecoder</span><span class="p">(</span><span class="nx">strings</span><span class="p">.</span><span class="nx">NewReader</span><span class="p">(</span><span class="nx">incoming</span><span class="p">))</span>
+
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">b</span><span class="w"> </span><span class="nx">bytes</span><span class="p">.</span><span class="nx">Buffer</span>
+<span class="w">    </span><span class="nx">encoder</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">json</span><span class="p">.</span><span class="nx">NewEncoder</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">b</span><span class="p">)</span>
+
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">p</span><span class="w"> </span><span class="nx">Person</span>
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">people</span><span class="w"> </span><span class="nx">People</span>
+
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="nx">decoder</span><span class="p">.</span><span class="nx">More</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">decoder</span><span class="p">.</span><span class="nx">Decode</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">p</span><span class="p">);</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">log</span><span class="p">.</span><span class="nx">Print</span><span class="p">(</span><span class="s">&quot;decode err&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">)</span>
+<span class="w">            </span><span class="k">continue</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;p: %+v\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">p</span><span class="p">)</span>
+<span class="w">        </span><span class="c1">// p: {Name:Fred Age:40}</span>
+<span class="w">        </span><span class="c1">// p: {Name:Mary Age:21}</span>
+<span class="w">        </span><span class="c1">// p: {Name:Pat Age:30}</span>
+
+<span class="w">        </span><span class="nx">people</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">append</span><span class="p">(</span><span class="nx">people</span><span class="p">,</span><span class="w"> </span><span class="nx">p</span><span class="p">)</span>
+
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">encoder</span><span class="p">.</span><span class="nx">Encode</span><span class="p">(</span><span class="nx">p</span><span class="p">);</span><span class="w"> </span><span class="nx">err</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">nil</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">log</span><span class="p">.</span><span class="nx">Panic</span><span class="p">(</span><span class="s">&quot;encode err&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">err</span><span class="p">)</span><span class="w"> </span><span class="c1">// do not panic!</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">b</span><span class="p">.</span><span class="nx">Bytes</span><span class="p">())</span>
+<span class="w">    </span><span class="c1">// [123 34 110 97 109 101 34 58 34 70 114 101 100 34 44 34 97 103 101 34 58 52 48 125 10 123 34 110 97 109 101 34 58 34 77 97 114 121 34 44 34 97 103 101 34 58 50 49 125 10 123 34 110 97 109 101 34 58 34 80 97 116 34 44 34 97 103 101 34 58 51 48 125 10]</span>
+
+<span class="w">    </span><span class="c1">// fmt.Println(string(b.Bytes()))</span>
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">b</span><span class="p">.</span><span class="nx">String</span><span class="p">())</span>
+<span class="w">    </span><span class="c1">// {&quot;name&quot;:&quot;Fred&quot;,&quot;age&quot;:40}</span>
+<span class="w">    </span><span class="c1">// {&quot;name&quot;:&quot;Mary&quot;,&quot;age&quot;:21}</span>
+<span class="w">    </span><span class="c1">// {&quot;name&quot;:&quot;Pat&quot;,&quot;age&quot;:30}</span>
+
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;people: %+v\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">people</span><span class="p">)</span>
+<span class="w">    </span><span class="c1">// people: [{Name:Fred Age:40} {Name:Mary Age:21} {Name:Pat Age:30}]</span>
+
+<span class="w">    </span><span class="nx">j</span><span class="p">,</span><span class="w"> </span><span class="nx">_</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="nx">json</span><span class="p">.</span><span class="nx">MarshalIndent</span><span class="p">(</span><span class="nx">people</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;    &quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;%s\n&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">j</span><span class="p">)</span>
+<span class="w">    </span><span class="c1">// [</span>
+<span class="w">    </span><span class="c1">//     {</span>
+<span class="w">    </span><span class="c1">//         &quot;name&quot;: &quot;Fred&quot;,</span>
+<span class="w">    </span><span class="c1">//         &quot;age&quot;: 40</span>
+<span class="w">    </span><span class="c1">//     },</span>
+<span class="w">    </span><span class="c1">//     {</span>
+<span class="w">    </span><span class="c1">//         &quot;name&quot;: &quot;Mary&quot;,</span>
+<span class="w">    </span><span class="c1">//         &quot;age&quot;: 21</span>
+<span class="w">    </span><span class="c1">//     },</span>
+<span class="w">    </span><span class="c1">//     {</span>
+<span class="w">    </span><span class="c1">//         &quot;name&quot;: &quot;Pat&quot;,</span>
+<span class="w">    </span><span class="c1">//         &quot;age&quot;: 30</span>
+<span class="w">    </span><span class="c1">//     }</span>
+<span class="w">    </span><span class="c1">// ]</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            Başa dön
+          </button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.indexes", "navigation.top", "toc.integrate"], "search": "../../assets/javascripts/workers/search.dfff1995.min.js", "translations": {"clipboard.copied": "Kopyaland\u0131", "clipboard.copy": "Kopyala", "search.result.more.one": "Bu sayfada 1 tane daha", "search.result.more.other": "Bu sayfada # tane daha", "search.result.none": "E\u015fle\u015fen dok\u00fcman bulunamad\u0131", "search.result.one": "1 dok\u00fcman bulundu", "search.result.other": "# dok\u00fcman bulundu", "search.result.placeholder": "Aramaya ba\u015flamak i\u00e7in yaz\u0131n", "search.result.term.missing": "Eksik", "select.version": "Versiyon se\u00e7"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.dff1b7c8.min.js"></script>
+      
+    
+  </body>
+</html>
