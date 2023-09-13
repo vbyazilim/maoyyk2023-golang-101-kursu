@@ -219,7 +219,7 @@ Sözleşmesi][COC] davranış kurallarına uyması beklenir.
 
 ## Lisans
 
-Bu projed [MIT](https://opensource.org/licenses/MIT) lisansı kullanılmıştır.
+Bu projede [MIT](https://opensource.org/licenses/MIT) lisansı kullanılmıştır.
 
 ---
 
