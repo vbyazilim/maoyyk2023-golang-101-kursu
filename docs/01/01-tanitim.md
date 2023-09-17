@@ -29,7 +29,7 @@ Ana presibleri;
 
 - Basitlik
 - Açıkça tanımlanmış talimatlar dizisi
-- Statik tipler (tanımlu tipler)
+- Statik tipler (tanımlı tipler)
 - Üzerinde derlendiği işletim sisteminin doğal dili ne ise o dile derlenme,
   Bu sayede Java ve benzeri dillerdeki sanal makine (virtual machine) ihtiyacı yok
 - Nesne yönelimli değil (oop) ama tipler birbir içine geçebiliyor, miras kavramı yok
