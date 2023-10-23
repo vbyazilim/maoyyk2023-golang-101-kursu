@@ -1936,7 +1936,7 @@
 </ol>
 <p>Bir işin nasıl yapılacağını, bir davranışı belirleyen şeydir <code>interface</code>.
 Yazdığımız kodu test edebilmek için <code>interface</code>’lere ihtiyaç duyarız.</p>
-<p>Hemen küçük bir örnek yapalım. <strong>Type aliasing</strong> konusunu gördük;</p>
+<p>Hemen küçük bir örnek yapalım. <strong>type definition</strong> konusunu gördük;</p>
 <div class="highlight"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nx">main</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="s">&quot;fmt&quot;</span>
@@ -2218,7 +2218,7 @@ konuşacak şeyin insan ya da robot olmasının bir önemi yok, önemli olan tek
 direkt olarak kullanılamazlar ve sadece arayüz görevini üstlenirler.</p>
 <p>Yani elektrik prizi, kendisine takılan şeyin televizyon mu? cep telefonu şarj
 aletimi olduğunu bilmemesi gibi...</p>
-<p><a href="https://go.dev/play/p/U6jqQS_hjbw">https://go.dev/play/p/U6jqQS_hjbw</a></p>
+<p><a href="https://go.dev/play/p/y-nDQb82Xqi">https://go.dev/play/p/y-nDQb82Xqi</a></p>
 <div class="highlight"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nx">main</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="s">&quot;fmt&quot;</span>
@@ -2228,7 +2228,7 @@ aletimi olduğunu bilmemesi gibi...</p>
 <span class="w">    </span><span class="nx">Positive</span><span class="p">()</span><span class="w"> </span><span class="kt">bool</span>
 <span class="p">}</span>
 
-<span class="c1">// Numero is a type alias for int.</span>
+<span class="c1">// Numero is a custom type definition uses int.</span>
 <span class="kd">type</span><span class="w"> </span><span class="nx">Numero</span><span class="w"> </span><span class="kt">int</span>
 
 <span class="c1">// Positive is a method for satisfying Positiver interface.</span>
@@ -2236,7 +2236,7 @@ aletimi olduğunu bilmemesi gibi...</p>
 <span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">n</span><span class="w"> </span><span class="p">&gt;</span><span class="w"> </span><span class="mi">0</span>
 <span class="p">}</span>
 
-<span class="c1">// Person is a type alias for string.</span>
+<span class="c1">// Person is a custom type definition uses string.</span>
 <span class="kd">type</span><span class="w"> </span><span class="nx">Person</span><span class="w"> </span><span class="kt">string</span>
 
 <span class="c1">// Positive is a method for satisfying Positiver interface.</span>
@@ -2269,7 +2269,7 @@ eden herhangi bir tipi input olarak alabilir:</p>
 </code></pre></div>
 
 <p>Örneğimizi bir tık daha geliştirelim:</p>
-<p><a href="https://go.dev/play/p/_YJuxLi707H">https://go.dev/play/p/_YJuxLi707H</a></p>
+<p><a href="https://go.dev/play/p/p-J6Dcev_P8">https://go.dev/play/p/p-J6Dcev_P8</a></p>
 <div class="highlight"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nx">main</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="p">(</span>
@@ -2282,7 +2282,7 @@ eden herhangi bir tipi input olarak alabilir:</p>
 <span class="w">    </span><span class="nx">Positive</span><span class="p">()</span><span class="w"> </span><span class="kt">bool</span>
 <span class="p">}</span>
 
-<span class="c1">// Numero is a type alias for int.</span>
+<span class="c1">// Numero is is a custom type definition uses int.</span>
 <span class="kd">type</span><span class="w"> </span><span class="nx">Numero</span><span class="w"> </span><span class="kt">int</span>
 
 <span class="c1">// Positive is a method for satisfying Positiver interface.</span>
@@ -2294,7 +2294,7 @@ eden herhangi bir tipi input olarak alabilir:</p>
 <span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;my value is: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">strconv</span><span class="p">.</span><span class="nx">Itoa</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="nx">n</span><span class="p">))</span>
 <span class="p">}</span>
 
-<span class="c1">// Person is a type alias for string.</span>
+<span class="c1">// Person is a custom type definition uses string.</span>
 <span class="kd">type</span><span class="w"> </span><span class="nx">Person</span><span class="w"> </span><span class="kt">string</span>
 
 <span class="c1">// Positive is a method for satisfying Positiver interface.</span>
@@ -2321,7 +2321,7 @@ eden herhangi bir tipi input olarak alabilir:</p>
 <span class="p">}</span>
 </code></pre></div>
 <p>Şimdi kendi tipimiz için özel bir gösterim ekleyelim:</p>
-<p><a href="https://go.dev/play/p/C24F6Z4I8iq">https://go.dev/play/p/C24F6Z4I8iq</a></p>
+<p><a href="https://go.dev/play/p/zjfW_cXoa-M">https://go.dev/play/p/zjfW_cXoa-M</a></p>
 <div class="highlight"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nx">main</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="p">(</span>
@@ -2329,7 +2329,7 @@ eden herhangi bir tipi input olarak alabilir:</p>
 <span class="w">    </span><span class="s">&quot;strconv&quot;</span>
 <span class="p">)</span>
 
-<span class="c1">// Numero is a type alias to int.</span>
+<span class="c1">// Numero is a custom type definition uses int.</span>
 <span class="kd">type</span><span class="w"> </span><span class="nx">Numero</span><span class="w"> </span><span class="kt">int</span>
 
 <span class="c1">// String implements Stringer interface.</span>

@@ -2,267 +2,267 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://vbyazilim.github.io/maoyyk2023-golang-101-kursu/</loc>
-         <lastmod>2023-09-11</lastmod>
+         <lastmod>2023-10-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://vbyazilim.github.io/maoyyk2023-golang-101-kursu/01/01-tanitim/</loc>
-         <lastmod>2023-09-11</lastmod>
+         <lastmod>2023-10-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://vbyazilim.github.io/maoyyk2023-golang-101-kursu/01/02-proverbs/</loc>
-         <lastmod>2023-09-11</lastmod>
+         <lastmod>2023-10-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://vbyazilim.github.io/maoyyk2023-golang-101-kursu/01/03-kurulum/</loc>
-         <lastmod>2023-09-11</lastmod>
+         <lastmod>2023-10-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://vbyazilim.github.io/maoyyk2023-golang-101-kursu/01/04-vscode-kurulumu/</loc>
-         <lastmod>2023-09-11</lastmod>
+         <lastmod>2023-10-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://vbyazilim.github.io/maoyyk2023-golang-101-kursu/02/01-paket-kavrami/</loc>
-         <lastmod>2023-09-11</lastmod>
+         <lastmod>2023-10-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://vbyazilim.github.io/maoyyk2023-golang-101-kursu/02/02-executable-lib-run/</loc>
-         <lastmod>2023-09-11</lastmod>
+         <lastmod>2023-10-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://vbyazilim.github.io/maoyyk2023-golang-101-kursu/03/01-dil-kurallari/</loc>
-         <lastmod>2023-09-11</lastmod>
+         <lastmod>2023-10-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://vbyazilim.github.io/maoyyk2023-golang-101-kursu/03/02-sabitler/</loc>
-         <lastmod>2023-09-11</lastmod>
+         <lastmod>2023-10-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://vbyazilim.github.io/maoyyk2023-golang-101-kursu/03/03-degiskenler/</loc>
-         <lastmod>2023-09-11</lastmod>
+         <lastmod>2023-10-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://vbyazilim.github.io/maoyyk2023-golang-101-kursu/04/01-string/</loc>
-         <lastmod>2023-09-11</lastmod>
+         <lastmod>2023-10-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://vbyazilim.github.io/maoyyk2023-golang-101-kursu/04/02-bool/</loc>
-         <lastmod>2023-09-11</lastmod>
+         <lastmod>2023-10-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://vbyazilim.github.io/maoyyk2023-golang-101-kursu/04/03-numerics/</loc>
-         <lastmod>2023-09-11</lastmod>
+         <lastmod>2023-10-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://vbyazilim.github.io/maoyyk2023-golang-101-kursu/04/04-collections/</loc>
-         <lastmod>2023-09-11</lastmod>
+         <lastmod>2023-10-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://vbyazilim.github.io/maoyyk2023-golang-101-kursu/04/05-struct-annotations/</loc>
-         <lastmod>2023-09-11</lastmod>
+         <lastmod>2023-10-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://vbyazilim.github.io/maoyyk2023-golang-101-kursu/04/05-struct/</loc>
-         <lastmod>2023-09-11</lastmod>
+         <lastmod>2023-10-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://vbyazilim.github.io/maoyyk2023-golang-101-kursu/04/06-pointer/</loc>
-         <lastmod>2023-09-11</lastmod>
+         <lastmod>2023-10-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://vbyazilim.github.io/maoyyk2023-golang-101-kursu/04/07-struct-methods-receivers/</loc>
-         <lastmod>2023-09-11</lastmod>
+         <lastmod>2023-10-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://vbyazilim.github.io/maoyyk2023-golang-101-kursu/04/08-map/</loc>
-         <lastmod>2023-09-11</lastmod>
+         <lastmod>2023-10-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://vbyazilim.github.io/maoyyk2023-golang-101-kursu/04/09-tip-donusturmek/</loc>
-         <lastmod>2023-09-11</lastmod>
+         <lastmod>2023-10-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://vbyazilim.github.io/maoyyk2023-golang-101-kursu/05/01-fonksiyonlar/</loc>
-         <lastmod>2023-09-11</lastmod>
+         <lastmod>2023-10-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://vbyazilim.github.io/maoyyk2023-golang-101-kursu/06/01-durum-koontrolleri-if/</loc>
-         <lastmod>2023-09-11</lastmod>
+         <lastmod>2023-10-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://vbyazilim.github.io/maoyyk2023-golang-101-kursu/06/02-durum-koontrolleri-switch/</loc>
-         <lastmod>2023-09-11</lastmod>
+         <lastmod>2023-10-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://vbyazilim.github.io/maoyyk2023-golang-101-kursu/06/03-label-break-goto/</loc>
-         <lastmod>2023-09-11</lastmod>
+         <lastmod>2023-10-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://vbyazilim.github.io/maoyyk2023-golang-101-kursu/07/01-dongu/</loc>
-         <lastmod>2023-09-11</lastmod>
+         <lastmod>2023-10-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://vbyazilim.github.io/maoyyk2023-golang-101-kursu/08/01-interface/</loc>
-         <lastmod>2023-09-11</lastmod>
+         <lastmod>2023-10-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://vbyazilim.github.io/maoyyk2023-golang-101-kursu/09/01-error/</loc>
-         <lastmod>2023-09-11</lastmod>
+         <lastmod>2023-10-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://vbyazilim.github.io/maoyyk2023-golang-101-kursu/10/01-nil/</loc>
-         <lastmod>2023-09-11</lastmod>
+         <lastmod>2023-10-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://vbyazilim.github.io/maoyyk2023-golang-101-kursu/11/01-generics/</loc>
-         <lastmod>2023-09-11</lastmod>
+         <lastmod>2023-10-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://vbyazilim.github.io/maoyyk2023-golang-101-kursu/12/01-reflection/</loc>
-         <lastmod>2023-09-11</lastmod>
+         <lastmod>2023-10-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://vbyazilim.github.io/maoyyk2023-golang-101-kursu/13/01-json-ile-calismak/</loc>
-         <lastmod>2023-09-11</lastmod>
+         <lastmod>2023-10-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://vbyazilim.github.io/maoyyk2023-golang-101-kursu/14/01-test/</loc>
-         <lastmod>2023-09-11</lastmod>
+         <lastmod>2023-10-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://vbyazilim.github.io/maoyyk2023-golang-101-kursu/14/02-table-driven-test/</loc>
-         <lastmod>2023-09-11</lastmod>
+         <lastmod>2023-10-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://vbyazilim.github.io/maoyyk2023-golang-101-kursu/14/03-test-coverage/</loc>
-         <lastmod>2023-09-11</lastmod>
+         <lastmod>2023-10-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://vbyazilim.github.io/maoyyk2023-golang-101-kursu/14/04-profiling/</loc>
-         <lastmod>2023-09-11</lastmod>
+         <lastmod>2023-10-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://vbyazilim.github.io/maoyyk2023-golang-101-kursu/15/01-concurrency/</loc>
-         <lastmod>2023-09-11</lastmod>
+         <lastmod>2023-10-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://vbyazilim.github.io/maoyyk2023-golang-101-kursu/15/02-channels/</loc>
-         <lastmod>2023-09-11</lastmod>
+         <lastmod>2023-10-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://vbyazilim.github.io/maoyyk2023-golang-101-kursu/15/03-mutex/</loc>
-         <lastmod>2023-09-11</lastmod>
+         <lastmod>2023-10-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://vbyazilim.github.io/maoyyk2023-golang-101-kursu/15/04-context/</loc>
-         <lastmod>2023-09-11</lastmod>
+         <lastmod>2023-10-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://vbyazilim.github.io/maoyyk2023-golang-101-kursu/16/01-naming-conventions/</loc>
-         <lastmod>2023-09-11</lastmod>
+         <lastmod>2023-10-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://vbyazilim.github.io/maoyyk2023-golang-101-kursu/17/01-kurulumlar/</loc>
-         <lastmod>2023-09-11</lastmod>
+         <lastmod>2023-10-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://vbyazilim.github.io/maoyyk2023-golang-101-kursu/17/02-go-modul-anotomisi/</loc>
-         <lastmod>2023-09-11</lastmod>
+         <lastmod>2023-10-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://vbyazilim.github.io/maoyyk2023-golang-101-kursu/17/03-ornek-paket/</loc>
-         <lastmod>2023-09-11</lastmod>
+         <lastmod>2023-10-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://vbyazilim.github.io/maoyyk2023-golang-101-kursu/17/04-paketi-dagitmak/</loc>
-         <lastmod>2023-09-11</lastmod>
+         <lastmod>2023-10-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://vbyazilim.github.io/maoyyk2023-golang-101-kursu/18/01-http-paketi/</loc>
-         <lastmod>2023-09-11</lastmod>
+         <lastmod>2023-10-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://vbyazilim.github.io/maoyyk2023-golang-101-kursu/18/02-ddd-basics/</loc>
-         <lastmod>2023-09-11</lastmod>
+         <lastmod>2023-10-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://vbyazilim.github.io/maoyyk2023-golang-101-kursu/18/03-development/</loc>
-         <lastmod>2023-09-11</lastmod>
+         <lastmod>2023-10-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://vbyazilim.github.io/maoyyk2023-golang-101-kursu/18/04-testing/</loc>
-         <lastmod>2023-09-11</lastmod>
+         <lastmod>2023-10-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://vbyazilim.github.io/maoyyk2023-golang-101-kursu/18/05-docker/</loc>
-         <lastmod>2023-09-11</lastmod>
+         <lastmod>2023-10-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://vbyazilim.github.io/maoyyk2023-golang-101-kursu/18/06-github-actions/</loc>
-         <lastmod>2023-09-11</lastmod>
+         <lastmod>2023-10-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://vbyazilim.github.io/maoyyk2023-golang-101-kursu/18/07-acik-kaynak/</loc>
-         <lastmod>2023-09-11</lastmod>
+         <lastmod>2023-10-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://vbyazilim.github.io/maoyyk2023-golang-101-kursu/bonus/01-links/</loc>
-         <lastmod>2023-09-11</lastmod>
+         <lastmod>2023-10-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://vbyazilim.github.io/maoyyk2023-golang-101-kursu/quiz/01-go-cash-register/</loc>
-         <lastmod>2023-09-11</lastmod>
+         <lastmod>2023-10-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>

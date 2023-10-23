@@ -2252,8 +2252,8 @@ fonksiyon dışarıdaki değişkenleri <strong>referans</strong> olarak alıp ku
 fonksiyonlara ihtiyaç duyduğumuzda, go routine’lerle çalışırken sıklıkla bu
 tür ifadelere kullanacağız.</p>
 <h3 id="tip-ya-da-arguman-olarak-fonksiyon">Tip ya da Argüman olarak Fonksiyon</h3>
-<p>Birinci sınıf vatandaş olduğu için, fonksiyonları <strong>type alias</strong> mantığında
-kullanabiliyoruz:</p>
+<p>Birinci sınıf vatandaş olduğu için, fonksiyonları <strong>type definition</strong>
+mantığında kullanabiliyoruz:</p>
 <p><a href="https://go.dev/play/p/tiNguGxxvNW">https://go.dev/play/p/tiNguGxxvNW</a></p>
 <div class="highlight"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nx">main</span>
 
@@ -2280,7 +2280,7 @@ kullanabiliyoruz:</p>
 </code></pre></div>
 <p><code>greet</code> fonksiyonuna <code>string</code> alıp, <code>string</code> dönen herhangi bir fonksiyonu
 parametre olarak geçebiliriz. <code>type GreeterFunc func(string) string</code> artık
-<code>GreeterFunc</code> diye bir type alias’ımıza var, tipi ne? bir fonksiyon, nasıl bir
+<code>GreeterFunc</code> diye bir type’ımız var, tipi ne? bir fonksiyon, nasıl bir
 fonksiyon? <code>string</code> alıp, <code>string</code> dönen bir fonksiyon.</p>
 <hr />
 <h2 id="defer">Defer</h2>

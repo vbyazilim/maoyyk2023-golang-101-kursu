@@ -2075,7 +2075,7 @@ düzenleyelim;</p>
 
 <span class="kd">var</span><span class="w"> </span><span class="nx">_</span><span class="w"> </span><span class="nx">Storer</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">memoryStorage</span><span class="p">)(</span><span class="kc">nil</span><span class="p">)</span><span class="w"> </span><span class="c1">// compile time proof</span>
 
-<span class="c1">// MemoryDB is a type alias for in memory-db type.</span>
+<span class="c1">// MemoryDB is a custom type definition uses map[string]any for in memory-db type.</span>
 <span class="kd">type</span><span class="w"> </span><span class="nx">MemoryDB</span><span class="w"> </span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">any</span>
 
 <span class="c1">// Storer defines storage behaviours.</span>
@@ -2162,7 +2162,7 @@ $<span class="w"> </span>touch<span class="w"> </span>src/internal/kverror/kverr
 <span class="w">    </span><span class="nx">Error</span><span class="p">()</span><span class="w"> </span><span class="kt">string</span>
 <span class="p">}</span>
 
-<span class="c1">// Error is a type alias, custom error.</span>
+<span class="c1">// Error is a custom type definition uses struct, custom error.</span>
 <span class="kd">type</span><span class="w"> </span><span class="nx">Error</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="nx">Err</span><span class="w">      </span><span class="kt">error</span>
 <span class="w">    </span><span class="nx">Message</span><span class="w">  </span><span class="kt">string</span>

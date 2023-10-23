@@ -2036,12 +2036,12 @@ de geliştirme yaparken, paketlerimize özel <code>error</code> tipleri implemen
 <li><code>== 1</code> ya da <code>== 0</code> ?</li>
 </ul>
 <p>Cevabı sizden bekliyorum :)</p>
-<p><a href="https://go.dev/play/p/Z29IOszq2Ge">https://go.dev/play/p/Z29IOszq2Ge</a></p>
+<p><a href="https://go.dev/play/p/VOE28-nwG88">https://go.dev/play/p/VOE28-nwG88</a></p>
 <div class="highlight"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nx">main</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="s">&quot;fmt&quot;</span>
 
-<span class="c1">// errKind is a type alias to int.</span>
+<span class="c1">// errKind is a custom type definition uses int.</span>
 <span class="kd">type</span><span class="w"> </span><span class="nx">errKind</span><span class="w"> </span><span class="kt">int</span>
 
 <span class="c1">// create automatic constants with iota.</span>
@@ -2240,7 +2240,7 @@ slack kanalına mesaj atmak gibi başka aksiyonlar da alınabilir.</p>
 </code></pre></div>
 <h2 id="errorsas"><code>errors.As</code></h2>
 <p>Hatayı <code>type</code> olarak kontrol etmeye yarar.</p>
-<p><a href="https://go.dev/play/p/bgcRhUH761Y">https://go.dev/play/p/bgcRhUH761Y</a></p>
+<p><a href="https://go.dev/play/p/JhM3JXdy-15">https://go.dev/play/p/JhM3JXdy-15</a></p>
 <div class="highlight"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nx">main</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="p">(</span>
@@ -2248,7 +2248,7 @@ slack kanalına mesaj atmak gibi başka aksiyonlar da alınabilir.</p>
 <span class="w">    </span><span class="s">&quot;fmt&quot;</span>
 <span class="p">)</span>
 
-<span class="c1">// customError is a type alias to string, will</span>
+<span class="c1">// customError is a custom type definition uses string, will</span>
 <span class="c1">// implement error interface.</span>
 <span class="kd">type</span><span class="w"> </span><span class="nx">customError</span><span class="w"> </span><span class="kt">string</span>
 

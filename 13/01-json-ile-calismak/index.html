@@ -1969,7 +1969,7 @@ hafif siklet veri değişim formatını kullancaksınız. Bu bakımdan;</p>
 <hr />
 <h2 id="encodingjson-marshal"><code>encoding/json</code> Marshal</h2>
 <p>Elimizdeki <code>go</code> tipini <code>[]byte</code> haline dönüştürme işlemidir:</p>
-<p><a href="https://go.dev/play/p/nOzvhUsD40p">https://go.dev/play/p/nOzvhUsD40p</a></p>
+<p><a href="https://go.dev/play/p/7yav9dmBRb7">https://go.dev/play/p/7yav9dmBRb7</a></p>
 <div class="highlight"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nx">main</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="p">(</span>
@@ -1978,7 +1978,7 @@ hafif siklet veri değişim formatını kullancaksınız. Bu bakımdan;</p>
 <span class="w">    </span><span class="s">&quot;log&quot;</span>
 <span class="p">)</span>
 
-<span class="c1">// UserLevel is a type alias for defining user level.</span>
+<span class="c1">// UserLevel is a custom type definition uses string for defining user level.</span>
 <span class="kd">type</span><span class="w"> </span><span class="nx">UserLevel</span><span class="w"> </span><span class="kt">string</span>
 
 <span class="c1">// UserLevels holds collection of UserLevel types.</span>
@@ -2013,7 +2013,7 @@ aslında JavaScript’teki <code>array</code> tipidir.</p>
 <h2 id="encodingjson-unmarshal"><code>encoding/json</code> Unmarshal</h2>
 <p>Şimdi, tam ters işlemi yapalım; dış dünyadan bize <code>["admin","moderator","anonymous"]</code>
 gelsin:</p>
-<p><a href="https://go.dev/play/p/7l7sIFzUh1S">https://go.dev/play/p/7l7sIFzUh1S</a></p>
+<p><a href="https://go.dev/play/p/E6L7GhKpJmu">https://go.dev/play/p/E6L7GhKpJmu</a></p>
 <div class="highlight"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nx">main</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="p">(</span>
@@ -2022,7 +2022,7 @@ gelsin:</p>
 <span class="w">    </span><span class="s">&quot;log&quot;</span>
 <span class="p">)</span>
 
-<span class="c1">// UserLevel is a type alias for defining user level.</span>
+<span class="c1">// UserLevel is a custom type definition uses string.</span>
 <span class="kd">type</span><span class="w"> </span><span class="nx">UserLevel</span><span class="w"> </span><span class="kt">string</span>
 
 <span class="c1">// UserLevels holds collection of UserLevel types.</span>
@@ -2210,7 +2210,7 @@ alanları içinde gezen, tag’leri bulan ve özelleştirilmiş <code>time</code
 yapı bulunuyor. <code>go</code>, <code>Marshal</code> işlemi yaparken, eğer custom type varsa ve bu
 type’ın <code>MarshalJSON()</code> metotu varsa onu kullanıyor. <code>describeStruct</code> ise
 <code>reflect</code> paketini kullanarak struct içinde geziyor.</p>
-<p><a href="https://go.dev/play/p/fsbNbTOMVav">https://go.dev/play/p/fsbNbTOMVav</a></p>
+<p><a href="https://go.dev/play/p/7ny1yu09idp">https://go.dev/play/p/7ny1yu09idp</a></p>
 <div class="highlight"><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nx">main</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="p">(</span>
@@ -2233,7 +2233,7 @@ type’ın <code>MarshalJSON()</code> metotu varsa onu kullanıyor. <code>descri
 
 <span class="kd">const</span><span class="w"> </span><span class="nx">customTimeLayout</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;2006-01-02T15:04:05-07:00&quot;</span>
 
-<span class="c1">// CustomTime is a type alias for time.Time, uses custom marshal format.</span>
+<span class="c1">// CustomTime is a custom type definition uses time.Time, uses custom marshal format.</span>
 <span class="kd">type</span><span class="w"> </span><span class="nx">CustomTime</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="nx">time</span><span class="p">.</span><span class="nx">Time</span>
 <span class="p">}</span>
