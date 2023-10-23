@@ -83,14 +83,14 @@ Neden;
 
 Cevabı sizden bekliyorum :)
 
-https://go.dev/play/p/Z29IOszq2Ge
+https://go.dev/play/p/VOE28-nwG88
 
 ```go
 package main
 
 import "fmt"
 
-// errKind is a type alias to int.
+// errKind is a custom type definition uses int.
 type errKind int
 
 // create automatic constants with iota.
@@ -315,7 +315,7 @@ func main() {
 
 Hatayı `type` olarak kontrol etmeye yarar.
 
-https://go.dev/play/p/bgcRhUH761Y
+https://go.dev/play/p/JhM3JXdy-15
 
 ```go
 package main
@@ -325,7 +325,7 @@ import (
 	"fmt"
 )
 
-// customError is a type alias to string, will
+// customError is a custom type definition uses string, will
 // implement error interface.
 type customError string
 

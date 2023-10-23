@@ -8,7 +8,7 @@ Go’nun en önemli konuları nedir diye sorsanız cevap olarak iki konu var der
 Bir işin nasıl yapılacağını, bir davranışı belirleyen şeydir `interface`.
 Yazdığımız kodu test edebilmek için `interface`’lere ihtiyaç duyarız.
 
-Hemen küçük bir örnek yapalım. **Type aliasing** konusunu gördük;
+Hemen küçük bir örnek yapalım. **type definition** konusunu gördük;
 
 ```go
 package main
@@ -340,7 +340,7 @@ direkt olarak kullanılamazlar ve sadece arayüz görevini üstlenirler.
 Yani elektrik prizi, kendisine takılan şeyin televizyon mu? cep telefonu şarj
 aletimi olduğunu bilmemesi gibi...
 
-https://go.dev/play/p/U6jqQS_hjbw
+https://go.dev/play/p/y-nDQb82Xqi
 
 ```go
 package main
@@ -352,7 +352,7 @@ type Positiver interface {
 	Positive() bool
 }
 
-// Numero is a type alias for int.
+// Numero is a custom type definition uses int.
 type Numero int
 
 // Positive is a method for satisfying Positiver interface.
@@ -360,7 +360,7 @@ func (n Numero) Positive() bool {
 	return n > 0
 }
 
-// Person is a type alias for string.
+// Person is a custom type definition uses string.
 type Person string
 
 // Positive is a method for satisfying Positiver interface.
@@ -395,7 +395,7 @@ eden herhangi bir tipi input olarak alabilir:
 
 Örneğimizi bir tık daha geliştirelim:
 
-https://go.dev/play/p/_YJuxLi707H
+https://go.dev/play/p/p-J6Dcev_P8
 
 ```go
 package main
@@ -410,7 +410,7 @@ type Positiver interface {
 	Positive() bool
 }
 
-// Numero is a type alias for int.
+// Numero is is a custom type definition uses int.
 type Numero int
 
 // Positive is a method for satisfying Positiver interface.
@@ -422,7 +422,7 @@ func (n Numero) String() string {
 	return "my value is: " + strconv.Itoa(int(n))
 }
 
-// Person is a type alias for string.
+// Person is a custom type definition uses string.
 type Person string
 
 // Positive is a method for satisfying Positiver interface.
@@ -454,7 +454,7 @@ type Formatter interface {
 
 Şimdi kendi tipimiz için özel bir gösterim ekleyelim:
 
-https://go.dev/play/p/C24F6Z4I8iq
+https://go.dev/play/p/zjfW_cXoa-M
 
 ```go
 package main
@@ -464,7 +464,7 @@ import (
 	"strconv"
 )
 
-// Numero is a type alias to int.
+// Numero is a custom type definition uses int.
 type Numero int
 
 // String implements Stringer interface.
