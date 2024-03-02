@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-// SchoolNumber is a type alias.
+// SchoolNumber is a custom type definition uses int.
 type SchoolNumber int
 
 func sum[T ~int](a T, b T) T {

@@ -194,7 +194,7 @@ Tilda (~) işareti, `T`’nin `int` türü veya `int` türünden bir alt tür ol
 gerektiğini belirtir. `SchoolNumber` türü, `int` türünden bir alt tür olduğu için,
 bu fonksiyonu `SchoolNumber` türü için kullanabiliriz:
 
-https://go.dev/play/p/20l3bUMhJY4
+https://go.dev/play/p/R2t6n6xx1EW
 
 [Örnek](https://github.com/vbyazilim/maoyyk2023-golang-101-kursu/tree/main/src/11/generics-custom-types)
 
@@ -203,7 +203,7 @@ package main
 
 import "fmt"
 
-// SchoolNumber is a type alias.
+// SchoolNumber is a custom type definition uses int.
 type SchoolNumber int
 
 func sum[T ~int](a T, b T) T {

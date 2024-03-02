@@ -138,7 +138,7 @@ import (
 
 var _ Storer = (*memoryStorage)(nil) // compile time proof
 
-// MemoryDB is a type alias for in memory-db type.
+// MemoryDB is a custom type definition uses map[string]any for in memory-db type.
 type MemoryDB map[string]any
 
 // Storer defines storage behaviours.
@@ -237,7 +237,7 @@ type KVError interface {
 	Error() string
 }
 
-// Error is a type alias, custom error.
+// Error is a custom type definition uses struct, custom error.
 type Error struct {
 	Err      error
 	Message  string

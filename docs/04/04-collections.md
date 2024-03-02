@@ -212,9 +212,9 @@ package main
 
 import "fmt"
 
-type user string // type alias, custom type
+type user string // type definition, custom type
 
-type users []user // type alias, custom type
+type users []user // type definition, custom type
 
 func main() {
 	var ourUsers users

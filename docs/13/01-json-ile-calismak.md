@@ -16,7 +16,7 @@ getirmek çok sık yaptığımız bir iş olacak. Bu dönüşüm esnasında
 
 Elimizdeki `go` tipini `[]byte` haline dönüştürme işlemidir:
 
-https://go.dev/play/p/nOzvhUsD40p
+https://go.dev/play/p/7yav9dmBRb7
 
 ```go
 package main
@@ -27,7 +27,7 @@ import (
 	"log"
 )
 
-// UserLevel is a type alias for defining user level.
+// UserLevel is a custom type definition uses string for defining user level.
 type UserLevel string
 
 // UserLevels holds collection of UserLevel types.
@@ -67,7 +67,7 @@ aslında JavaScript’teki `array` tipidir.
 Şimdi, tam ters işlemi yapalım; dış dünyadan bize `["admin","moderator","anonymous"]`
 gelsin:
 
-https://go.dev/play/p/7l7sIFzUh1S
+https://go.dev/play/p/E6L7GhKpJmu
 
 ```go
 package main
@@ -78,7 +78,7 @@ import (
 	"log"
 )
 
-// UserLevel is a type alias for defining user level.
+// UserLevel is a custom type definition uses string.
 type UserLevel string
 
 // UserLevels holds collection of UserLevel types.
@@ -293,7 +293,7 @@ yapı bulunuyor. `go`, `Marshal` işlemi yaparken, eğer custom type varsa ve bu
 type’ın `MarshalJSON()` metotu varsa onu kullanıyor. `describeStruct` ise
 `reflect` paketini kullanarak struct içinde geziyor.
 
-https://go.dev/play/p/fsbNbTOMVav
+https://go.dev/play/p/7ny1yu09idp
 
 ```go
 package main
@@ -318,7 +318,7 @@ type User struct {
 
 const customTimeLayout = "2006-01-02T15:04:05-07:00"
 
-// CustomTime is a type alias for time.Time, uses custom marshal format.
+// CustomTime is a custom type definition uses time.Time, uses custom marshal format.
 type CustomTime struct {
 	time.Time
 }

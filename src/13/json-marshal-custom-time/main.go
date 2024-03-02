@@ -20,7 +20,7 @@ type User struct {
 
 const customTimeLayout = "2006-01-02T15:04:05-07:00"
 
-// CustomTime is a type alias for time.Time, uses custom marshal format.
+// CustomTime is a custom type definition uses time.Time, uses custom marshal format.
 type CustomTime struct {
 	time.Time
 }

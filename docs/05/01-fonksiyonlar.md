@@ -324,8 +324,8 @@ tür ifadelere kullanacağız.
 
 ### Tip ya da Argüman olarak Fonksiyon
 
-Birinci sınıf vatandaş olduğu için, fonksiyonları **type alias** mantığında
-kullanabiliyoruz:
+Birinci sınıf vatandaş olduğu için, fonksiyonları **type definition**
+mantığında kullanabiliyoruz:
 
 https://go.dev/play/p/tiNguGxxvNW
 
@@ -356,7 +356,7 @@ func main() {
 
 `greet` fonksiyonuna `string` alıp, `string` dönen herhangi bir fonksiyonu
 parametre olarak geçebiliriz. `type GreeterFunc func(string) string` artık
-`GreeterFunc` diye bir type alias’ımıza var, tipi ne? bir fonksiyon, nasıl bir
+`GreeterFunc` diye bir type’ımız var, tipi ne? bir fonksiyon, nasıl bir
 fonksiyon? `string` alıp, `string` dönen bir fonksiyon.
 
 ---
