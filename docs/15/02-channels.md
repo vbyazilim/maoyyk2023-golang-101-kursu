@@ -312,7 +312,7 @@ func main() {
 func count(ch chan int) {
 	for i := 0; i < 5; i++ {
 		ch <- i
-		time.Sleep(time.Millisecond * 500) // yarım saniye bekletme, görmek içim
+		time.Sleep(time.Millisecond * 500) // kodu simüle etmek için 500ms bekliyoruz
 	}
     // loop bitti ama yukarıdaki for{} halen okumak istiyor
 }
@@ -562,6 +562,10 @@ Eğer `capacity = 1` ise, bu **gecikmeli garanti** yani, send, receive’i
 garanti edebilir. Receive, send’den önce olur. Sender, **buffer dolana kadar**
 blok olmadan gönderir. Buffer dolunca block olur. Receiver, buffer boşalana
 kadar blok olmadan receive eder, buffer boşalınca blok olur.
+
+Ayrıca **buffered channel**’lar kapasiteleri kadar veri alabilirler. Kapasite
+dolduğunda daha fazla veri alamazlar. Şayet daha fazla veri göndermeye
+çalışırsanız, **deadlock** oluşur.
 
 Buffered channel’lar in-memory **FIFO** queue yani, ilk gönderilen (send) ilk
 alınan (receive) şeklinde çalışır.

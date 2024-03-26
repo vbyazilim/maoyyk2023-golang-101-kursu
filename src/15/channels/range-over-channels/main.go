@@ -21,7 +21,7 @@ func main() {
 func count(ch chan int) {
 	for i := 0; i < 5; i++ {
 		ch <- i
-		time.Sleep(time.Millisecond * 500) // yarım saniye bekletme, görmek içim
+		time.Sleep(time.Millisecond * 500) // kodu simüle etmek için 500ms bekliyoruz
 	}
 	close(ch)
 }
