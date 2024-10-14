@@ -278,7 +278,7 @@ slice’a `append` yani ekleme yapılabilir.
 Eğer slice initialize edilirken kapasite değeri verilmemişse, varsayılan
 (default) kapasite **slice’ın length**’i kadar olur:
 
-https://go.dev/play/p/hzNeqh1nxv8
+https://go.dev/play/p/Ls4_qEAz4x4
 
 ```go
 package main
@@ -295,7 +295,7 @@ func main() {
 	fmt.Println() // boş satır
 
 	slice1 = append(slice1, 1)                                         // 1 eleman ekle, kapasiteyi aş, ek alan ekle
-	fmt.Printf("slice1, len: %d, cap: %d\n", len(slice1), cap(slice1)) // slice1, len: 6, cap: 1
+	fmt.Printf("slice1, len: %d, cap: %d\n", len(slice1), cap(slice1)) // slice1, len: 6, cap: 10
 
 	slice2 = append(slice2, 1)                                         // 1 eleman ekle, kapasiteyi aş, ek alan ekle
 	fmt.Printf("slice2, len: %d, cap: %d\n", len(slice2), cap(slice2)) // slice2, len: 3, cap: 4
